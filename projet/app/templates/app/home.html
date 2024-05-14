@@ -1,0 +1,113 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        .column {
+            float: left;
+            width: 25%;
+        }
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenue, {{ user.username }}!</h1>
+    <p>Vous êtes connecté en tant que 
+    {% for group in user_groups %}
+        {{ group.name }}
+    {% endfor %}</p>
+    
+        
+    
+    {% if can_create_team %}
+        <p><a href="{% url 'create_team' %}">Créer une équipe</a></p>
+    {% else %}
+        {% if group.id == 2 %}
+        <h2>Votre équipe :</h2>
+        <ul>
+            {% for team_name in manage_teams %}
+                <li>{{ team_name }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <ul>
+            {% for team_name in technician_teams %}
+                <li>{{ team_name }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <ul>
+            {% for team_name in manage_teams %}
+                <li>{{ team_name }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        
+        {% if user_groups %}
+            {% for group in user_groups %}
+                {% if group.id == 1 %}  <!-- Changez l'ID du groupe Admin selon votre configuration -->
+                    <p><a href="{% url 'add_manager' %}">Add Manager</a></p>
+                    <p><a href="{% url 'manager_members' %}">See Managers</a></p>
+                {% endif %}
+                {% if group.id == 2 and not can_create_team %}  <!-- Changez l'ID du groupe Admin selon votre configuration -->
+                    <p><a href="{% url 'add_technician' %}">Add Technicien</a></p>
+                    <p><a href="{% url 'technician_members' %}">See Techniciens</a></p>
+                    <p><a href="{% url 'task_list' %}">See our Team Tasks</a></p>
+                {% endif %}
+                {% if group.id == 3 %} 
+                <h2>Tasks:</h2>
+                <div class="row">
+                    <h3>New request</h3>
+                    {% for task in tasks %}
+                        <ul>
+                            <li>
+                                <strong>{{ task.name }}</strong><br>
+                                Priority: {{ task.priority }}<br>
+                                Description: {{ task.description }}
+                                <form action="/take_task/" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="taskId" value="{{ task.id }}">
+                                    <input type="hidden" name="userId" value="{{ user.id }}">
+                                    <button type="submit" name="submit">Take Task</button>
+                                </form>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                    <br>
+                    <br>
+                    <h3>My Tasks</h3>
+                    {% for task in user_tasks %}
+                                <li>
+                                    <span class="task-name">{{ task.name }}</span>
+                                    {% for stage in stages %}
+                                        {% if task.stage_id == stage.id|stringformat:"d" %}
+                                            Actual stage : {{ stage.name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for buttonStage in stages %}
+                                    <form method="post" action="/update_task/">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="taskId" value="{{ task.id }}">
+                                            <input type="hidden" name="userId" value="{{ user.id }}">
+                                            <input type="hidden" name="stageId" value="{{ buttonStage.id }}">
+                                        {% if task.stage_id != buttonStage.id|stringformat:"d" and buttonStage.name != "New Request" %}
+                                            <button class="move-button" type="submit">Move to {{ buttonStage.name }}</button>
+                                        {% endif %}
+                                    </form>
+                                {% endfor %}
+                                </li>
+                        {% endfor %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membres Techniciens</title>
+</head>
+<body>
+    <h1>Membres Techniciens de Votre Équipe</h1>
+    <ul>
+        {% if members %}
+        {% for member in members %}
+            <li>
+                <strong>ID:</strong> {{ member.id }},
+                <strong>Nom d'utilisateur:</strong> {{ member.username }}, 
+                <strong>E-mail:</strong> {{ member.email }}
+                <a href="{% url 'delete_member' member.id %}">Supprimer</a>
+                <a href="{% url 'edit_member' member.id %}">Modifier</a>
+            </li>
+    {% endfor %}
+        {% else %}
+            <li>Aucun membre technicien dans votre équipe pour le moment.</li>
+        {% endif %}
+    </ul>
+</body>
+</html>

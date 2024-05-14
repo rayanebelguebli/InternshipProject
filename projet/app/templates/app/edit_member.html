@@ -1,0 +1,31 @@
+<!-- edit_member.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier le membre</title>
+</head>
+<body>
+    <h1>Modifier le membre</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Nom d'utilisateur:</label>
+        <input type="text" id="username" name="username" value="{{ user.username }}"><br>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}"><br>
+
+        <label for="first_name">Prénom:</label>
+        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}"><br>
+
+        <label for="last_name">Nom de famille:</label>
+        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}"><br>
+
+        <label for="password">Mot de passe:</label>
+        <input type="password" id="password" name="password"><br>
+
+        <input type="submit" value="Enregistrer les modifications">
+    </form>
+</body>
+</html>

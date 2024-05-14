@@ -1,0 +1,17 @@
+<!-- confirm_delete.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmer la suppression</title>
+</head>
+<body>
+    <h1>Confirmer la suppression</h1>
+    <p>Êtes-vous sûr de vouloir supprimer le membre "{{ user.username }}" ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Oui, supprimer">
+    </form>
+</body>
+</html>

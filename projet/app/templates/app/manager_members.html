@@ -1,0 +1,23 @@
+<!-- manager_members.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membres du groupe Manager</title>
+</head>
+<body>
+    <h1>Membres du groupe Manager</h1>
+    <ul>
+        {% for member in members %}
+            <li>
+                <strong>ID:</strong> {{ member.id }},
+                <strong>Nom d'utilisateur:</strong> {{ member.username }}, 
+                <strong>E-mail:</strong> {{ member.email }}
+                <a href="{% url 'delete_member' member.id %}">Supprimer</a>
+                <a href="{% url 'edit_member' member.id %}">Modifier</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
