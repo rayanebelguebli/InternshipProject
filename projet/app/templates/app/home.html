@@ -1,4 +1,5 @@
 <!-- home.html -->
+{% extends "app/main_layout.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,13 +18,20 @@
         }
     </style>
 </head>
-<body>
-    <h1>Bienvenue, {{ user.username }}!</h1>
-    <p>Vous êtes connecté en tant que 
-    {% for group in user_groups %}
-        {{ group.name }}
-    {% endfor %}</p>
-    
+
+{% block content %}
+
+    <div class="content">
+
+        <div class="presentation">
+            <h1 class="presentation__name">Welcome <span class="presentation__purple-text">{{ user.username }} ( {% for group in user_groups %}
+                {{ group.name }}
+            {% endfor %}) !</span></h1>
+            <p class="description"> in this space you can see all the information relating to your work orders.</p>
+            <p class="description"> You can also chat with your work colleagues via integrated messaging .</p>
+        </div>
+
+  
         
     
     {% if can_create_team %}
@@ -32,20 +40,23 @@
         {% if group.id == 2 %}
         <h2>Votre équipe :</h2>
         <ul>
+            <p>deded 1 </p>
             {% for team_name in manage_teams %}
                 <li>{{ team_name }}</li>
             {% endfor %}
         </ul>
         {% else %}
         <ul>
+            <p>deded 2 </p>
             {% for team_name in technician_teams %}
-                <li>{{ team_name }}</li>
+                <li>{{ team_name }} d2</li>
             {% endfor %}
         </ul>
         {% endif %}
         <ul>
+            <p>deded 3 </p>
             {% for team_name in manage_teams %}
-                <li>{{ team_name }}</li>
+                <li>{{ team_name }} d1</li>
             {% endfor %}
         </ul>
     {% endif %}
@@ -108,6 +119,8 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+            </div>
 
-</body>
+{% endblock %}
+</div>
 </html>

@@ -7,7 +7,7 @@ from .models import Teams, Task, MyTasks
 from django.db.models import Q
 import xmlrpc.client
 
-url = 'http://localhost:8069'
+url = 'http://192.168.1.243:8069'
 db = 'db_test'
 username = 'admin'
 password = 'admin'
