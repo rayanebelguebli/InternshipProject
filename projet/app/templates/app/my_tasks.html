@@ -4,25 +4,22 @@
     <div class="search-bar">
         <input class="search-bar__input" id="searchInput" type="search" placeholder="Rechercher ..."/>
     </div>
+ 
+       
     <div class="list-orders">
-        {% for task in tasks %}
-            {% if task.user_id %}
-                {% for user in users %}
-                    {% if user.id == task.user_id %}
-                        {% for stage in stages %}
-                            {% if task.stage_id == stage.id|stringformat:"d" %}
-                                {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders=false %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible="Non défini" step=task.stage_id isMyWorkOrders=false %}
-            {% endif %}
+        {% for task in user_tasks %}
+            {% for stage in stages %}
+                {% if task.stage_id == stage.id|stringformat:"d" %}
+                    {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders="true" %}
+                {% endif %}
+            {% endfor %}
         {% endfor %}
     </div>
        
+        
+
 </div>
+
 
 <script>
     // Fonction de recherche

@@ -35,7 +35,7 @@
                 <div class="sidebar-title">
                     <img class="sidebar-icon sidebar-icon--work-icon" src="{% static 'work.png' %}">
                     <h2 class="sidebar-text sidebar-text--one"> 
-                        {{ team_name }} 
+                       Team : {{ team_name }} 
                     </h2>
                 </div>
                 <ul class="sidebar__list">
@@ -44,7 +44,27 @@
                     <li><a href="{% url 'task_list' %}" class="item">See our Team Tasks</a></li>
                 </ul>
             {% endfor %}
-           
+        {% endif %}
+        {% if can_create_team %}
+            <div class="sidebar-title">
+                <img class="sidebar-icon sidebar-icon--work-icon" src="{% static 'work.png' %}">
+                <h2 class="sidebar-text sidebar-text--one">Gestion Team</h2>
+            </div>
+            <ul class="sidebar__list">
+                <li><a href="{% url 'create_team' %}" class="item">Créer une équipe</a></li>
+            </ul>
+        {% endif%}
+        {% if group.id == 3 %}
+            <div class="sidebar-title">
+                <img class="sidebar-icon sidebar-icon--work-icon" src="{% static 'work.png' %}">
+                <h2 class="sidebar-text sidebar-text--one"> 
+               Work Orders 
+                </h2>
+            </div>
+            <ul class="sidebar__list">
+                <li><a href="{% url 'works_orders' %}" class="item">All Work Orders</a></li>
+                <li><a href="{% url 'my_tasks' %}" class="item">My Work Orders</a></li>
+            </ul>
         {% endif %}
     {% endfor %}
 {% endif %}

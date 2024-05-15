@@ -1,4 +1,5 @@
 <!-- edit_member.html -->
+{% extends "app/main_layout.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,26 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier le membre</title>
 </head>
-<body>
-    <h1>Modifier le membre</h1>
-    <form method="post">
+{% block content%}
+   
+    <form class="form" method="post">
+        <h2 class="title-manager">Change Informations</h2>
         {% csrf_token %}
-        <label for="username">Nom d'utilisateur:</label>
-        <input type="text" id="username" name="username" value="{{ user.username }}"><br>
+        <label for="username">Login :</label>
+        <input class="input" type="text" id="username" name="username" value="{{ user.username }}"><br>
 
         <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" value="{{ user.email }}"><br>
+        <input class="input" type="email" id="email" name="email" value="{{ user.email }}"><br>
 
-        <label for="first_name">Prénom:</label>
-        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}"><br>
+        <label for="first_name">Firstname:</label>
+        <input class="input" type="text" id="first_name" name="first_name" value="{{ user.first_name }}"><br>
 
-        <label for="last_name">Nom de famille:</label>
-        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}"><br>
+        <label for="last_name">Lastname:</label>
+        <input class="input" type="text" id="last_name" name="last_name" value="{{ user.last_name }}"><br>
 
-        <label for="password">Mot de passe:</label>
-        <input type="password" id="password" name="password"><br>
+        <label for="password">Password:</label>
+        <input class="input" type="password" id="password" name="password"><br>
 
-        <input type="submit" value="Enregistrer les modifications">
+        <input class="btn btn--login" type="submit" value="Enregistrer les modifications">
     </form>
-</body>
+{% endblock %}
 </html>

@@ -1,0 +1,48 @@
+{% block search %}
+<div class="work-order">
+    <div class="work-order__text">
+        <h2 class="work-order__title">{{name}} - {% if responsible == "Non défini" %}No responsible{% else %}Assigned to <strong class="work-order__strong">{{responsible}}</strong>{% endif %} </h2>
+        <p class="work-order-status"><u>Status :</u> {{step}}</p>
+        {% if instructions != "False" %}
+            {{ instructions }}
+        {% else %}
+            <p>No instructions available.</p>
+        {% endif %}
+    </div>
+    
+
+
+    {% if isMyWorkOrders == "true" %}
+        <div class="button-container">
+            {% for buttonStage in stages %}
+                <form method="post" action="/update_task/">
+                    {% csrf_token %}
+                    <input type="hidden" name="taskId" value="{{ task.id }}">
+                    <input type="hidden" name="userId" value="{{ user.id }}">
+                    <input type="hidden" name="stageId" value="{{ buttonStage.id }}">
+                    {% if step != buttonStage.name and buttonStage.name != "New Request" %}
+                        <button class="btn btn--register btn--mytasks" type="submit">Move to {{ buttonStage.name }}</button>
+                    {% endif %}
+                </form>
+            {% endfor %}
+        </div>
+    {% endif %}
+  
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.id == 3 %}
+                {% if responsible == "Non défini" %}
+                <form action="/take_task/" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="taskId" value="{{ task.id }}">
+                    <input type="hidden" name="userId" value="{{ user.id }}">
+                    <button type="submit" class="btn btn--select">
+                       Select
+                    </button>
+                </form>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

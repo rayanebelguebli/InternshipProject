@@ -1,26 +1,26 @@
+{% extends "app/main_layout.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membres Techniciens</title>
+    <title>Membres du groupe Techincien</title>
 </head>
-
-    <h1>Membres Techniciens de Votre Équipe</h1>
-    <ul>
-        {% if members %}
-        {% for member in members %}
-            <li>
-                <strong>ID:</strong> {{ member.id }},
-                <strong>Nom d'utilisateur:</strong> {{ member.username }}, 
-                <strong>E-mail:</strong> {{ member.email }}
-                <a href="{% url 'delete_member' member.id %}">Supprimer</a>
-                <a href="{% url 'edit_member' member.id %}">Modifier</a>
-            </li>
-    {% endfor %}
-        {% else %}
-            <li>Aucun membre technicien dans votre équipe pour le moment.</li>
-        {% endif %}
-    </ul>
-
-
+{% block content %}
+    <h2 class="members-title">Technician group members</h2>
+    <div class="members">
+        <ul class="members-list">
+            {% for member in members %}
+                <li class="member">
+                    <br>
+                    <strong class="member-margin">ID:</strong> {{ member.id }}<br>
+                    <strong>Nom d'utilisateur:</strong> {{ member.username }} <br>
+                    <strong>E-mail:</strong> {{ member.email }} <br>
+                    <button class="btn btn--login"><a class="btn-text btn-text--login" href="{% url 'delete_member' member.id %}">Supprimer</a></button>
+                    <button class="btn btn--register"><a class="btn-text btn-text--register" href="{% url 'edit_member' member.id %}">Modifier</a></button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

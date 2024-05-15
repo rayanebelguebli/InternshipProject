@@ -81,6 +81,36 @@ def home(request):
 @login_required
 @user_passes_test(is_admin)
 def add_manager(request):
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+
+    context = {
+        'can_create_team': can_create_team,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks, 
+        'stages': stages
+    }
+
     if request.method == 'POST':
         signup_username = request.POST.get('username')
         signup_email = request.POST.get('email')
@@ -108,18 +138,71 @@ def add_manager(request):
 
         return redirect('home')  
 
-    return render(request, 'app/add_manager.html')
+    return render(request, 'app/add_manager.html', context)
+
 
 @login_required
 @user_passes_test(is_admin)
 def manager_members(request):
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+
     manager_group = Group.objects.get(name='Manager')
     members = manager_group.user_set.all()
-    return render(request, 'app/manager_members.html', {'members': members})
+
+    context = {
+        'can_create_team': can_create_team,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks,
+        'stages': stages,
+        'members': members
+    }
+
+    return render(request, 'app/manager_members.html', context)
+
 
 @login_required
 @user_passes_test(is_manager)
 def add_technician(request):
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+
     if request.method == 'POST':
         signup_username = request.POST.get('username')
         signup_email = request.POST.get('email')
@@ -128,12 +211,12 @@ def add_technician(request):
 
         if not User.objects.filter(username=signup_username).exists():
             new_user_data = {
-                'name': signup_username,  
+                'name': signup_username,
                 'login': signup_email,
                 'password': signup_password
             }
             new_user_id = models.execute_kw(db, uid, password, 'res.users', 'create', [new_user_data])
-        
+
             if new_user_id:
                 user_id = new_user_id
                 user = User.objects.create_user(id=user_id, username=signup_username, email=signup_email, password=signup_password)
@@ -146,8 +229,9 @@ def add_technician(request):
                 if manager_team:
                     manager_team.members.add(user)
                     models.execute_kw(
-                    db, uid, password, 'maintenance.team', 'write',
-                    [[manager_team.id], {'member_ids': [(4, user_id)]}])
+                        db, uid, password, 'maintenance.team', 'write',
+                        [[manager_team.id], {'member_ids': [(4, user_id)]}]
+                    )
                     messages.success(request, 'Utilisateur ajouté à votre équipe avec succès.')
                 else:
                     messages.error(request, 'Impossible de trouver votre équipe.')
@@ -159,33 +243,96 @@ def add_technician(request):
 
         return redirect('home')
 
-    return render(request, 'app/add_technician.html')
+    context = {
+        'can_create_team': can_create_team,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks,
+        'stages': stages,
+    }
+
+    return render(request, 'app/add_technician.html', context)
+
 
 @login_required
 @user_passes_test(is_manager)
 def technician_members(request):
-    manager = request.user
-    manager_team = Teams.objects.filter(manager=manager).first()
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1)
+    )
+
+    manager_team = Teams.objects.filter(manager=user).first()
 
     if manager_team:
         technician_group = Group.objects.get(name='Technicien')
         members = technician_group.user_set.filter(teams=manager_team)
-
-        return render(request, 'app/technician_members.html', {'members': members})
     else:
-        return render(request, 'app/technician_members.html', {'members': []})
+        members = []
+
+    context = {
+        'can_create_team': can_create_team,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks,
+        'stages': stages,
+        'members': members
+    }
+
+    return render(request, 'app/technician_members.html', context)
 
 @login_required
 @user_passes_test(is_manager)
 def create_team(request):
+    # Ajout des variables similaires à celles dans manager_members
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+
     if request.method == 'POST':
         team_name = request.POST.get('team_name')
-        
+
         if not Teams.objects.filter(name=team_name).exists():
             new_team_data = {
-            'name': team_name,  
-            'active': True,  
-        }
+                'name': team_name,
+                'active': True,
+            }
             new_team_id = models.execute_kw(
                 db, uid, password, 'maintenance.team', 'create',
                 [new_team_data]
@@ -195,15 +342,27 @@ def create_team(request):
                 team = Teams.objects.create(id=team_id, name=team_name, manager=request.user)
                 team.members.add(request.user)
                 models.execute_kw(
-                db, uid, password, 'maintenance.team', 'write',
-                [[team_id], {'member_ids': [(4, request.user.id)]}]
+                    db, uid, password, 'maintenance.team', 'write',
+                    [[team_id], {'member_ids': [(4, request.user.id)]}]
                 )
             
             return redirect('home')
         else:
-            messages.error(request, 'Cet équipe existe déjà.')
+            messages.error(request, 'Cette équipe existe déjà.')
 
-    return render(request, 'app/create_team.html')
+    context = {
+        'can_create_team': can_create_team,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks,
+        'stages': stages,
+    }
+
+    return render(request, 'app/create_team.html', context)
+
 
 def sync_with_odoo():
     # Récupérer les tâches depuis Odoo
@@ -230,7 +389,7 @@ def sync_with_odoo():
             else:
                 existing_task.user_id = None
             existing_task.priority = task_data['priority']
-            existing_task.equipment_id = task_data['equipment_id'][0]
+            #existing_task.equipment_id = task_data['equipment_id'][0]
             existing_task.description = task_data['description']
             existing_task.instruction_text = task_data['instruction_text']
             existing_task.maintenance_team_id = task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0]
@@ -248,7 +407,7 @@ def sync_with_odoo():
                 maintenance_type=task_data['maintenance_type'],
                 user_id=user_id,
                 priority=task_data['priority'],
-                equipment_id=task_data['equipment_id'][0],
+                #equipment_id=task_data['equipment_id'][0],
                 description=task_data['description'],
                 instruction_text=task_data['instruction_text'],
                 maintenance_team_id=task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0]
@@ -268,12 +427,116 @@ def task_list(request):
         tasks = Task.objects.filter(maintenance_team_id=manager_team.id)
     else:
         tasks = None
-    users = User.objects.all()  
+
+    users = User.objects.all()
+    user_groups = request.user.groups.all()
+
+    can_create_team = user_groups.filter(id=2).exists() and not Teams.objects.filter(manager=request.user).exists()
+
+    # Ajout des variables similaires à celles dans create_team
+    teams = Teams.objects.filter(members=request.user)
+    managed_teams = Teams.objects.filter(manager=request.user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
     context = {
         'tasks': tasks,
-        'users': users
+        'users': users,
+        'user_groups': user_groups,
+        'can_create_team': can_create_team,
+        'teams': teams,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'stages': stages,
+        'user_tasks': user_tasks,
     }
     return render(request, 'app/task_list.html', context)
+
+
+@user_passes_test(is_technicien)
+@login_required
+def works_orders(request):
+    sync_with_odoo()
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.all()
+    users = User.objects.all()
+
+    context = {
+        'can_create_team': can_create_team,
+        'users': users,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks, 
+        'stages': stages
+    }
+    
+    return render(request, 'app/all_works_orders.html', context)
+
+
+@user_passes_test(is_technicien)
+@login_required
+def my_tasks(request):
+    sync_with_odoo()
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+    
+    users = User.objects.all()
+
+    context = {
+        'can_create_team': can_create_team,
+        'users': users,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks, 
+        'stages': stages
+    }
+    
+    return render(request, 'app/my_tasks.html', context)
+
+
+
 
 @login_required
 @user_passes_test(is_technicien)
@@ -365,11 +628,31 @@ def update_task(request):
         return redirect('my_tasks')  
     else:
         pass
-
 @login_required
 @user_passes_test(is_admin_or_manager)
 def edit_member(request, member_id):
     user = User.objects.get(id=member_id)
+
+    # Ajout des variables similaires à celles dans manager_members
+    current_user = request.user
+    user_groups = current_user.groups.all()
+    teams = Teams.objects.filter(members=current_user)
+    managed_teams = Teams.objects.filter(manager=current_user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name']}
+    )
+    user_tasks = Task.objects.filter(user_id=current_user.id)
+
+    can_create_team = False
+    if current_user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=current_user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+
     if request.method == 'POST':
         user.username = request.POST['username']
         user.email = request.POST['email']
@@ -379,17 +662,31 @@ def edit_member(request, member_id):
         if new_password:
             user.set_password(new_password)
         vals = {
-        'name': user.username,
-        'login': user.email,
-        'password': user.password,
-    }
+            'name': user.username,
+            'login': user.email,
+            'password': user.password,
+        }
         models.execute_kw(db, uid, password, 'res.users', 'write', [[member_id], vals])
         user.save()
         if request.user.groups.filter(name='Manager').exists():
             return redirect('technician_members')  
         elif request.user.groups.filter(name='Admin').exists():
             return redirect('manager_members')
-    return render(request, 'app/edit_member.html', {'user': user})
+
+    context = {
+        'user': user,
+        'current_user': current_user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks,
+        'stages': stages,
+        'can_create_team': can_create_team,
+    }
+
+    return render(request, 'app/edit_member.html', context)
+
 
 @login_required
 @user_passes_test(is_admin_or_manager)

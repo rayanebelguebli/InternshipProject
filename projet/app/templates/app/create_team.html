@@ -1,4 +1,4 @@
-<!-- create_team.html -->
+{% extends "app/main_layout.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créer une équipe</title>
 </head>
-<body>
-    <h2>Créer une équipe</h2>
-    <form method="post">
+{% block content %}
+    <form class="form" method="post">
+        <h2>Create Team</h2>
         {% csrf_token %}
-        <label for="team_name">Nom de l'équipe:</label><br>
-        <input type="text" id="team_name" name="team_name"><br><br>
-        <input type="submit" value="Créer">
+        <label class="label" for="team_name">Name of the team:</label><br>
+        <input class="input" type="text" id="team_name" name="team_name"><br><br>
+        <input class="btn btn--login" type="submit" value="Créer">
     </form>
-</body>
+{% endblock %}
 </html>
