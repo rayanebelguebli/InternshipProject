@@ -13,13 +13,17 @@
                     {% if user.id == task.user_id %}
                         {% for stage in stages %}
                             {% if task.stage_id == stage.id|stringformat:"d" %}
-                                {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders=false %}
+                                <!--{% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders=false %}-->
                             {% endif %}
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
             {% else %}
-                {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible="Non défini" step=task.stage_id isMyWorkOrders=false %}
+                {% for stage in stages %}
+                    {% if task.stage_id == stage.id|stringformat:"d" %}
+                        {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible="Non défini" step=stage.name isMyWorkOrders=false %}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
         {% endfor %}
     </div>

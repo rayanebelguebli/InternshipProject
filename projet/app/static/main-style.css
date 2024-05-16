@@ -166,6 +166,9 @@ body {
 
 
 
+.icon-menu--left {
+    display: none;
+}
 
 
 
@@ -176,15 +179,36 @@ body {
 
     .sidebar-icon--work-icon {
         margin-top: 5.3%;
-        visibility: hidden;
+
     }
 
     .sidebar-icon--message-icon {
         margin-top: 4%;
-        visibility: hidden;
+
 
     }
+
+
+    .main-content {
+        margin-left: -25%;
+    }
+
+    .icon-menu--left {
+        display: block;
+    }
+
+    .item {
+        visibility: hidden;
+    }
+
+
+    .sidebar-text--one {
+        visibility: hidden;
+    }
+
+
 }
+
 
 
 .list-orders {
@@ -201,7 +225,7 @@ body {
     filter: drop-shadow(0 0 0.2rem #6B6B71);
     margin-top: 20px;
     display: grid;
-    grid-template-columns: 80% 1fr;
+    grid-template-columns: 75% 1fr;
 }
 
 
@@ -246,8 +270,10 @@ body {
     color: #5C59F4;
     border: 3px solid #5C59F4;
     filter: drop-shadow(0 0 0.15rem #5C59F4);
-    width: 100%;
-    margin-right: -10%;
+    margin-left: 30%;
+
+
+
 }
 
 .btn-text {
