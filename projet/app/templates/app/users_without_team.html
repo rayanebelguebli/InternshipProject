@@ -1,0 +1,10 @@
+<h2>Ajouter un technicien</h2>
+
+{% for user in users %}
+    <div>{{ user.username }}</div>
+    <form method="post" action="{% url 'add_to_manager_team' %}">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+        <button type="submit">Ajouter à l'équipe du manager</button>
+    </form>
+{% endfor %}

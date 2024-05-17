@@ -19,4 +19,6 @@ urlpatterns = [
     path('works_orders/', views.works_orders, name='works_orders'),
     path('my_tasks/', views.my_tasks, name='my_tasks'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('users_without_team.html/', views.users_without_team, name='users_without_team'),
+    path('add_to_manager_team/', views.add_to_manager_team, name='add_to_manager_team'),
 ]
