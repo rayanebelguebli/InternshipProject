@@ -3,11 +3,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
-from .models import Teams, Task, MyTasks, Equipment
+from .models import Teams, Task, MyTasks, Equipment, UploadedModel
 from django.db.models import Q
 from datetime import datetime
 import xmlrpc.client
 from xmlrpc.client import Fault
+from .forms import UploadModelForm
 
 url = 'http://192.168.1.244:8069'
 db = 'db_test'
@@ -899,3 +900,33 @@ def add_to_manager_team(request):
             messages.error(request, 'Impossible de trouver votre équipe.')
     
     return redirect('users_without_team')
+
+@login_required
+@user_passes_test(is_manager)
+def upload_model(request):
+    if request.method == 'POST':
+        form = UploadModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.cleaned_data['file']
+            nomenclature = form.cleaned_data['nomenclature']
+            equipement = form.cleaned_data['equipement']
+            user = request.user  # Assurez-vous d'avoir le user
+
+            try:
+                UploadedModel.objects.create(user=user, file=file, nomenclature=nomenclature, equipement=equipement)
+                messages.success(request, "Le modèle a été téléchargé avec succès.")
+                return redirect('home')  # Rediriger vers la page d'accueil après le succès
+            except Exception as e:
+                messages.error(request, f"Erreur lors du téléchargement du modèle : {str(e)}")
+        else:
+            messages.error(request, "Le formulaire n'est pas valide. Veuillez corriger les erreurs.")
+    else:
+        form = UploadModelForm()
+    
+    return render(request, 'app/upload_model.html', {'form': form})  # Rendre le formulaire s'il y a une erreur ou si c'est une requête GET
+
+@login_required
+@user_passes_test(is_manager)
+def model_list(request):
+    models = UploadedModel.objects.filter(user=request.user)
+    return render(request, 'app/model_list.html', {'models': models})

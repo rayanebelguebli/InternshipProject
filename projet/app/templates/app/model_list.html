@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uploaded Models</title>
+</head>
+<body>
+    <h2>Uploaded Models</h2>
+    <ul>
+        {% for model in models %}
+            <li>{{ model.file }} - {{ model.equipement.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

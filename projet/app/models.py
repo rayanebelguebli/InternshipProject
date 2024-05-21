@@ -36,3 +36,18 @@ class Equipment(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     maintenance_team_id = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.name
+
+class UploadedModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='uploaded_models/')
+    nomenclature = models.CharField(max_length=100)
+    source = models.CharField(max_length=100, blank=True)  # Allow blank but ensure it's set during save
+    equipement = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if self.nomenclature == "BIM Standard" and not self.source:
+            self.source = "Generico"
+        super().save(*args, **kwargs)

@@ -33,6 +33,8 @@ header-includes:
         - [Use Case](#use-case)
         - [Descriptions](#descriptions)
         - [Non-Functional Requirements](#non-functional-requirements)
+    - [External API Odoo](#external-api-odoo)
+    - [Database](#database)
 
 - [**References**](#references)
 
@@ -242,225 +244,168 @@ In short, Django offers a combination of powerful features, built-in security an
 
 &nbsp;
 
-![Use case for Admin](../uses-cases/use_case_admin.png)
+![Use case for Admin]
 
-![Use case for Manager](../uses-cases/use_case_cmms.png)
+![Use case for Manager]
 
-![Use case for Technician](../uses-cases/use_case_app.png)
+![Use case for Technician]
 
 \newpage
 
 ### Description of uses cases
 
-####  _Main App :_
+**Scenarios for Admin**
 
-##### **Create an Account:**
+**Scenario 1: Create a Manager**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin navigates to the "Managers Management" section.
+  3. The Admin clicks on "Create a Manager".
+  4. The Admin fills out the form with the new Manager's information.
+  5. The Admin submits the form.
+- **Expected Result**: A new Manager is created and visible in the list of Managers.
+- **Error Case**: If the Manager already exists (checked by email or a unique identifier), the system displays an error message: "Manager already exists."
 
-- **Primary Actor:** Technician
-- **Objective:** To create an account to access the platform's features.
-- **Preconditions:** The technician must be present on the site and connected to the Internet.
-- **Postconditions:** The technician now has an account and can access the features.
-- **Basic Flow:**
-    1. The technician clicks on the create account button.
-    2. A create account form appears.
-    3. The technician fills in the mandatory information.
-    4. The technician clicks on the create account button.
-    5. A success message appears.
-    6. The technician now has an account and can log in.
-- **Alternative Paths:**
-    - If mandatory information is missing, an error message appears, prompting the technician to complete the necessary fields.
-    - In case of account creation failure due to technical issues, an error message appears, suggesting the technician to try again later
+**Scenario 2: Modify a Manager**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin navigates to the "Managers Management" section.
+  3. The Admin selects an existing Manager to modify.
+  4. The Admin modifies the necessary information in the form.
+  5. The Admin submits the modifications.
+- **Expected Result**: The Manager's information is updated.
+- **Error Case**: If attempting to modify introduces information already existing for another Manager (like an already used email), the system displays an error message: "Information already exists for another Manager."
 
-#### **Login:**
+**Scenario 3: Delete a Manager**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin navigates to the "Managers Management" section.
+  3. The Admin selects a Manager to delete.
+  4. The Admin confirms the deletion.
+- **Expected Result**: The Manager is deleted from the system.
+- **Error Case**: If the Manager is associated with workorders, the system displays an error message: "Unable to delete Manager as they are associated with workorders."
 
-- **Primary Actor:** Technician
-- **Objective:** To log in to access the features.
-- **Preconditions:** The technician must be present on the site, connected to the Internet, and have an account.
-- **Postconditions:** The technician is now logged into their account and can access the features.
-- **Basic Flow:**
-    1. The technician clicks on the login button.
-    2. A login form appears.
-    3. The technician enters the required information.
-    4. The technician clicks on the login button.
-    5. A success message appears.
-    6. The technician is now logged in and can access the features.
-- **Alternative Paths:**
-    - If the provided login information is incorrect, an error message appears, prompting the technician to check their information and try again.
+**Scenario 4: View the list of Managers**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin navigates to the "Managers Management" section.
+  3. The Admin views the list of Managers.
+- **Expected Result**: The Admin sees a list of all Managers with their information.
 
-#### **Logout:**
+**Scenario 5: Modify their profile**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin navigates to "My Profile".
+  3. The Admin modifies their personal information.
+  4. The Admin submits the modifications.
+- **Expected Result**: The Admin's profile is updated.
+- **Error Case**: If the new information entered (such as email) already exists for another user, the system displays an error message: "Information already exists for another user."
 
-- **Primary Actor:** Technician
-- **Objective:** To log out.
-- **Preconditions:** The technician must be present on the site and logged into the platform.
-- **Postconditions:** The technician is logged out of their account.
-- **Basic Flow:**
-    1. The technician clicks on the logout button.
-    2. A logout confirmation message appears.
-    3. The technician confirms the logout.
-    4. A success message appears.
-    5. The technician is now logged out.
-- **Alternative Paths:**
-    - If the technician simply closes the browser without logging out, an inactive session may automatically end after a certain period of time, with prior notification.
+**Scenarios for Manager**
 
-#### **View Work Orders:**
+**Scenario 1: Create a Technician**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager navigates to the "Technicians Management" section.
+  3. The Manager clicks on "Create a Technician".
+  4. The Manager fills out the form with the new Technician's information.
+  5. The Manager submits the form.
+- **Expected Result**: A new Technician is created.
+- **Error Case**: If the Technician already exists (checked by email or a unique identifier), the system displays an error message: "Technician already exists."
 
-- **Primary Actor:** Technician
-- **Objective:** To view the list of work orders.
-- **Preconditions:** The technician must be present on the site and logged into the platform.
-- **Postconditions:** The technician views the available work orders.
-- **Basic Flow:**
-    1. The technician clicks on a link in the top menu of the site.
-    2. The list of work orders appears.
-    3. The technician can now view the list of work orders.
-- **Alternative Paths:**
-    - If no work orders are available, a message indicating the absence of work orders appears, prompting the technician to try again later or contact support.
+**Scenario 2: Modify a Technician**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager navigates to the "Technicians Management" section.
+  3. The Manager selects an existing Technician to modify.
+  4. The Manager modifies the necessary information in the form.
+  5. The Manager submits the modifications.
+- **Expected Result**: The Technician's information is updated.
+- **Error Case**: If attempting to modify introduces information already existing for another Technician (like an already used email), the system displays an error message: "Information already exists for another Technician."
 
-#### **Select a Work Order:**
+**Scenario 3: Delete a Technician**
+- **Actor**: Manager
+- **Conditions**: The Manager must have a team.
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager navigates to the "Technicians Management" section.
+  3. The Manager selects a Technician to delete.
+  4. The Manager confirms the deletion.
+- **Expected Result**: The Technician is deleted from the system.
+- **Error Case**: If the Technician is associated with workorders, the system displays an error message: "Unable to delete Technician as they are associated with workorders."
 
-- **Primary Actor:** Technician
-- **Objective:** To choose a work order.
-- **Preconditions:** The technician must be present on the site, logged into the platform, and on the work orders list page.
-- **Postconditions:** The technician has now selected the desired work order, and that order no longer appears in the list.
-- **Basic Flow:**
-    1. The technician clicks on the desired work order.
-    2. A "Choose this work order" button appears.
-    3. The technician clicks on the button.
-    4. The work order is now associated with the technician who chose it.
-- **Alternative Paths:**
-    - If the selected work order is already assigned to another technician, a warning message appears indicating that the work order is unavailable.
+**Scenario 4: Add Technicians to their team**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager navigates to the "Team Management" section.
+  3. The Manager selects existing Technicians to add to their team.
+  4. The Manager confirms the addition.
+- **Expected Result**: The selected Technicians are added to the Manager's team.
 
-#### **Validate a Work Order:**
+**Scenario 5: View workorders associated with their team**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager navigates to the "Workorders Management" section.
+  3. The Manager views the list of workorders associated with their team.
+- **Expected Result**: The Manager sees the workorders assigned to their team.
 
-- **Primary Actor:** Technician
-- **Objective:** To validate a work order.
-- **Preconditions:** The technician must be present on the site, logged into the platform, and have already selected a work order.
-- **Postconditions:** The technician has validated the work order, and it no longer appears in their list.
-- **Basic Flow:**
-    1. The technician clicks on a link in the top menu of the site "View my work orders."
-    2. The list of the technician's work orders appears.
-    3. The technician clicks on the work order to be validated.
-    4. A "Validate work order" button appears.
-    5. The technician clicks on the button.
-    6. A success message appears.
+**Scenario 6: Modify their profile**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager navigates to "My Profile".
+  3. The Manager modifies their personal information.
+  4. The Manager submits the modifications.
+- **Expected Result**: The Manager's profile is updated.
+- **Error Case**: If the new information entered (such as email) already exists for another user, the system displays an error message: "Information already exists for another user."
 
-#### **Add Media to a Work Order:**
+**Scenarios for Technician**
 
-- **Primary Actor:** Technician
-- **Objective:** To add media to a work order.
-- **Preconditions:** The technician must be present on-site, logged into the platform, and have already selected a work order that is not yet validated.
-- **Postconditions:** The technician has added media to a work order, and other individuals can view them.
-- **Basic Flow:**
-    1. The technician clicks on a link in the site's top menu labeled "View my work orders."
-    2. The list of the technician's work orders is displayed.
-    3. The technician selects the desired work order from the list.
-    4. An "Add Media" button appears.
-    5. The technician clicks on the button.
-    6. A media addition form appears.
-    7. The technician uploads the desired media.
-    8. The technician submits the form.
-    9. A success message is displayed.
+**Scenario 1: Modify their profile**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician navigates to "My Profile".
+  3. The Technician modifies their personal information.
+  4. The Technician submits the modifications.
+- **Expected Result**: The Technician's profile is updated.
+- **Error Case**: If the new information entered (such as email) already exists for another user, the system displays an error message: "Information already exists for another user."
 
-- **Alternative Paths:**
-    - If the uploaded media is incorrect, an error message is displayed.
+**Scenario 2: View assigned workorders**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician navigates to the "Workorders Management" section.
+  3. The Technician views the list of workorders assigned to them.
+- **Expected Result**: The Technician sees the workorders assigned to them.
 
-#### **Send Message :**
+**Scenario 3: Select workorders**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician navigates to the "Workorders Management" section.
+  3. The Technician selects one or more workorders to process.
+  4. The Technician confirms their selection.
+- **Expected Result**: The workorders are marked as selected by the Technician.
 
-- **Primary Actor:** Technician
-- **Objective:** To send message 
-- **Preconditions:** The technician must be present on-site, logged into the platform .
-- **Postconditions:** The technician sent a message to another employee.
-- **Basic Flow:**
-    1. The technician clicks on a link in the site's top menu labeled "Chat"
-    2. The list of the technicians displayed.
-    3. The technician selects the desired technician from the list.
-    4. A message chat appears.
-    5. The technician types the message he wants.
-    6. The technician presses the “send” button.
-    7. The technician sees his message in the chat.
-    
-####  _Admin App :_
-
-#### **Login:**
-
-- **Primary Actor:** Admin
-- **Objective:** To log in to access the features.
-- **Preconditions:** The admin must be present on the site, connected to the Internet, and have an account.
-- **Postconditions:** The admin is now logged into their account and can access the features.
-- **Basic Flow:**
-    1. The admin clicks on the login button.
-    2. A login form appears.
-    3. The admin enters the required information.
-    4. The admin clicks on the login button.
-    5. A success message appears.
-    6. The admin is now logged in and can access the features.
-- **Alternative Paths:**
-    - If the provided login information is incorrect, an error message appears, prompting the technician to check their information and try again.
-
-#### **Logout:**
-
-- **Primary Actor:** Admin
-- **Objective:** To log out.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** The admin is logged out of their account.
-- **Basic Flow:**
-    1. The admin clicks on the logout button.
-    2. A logout confirmation message appears.
-    3. The admin confirms the logout.
-    4. A success message appears.
-    5. The admin is now logged out.
-- **Alternative Paths:**
-    - If the admin simply closes the browser without logging out, an inactive session may automatically end after a certain period of time, with prior notification.
-
-#### **Add Work Order:**
-
-- **Primary Actor:** Admin
-- **Objective:** Add work orders.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** Data has been added.
-- **Basic Flow:**
-    1. The admin clicks on the desired link at the top of the page (e.g., equipment, work orders,...).
-    2. A list of data and an "Add Data" button appear.
-    3. The admin clicks on the button.
-    4. A form is displayed.
-    5. The admin enters the desired information.
-    6. A success pop-up appears.
-
-- **Alternative Paths:**
-    - If the provided form information is incorrect, an error message appears, prompting the admin to check their information and try again.
-
-#### **Remove Work Order:**
-
-- **Primary Actor:** Admin
-- **Objective:** Remove work order.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** Data has been removed.
-- **Basic Flow:**
-    1. The admin clicks on the desired link at the top of the page (e.g., equipment, work orders,...).
-    2. A list of data and a "Remove Data" button appear for each item.
-    3. The admin clicks on the button corresponding to the data they want to remove.
-    4. A success pop-up appears.
-
-- **Alternative Paths:**
-    - If the data cannot be removed, an error message appears.
-
-#### **Change Password:**
-
-- **Primary Actor:** Admin
-- **Objective:** Change password.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** Password has been changed.
-- **Basic Flow:**
-    1. The admin clicks on the "My Account" button on the top menu of the page.
-    2. A button labeled "Change Your Password" appears.
-    3. The admin clicks on the button.
-    4. A password change form is displayed.
-    5. The admin enters their new password twice.
-    6. They click on the "Change Password" button.
-    7. A success pop-up appears.
-
-- **Alternative Paths:**
-    - If the admin enters a password that is the same as the previous one, an error message appears.
-
+**Scenario 4: Modify the state of workorders**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician navigates to the "Workorders Management" section.
+  3. The Technician selects a workorder.
+  4. The Technician modifies the state of the workorder (e.g., in progress, completed).
+  5. The Technician submits the modifications.
+- **Expected Result**: The state of the workorder is updated.
 
 
 
@@ -477,6 +422,58 @@ In short, Django offers a combination of powerful features, built-in security an
     Employ modular and well-documented code to facilitate easy understanding, modification, and maintenance of the backend system.
 
 \newpage
+
+### External API Odoo
+
+**Connection**
+
+```py
+url = <insert server URL>
+db = <insert database name>
+username = 'admin'
+password = <insert password for your admin user (default: admin)>
+```
+
+**GET**
+
+```py
+models.execute_kw(db, uid, password, 'res.users', 'search_read', [[]], {'fields': []})
+```
+
+**PATCH**
+
+```py
+models.execute_kw(
+        db, uid, password,
+        'maintenance.request', 'write',
+        [[33], {'schedule_date': formatted_now}]
+    )
+```
+
+**CREATE**
+
+```py
+new_user_data = {
+    'name': "signup_username",
+    'login': "signup_email",
+    'password': "signup_password",
+}
+models.execute_kw(db, uid, password, 'res.users', 'create', [new_user_data])
+```
+
+**DELETE**
+
+```py
+models.execute_kw(db, uid, password, 'res.users', 'unlink', [[2]])
+```
+
+[source (05/2024)](https://www.odoo.com/documentation/17.0/fr/developer/reference/external_api.html)
+
+\newpage
+
+### Database
+
+![Database](./DB.png)
 
 ## References
 
