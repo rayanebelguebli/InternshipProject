@@ -10,7 +10,7 @@
         {% for task in user_tasks %}
             {% for stage in stages %}
                 {% if task.stage_id == stage.id|stringformat:"d" %}
-                    {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders="true" %}
+                    {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders="true" date=task.schedule_date %}
                 {% endif %}
             {% endfor %}
         {% endfor %}

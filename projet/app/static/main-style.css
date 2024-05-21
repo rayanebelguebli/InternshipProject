@@ -230,6 +230,7 @@ body {
 
 .work-order__title {
     font-weight: 200;
+    font-size: 1.2em;
 }
 
 .work-order>* {
@@ -270,9 +271,20 @@ body {
     border: 3px solid #5C59F4;
     filter: drop-shadow(0 0 0.15rem #5C59F4);
     margin-left: 30%;
+}
 
-
-
+.alone-technician-btn {
+    background-color: white;
+    color: #5C59F4;
+    border: 3px solid #5C59F4;
+    filter: drop-shadow(0 0 0.15rem #5C59F4);
+    border: none;
+    border-radius: 3%;
+    width: 50%;
+    height: 37px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 450;
+    margin: 3%;
 }
 
 .btn-text {
@@ -405,6 +417,14 @@ input:focus {
 
 }
 
+.alone-technician-alone {
+    height: calc(100vh - 180px);
+    overflow: hidden;
+    list-style-type: none;
+}
+
+
+
 .members-list {
     max-height: calc(100vh - 180px);
     overflow-y: auto;
@@ -425,6 +445,7 @@ input:focus {
     border: 1px solid #6B6B71;
     border-radius: 4px;
     width: 70%;
+    list-style-type: none;
 }
 
 .member {
@@ -441,7 +462,7 @@ input:focus {
 }
 
 .work-order-status {
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-weight: 100;
     margin-top: -2%;
 }
@@ -451,4 +472,15 @@ input:focus {
     margin-top: 3%;
     margin-right: 8%;
     height: 50px;
+}
+
+.alone-technician {
+    margin-left: 20%;
+}
+
+
+.alone-technician__title {
+    margin-left: 4%;
+    font-weight: 400;
+    font-size: 2.2em;
 }

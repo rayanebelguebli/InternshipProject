@@ -165,10 +165,6 @@ The library provides a wide range of functions for creating programs from raw da
 
 ### Uses cases 
 
-![Use case for Admin](../uses-cases/use_case_admin.png)
-
-![Use case for Manager](../uses-cases/use_case_cmms.png)
-
 ![Use case for Technician](../uses-cases/use_case_app.png)
 
 \newpage
@@ -176,8 +172,6 @@ The library provides a wide range of functions for creating programs from raw da
 
 
 ### Description of uses cases
-
-####  _Main App :_
 
 ##### **Create an Account:**
 
@@ -303,111 +297,84 @@ The library provides a wide range of functions for creating programs from raw da
     6. The technician presses the “send” button.
     7. The technician sees his message in the chat.
     
-####  _Admin App :_
-
-#### **Login:**
-
-- **Primary Actor:** Admin
-- **Objective:** To log in to access the features.
-- **Preconditions:** The admin must be present on the site, connected to the Internet, and have an account.
-- **Postconditions:** The admin is now logged into their account and can access the features.
-- **Basic Flow:**
-    1. The admin clicks on the login button.
-    2. A login form appears.
-    3. The admin enters the required information.
-    4. The admin clicks on the login button.
-    5. A success message appears.
-    6. The admin is now logged in and can access the features.
-- **Alternative Paths:**
-    - If the provided login information is incorrect, an error message appears, prompting the technician to check their information and try again.
-
-#### **Logout:**
-
-- **Primary Actor:** Admin
-- **Objective:** To log out.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** The admin is logged out of their account.
-- **Basic Flow:**
-    1. The admin clicks on the logout button.
-    2. A logout confirmation message appears.
-    3. The admin confirms the logout.
-    4. A success message appears.
-    5. The admin is now logged out.
-- **Alternative Paths:**
-    - If the admin simply closes the browser without logging out, an inactive session may automatically end after a certain period of time, with prior notification.
-
-#### **Add Work Order:**
-
-- **Primary Actor:** Admin
-- **Objective:** Add work orders.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** Data has been added.
-- **Basic Flow:**
-    1. The admin clicks on the desired link at the top of the page (e.g., equipment, work orders,...).
-    2. A list of data and an "Add Data" button appear.
-    3. The admin clicks on the button.
-    4. A form is displayed.
-    5. The admin enters the desired information.
-    6. A success pop-up appears.
-
-- **Alternative Paths:**
-    - If the provided form information is incorrect, an error message appears, prompting the admin to check their information and try again.
-
-#### **Remove Work Order:**
-
-- **Primary Actor:** Admin
-- **Objective:** Remove work order.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** Data has been removed.
-- **Basic Flow:**
-    1. The admin clicks on the desired link at the top of the page (e.g., equipment, work orders,...).
-    2. A list of data and a "Remove Data" button appear for each item.
-    3. The admin clicks on the button corresponding to the data they want to remove.
-    4. A success pop-up appears.
-
-- **Alternative Paths:**
-    - If the data cannot be removed, an error message appears.
-
-#### **Change Password:**
-
-- **Primary Actor:** Admin
-- **Objective:** Change password.
-- **Preconditions:** The admin must be present on the site and logged into the platform.
-- **Postconditions:** Password has been changed.
-- **Basic Flow:**
-    1. The admin clicks on the "My Account" button on the top menu of the page.
-    2. A button labeled "Change Your Password" appears.
-    3. The admin clicks on the button.
-    4. A password change form is displayed.
-    5. The admin enters their new password twice.
-    6. They click on the "Change Password" button.
-    7. A success pop-up appears.
-
-- **Alternative Paths:**
-    - If the admin enters a password that is the same as the previous one, an error message appears.
-
-
 ### Mockups
 
 
-![Use case Technician](1.png)
-![Use case Technician](2.png)
-![Use case Technician](3.png)
-![Use case Technician](4.png)
-![Use case Technician](5.png)
-![Use case Technician](6.png)
-![Use case Technician](7.png)
+![Mockup 1](1.png)
+![Mockup 2](2.png)
+![Mockup 3](3.png)
+![Mockup 4](4.png)
+![Mockup 5](5.png)
+![Mockup 6](6.png)
+![Mockup 7](7.png)
+![Mockup 8](8.png)
+![Mockup 9](9.png)
 
+### Implementation
 
+#### Part 1: Frontend Development Using Django Templates
 
-![Use case Technician](8.png)
-![Use case Technician](9.png)
+During my internship, I was responsible for the frontend development of the application using Django templates. The goal was to create a user-friendly interface that is both functional and aesthetically pleasing. Here is a detailed account of the work I performed:
 
+1. **Learning and Applying BEM for CSS**
+   To ensure that the CSS was well-structured and maintainable, I learned and applied the BEM (Block, Element, Modifier) methodology. BEM is a naming convention for classes in HTML and CSS that helps in writing clean and manageable code. It divides the interface into independent blocks, with elements as child components and modifiers to signify variations. This approach made the CSS more readable and easier to debug.
 
+2. **Building Responsive Layouts**
+   One of the key requirements was to make sure that the application was responsive, meaning it should work seamlessly across different devices and screen sizes. I used a combination of CSS Grid and Flexbox to create fluid layouts. Media queries were implemented to adjust the design for mobile, tablet, and desktop views, ensuring a consistent user experience.
 
+   - **CSS Grid**: This was used to create complex, multi-dimensional layouts. It allowed for the placement of elements into a grid-based structure, making it easier to manage different screen sizes.
+   - **Flexbox**: This was used for simpler, one-dimensional layouts. It provided a flexible way to align and distribute space among items in a container, even when their size was unknown or dynamic.
+   - **Media Queries**: These were used to apply different CSS rules based on the device's characteristics, such as screen width. This ensured that the layout adapted to various screen sizes, providing a good user experience on mobile phones, tablets, and desktop computers.
 
+3. **Template Inheritance and Reusability**
+   Django's template system allows for powerful features like template inheritance, which I leveraged to maintain a consistent layout across different pages. By creating a base template that included common elements such as the header, footer, and navigation menu, I was able to reuse these components in multiple pages, reducing redundancy and simplifying maintenance.
 
+   - **Base Template**: This template included the HTML structure for the header, footer, and navigation menu. Other templates extended this base template, inheriting its structure and allowing for consistent design across the site.
+   - **Block Tags**: These were used within the base template to define sections that child templates could override. This provided flexibility in customizing specific pages while maintaining a uniform overall structure.
 
+4. **Integration with Backend Data**
+   The frontend had to display dynamic data fetched from the backend. Using Django's templating language, I integrated data into the templates by passing context variables from views. This included displaying lists of work orders, user information, and other dynamic content.
+
+   - **Context Variables**: These were passed from views to templates, allowing the templates to access and display dynamic data. For example, a list of work orders could be passed to a template and rendered in an HTML table.
+   - **Template Tags and Filters**: These were used to manipulate and display data within the templates. Common tags included `{% for %}` loops for iterating over data and `{% if %}` statements for conditional rendering.
+
+5. **User Interaction and Forms**
+   To enhance user interaction, I implemented various forms using Django's form handling capabilities. This included login and registration forms, work order submission forms, and feedback forms. Client-side validation was added to improve user experience, ensuring immediate feedback on form inputs.
+
+   - **Django Forms**: These were used to define the structure and validation rules for each form. By leveraging Django's built-in form classes, I was able to quickly create and validate forms.
+   - **Client-side Validation**: This was implemented using JavaScript to provide instant feedback on form inputs. For example, if a required field was left empty, an error message would be displayed immediately without needing to reload the page.
+
+![Login Page](LoginPage.png)  [Figure 6 - Login Page](#list-of-figures) 
+
+### Part 2: API Development with Django REST Framework
+
+The second part of my internship focused on creating a RESTful API using Django REST Framework (DRF). This API was designed to handle the data exchange between the frontend and backend, as well as facilitate integrations with other systems.
+
+1. **Understanding REST and API Development**
+   A RESTful API (Representational State Transfer) is an architectural style for designing networked applications. It relies on a stateless, client-server communication protocol, typically HTTP. RESTful APIs provide a way to interact with application data through standard HTTP methods such as GET, POST, PUT, and DELETE.
+
+![API rest using](apirest.png)  [Figure 5 - API REST using ](#list-of-figures) Source : https://www.astera.com/fr/type/blog/rest-api-definition/ Last search : 21/05/2024
+
+2. **Setting Up Django REST Framework**
+   Django REST Framework (DRF) is a powerful and flexible toolkit for building Web APIs. To set up DRF, I installed the necessary packages and configured Django settings to include `rest_framework`. This setup provided the tools needed to create API endpoints, handle authentication, and serialize data.
+
+3. **Creating API Endpoints**
+   I created various API endpoints to handle different aspects of the application, such as user authentication, work order management, and messaging. Each endpoint was defined in a dedicated view, using DRF's class-based views for better organization and scalability. These views were mapped to URL patterns in the `urls.py` file.
+
+   - **Class-Based Views**: These were used to define the behavior of each endpoint. For example, `ListCreateAPIView` was used for endpoints that needed to handle both listing and creating resources.
+   - **URL Routing**: URL patterns were defined to map each endpoint to its corresponding view. This allowed for clean and readable URLs.
+
+4. **Serializing Data**
+   Serialization is the process of converting complex data types, like Django models, into native Python data types that can be easily rendered into JSON or XML. I used DRF's serializers to convert model instances into JSON data and vice versa. This was crucial for data exchange between the frontend and the backend.
+
+   - **ModelSerializers**: These were used to automatically generate serializers based on Django models. This simplified the process of converting model instances to JSON and back.
+   - **Custom Serializers**: In some cases, custom serializers were created to handle more complex data transformations or validations.
+
+5. **Implementing Token-Based Authentication**
+   For secure API access, I implemented token-based authentication using DRF's built-in token authentication system. Each user was issued a unique token upon successful login, which had to be included in the headers of subsequent API requests. This ensured that only authenticated users could access protected endpoints.
+
+   - **Token Generation**: Tokens were generated upon successful login and returned to the client. These tokens were stored client-side and included in the headers of API requests.
+   - **Token Validation**: On the server side, each request included a token in the header. The token was validated before processing the request to ensure the user was authenticated.
 
 \newpage
 

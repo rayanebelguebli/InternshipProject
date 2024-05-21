@@ -1,7 +1,7 @@
 {% block search %}
 <div class="work-order">
     <div class="work-order__text">
-        <h2 class="work-order__title">{{name}} - {% if responsible == "Non défini" %}No responsible{% else %}Assigned to <strong class="work-order__strong">{{responsible}}</strong>{% endif %} </h2>
+        <h2 class="work-order__title">{{name}} - {% if responsible == "Non défini" %}No responsible{% else %}Assigned to <strong class="work-order__strong">{{responsible}}</strong>{% endif %}{% if date != "False" %}- to do before {{date}} {% endif%} </h2>
         <p class="work-order-status"><u>Status :</u> {{step}}</p>
         {% if instructions != "False" %}
             {{ instructions }}
