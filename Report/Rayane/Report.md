@@ -244,11 +244,7 @@ In short, Django offers a combination of powerful features, built-in security an
 
 &nbsp;
 
-![Use case for Admin]
-
-![Use case for Manager]
-
-![Use case for Technician]
+![Use case](./Use_case.png)
 
 \newpage
 
@@ -367,6 +363,25 @@ In short, Django offers a combination of powerful features, built-in security an
   4. The Manager submits the modifications.
 - **Expected Result**: The Manager's profile is updated.
 - **Error Case**: If the new information entered (such as email) already exists for another user, the system displays an error message: "Information already exists for another user."
+
+**Scenario 7: Manager Uploading 3D Files**
+
+- **Actor**: Manager
+- **Actions**:
+   1. The Manager logs into the system.
+   2. The Manager navigates to the 3D File Upload section.
+   3. The Manager selects the 3D file to upload.
+   4. The system validates the file's BIM nomenclature compliance.
+   5. If the nomenclature does not comply with BIM standards, the system displays an error message and prevents the upload.
+   6. If the nomenclature complies, the system checks for the presence of the manufacturer.
+   7. If the manufacturer is missing, the system automatically fills "Generico" in the Source field.
+   8. The system verifies permissions to ensure only Managers can upload 3D files.
+   9. If the Manager is not authorized, the system displays an error message and prevents the upload.
+   10. If the Manager is authorized, the 3D file is successfully uploaded into the system.
+- **Expected Result**: The Manager successfully uploads the 3D file.
+- **Error Case**: 
+   - If the 3D file does not comply with BIM nomenclature standards, the system displays an error message: "3D file nomenclature does not comply with BIM standards."
+   - If the Manager is not authorized to upload 3D files, the system displays an error message: "Only Managers are authorized to upload 3D files."
 
 **Scenarios for Technician**
 
