@@ -11,7 +11,7 @@
                     {% if user.id == task.user_id %}
                         {% for stage in stages %}
                             {% if task.stage_id == stage.id|stringformat:"d" %}
-                                {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders=false %}
+                                {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders=false date=task.schedule_date %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -19,7 +19,7 @@
             {% else %}
                 {% for stage in stages %}
                         {% if task.stage_id == stage.id|stringformat:"d" %}
-                            {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible="Non défini" step=stage.name isMyWorkOrders=false %}
+                            {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible="Non défini" step=stage.name isMyWorkOrders=false date=task.schedule_date %}
                         {% endif %}
                 {% endfor %}
             {% endif %}
