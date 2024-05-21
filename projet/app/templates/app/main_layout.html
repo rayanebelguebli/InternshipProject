@@ -12,7 +12,12 @@
         <h2 class="menu__title">My App</h2>
     </div>
     <div class="menu__right-side"> 
-        <img class="icon-menu icon-menu--right" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xMiAwYzYuNjIzIDAgMTIgNS4zNzcgMTIgMTJzLTUuMzc3IDEyLTEyIDEyLTEyLTUuMzc3LTEyLTEyIDUuMzc3LTEyIDEyLTEyem04LjEyNyAxOS40MWMtLjI4Mi0uNDAxLS43NzItLjY1NC0xLjYyNC0uODUtMy44NDgtLjkwNi00LjA5Ny0xLjUwMS00LjM1Mi0yLjA1OS0uMjU5LS41NjUtLjE5LTEuMjMuMjA1LTEuOTc3IDEuNzI2LTMuMjU3IDIuMDktNi4wMjQgMS4wMjctNy43OS0uNjc0LTEuMTE5LTEuODc1LTEuNzM0LTMuMzgzLTEuNzM0LTEuNTIxIDAtMi43MzIuNjI2LTMuNDA5IDEuNzYzLTEuMDY2IDEuNzg5LS42OTMgNC41NDQgMS4wNDkgNy43NTcuNDAyLjc0Mi40NzYgMS40MDYuMjIgMS45NzQtLjI2NS41ODYtLjYxMSAxLjE5LTQuMzY1IDIuMDY2LS44NTIuMTk2LTEuMzQyLjQ0OS0xLjYyMy44NDggMi4wMTIgMi4yMDcgNC45MSAzLjU5MiA4LjEyOCAzLjU5MnM2LjExNS0xLjM4NSA4LjEyNy0zLjU5em0uNjUtLjc4MmMxLjM5NS0xLjg0NCAyLjIyMy00LjE0IDIuMjIzLTYuNjI4IDAtNi4wNzEtNC45MjktMTEtMTEtMTFzLTExIDQuOTI5LTExIDExYzAgMi40ODcuODI3IDQuNzgzIDIuMjIyIDYuNjI2LjQwOS0uNDUyIDEuMDQ5LS44MSAyLjA0OS0xLjA0MSAyLjAyNS0uNDYyIDMuMzc2LS44MzYgMy42NzgtMS41MDIuMTIyLS4yNzIuMDYxLS42MjgtLjE4OC0xLjA4Ny0xLjkxNy0zLjUzNS0yLjI4Mi02LjY0MS0xLjAzLTguNzQ1Ljg1My0xLjQzMSAyLjQwOC0yLjI1MSA0LjI2OS0yLjI1MSAxLjg0NSAwIDMuMzkxLjgwOCA0LjI0IDIuMjE4IDEuMjUxIDIuMDc5Ljg5NiA1LjE5NS0xIDguNzc0LS4yNDUuNDYzLS4zMDQuODIxLS4xNzkgMS4wOTQuMzA1LjY2OCAxLjY0NCAxLjAzOCAzLjY2NyAxLjQ5OSAxIC4yMyAxLjY0LjU5IDIuMDQ5IDEuMDQzeiIvPjwvc3ZnPg==">
+        <form action="{% url 'my_account' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="border:none; background:none; padding:0; cursor:pointer;">
+                <img class="icon-menu icon-menu--right" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xMiAwYzYuNjIzIDAgMTIgNS4zNzcgMTIgMTJzLTUuMzc3IDEyLTEyIDEyLTEyLTUuMzc3LTEyLTEyIDUuMzc3LTEyIDEyLTEyem04LjEyNyAxOS40MWMtLjI4Mi0uNDAxLS43NzItLjY1NC0xLjYyNC0uODUtMy44NDgtLjkwNi00LjA5Ny0xLjUwMS00LjM1Mi0yLjA1OS0uMjU5LS41NjUtLjE5LTEuMjMuMjA1LTEuOTc3IDEuNzI2LTMuMjU3IDIuMDktNi4wMjQgMS4wMjctNy43OS0uNjc0LTEuMTE5LTEuODc1LTEuNzM0LTMuMzgzLTEuNzM0LTEuNTIxIDAtMi43MzIuNjI2LTMuNDA5IDEuNzYzLTEuMDY2IDEuNzg5LS42OTMgNC41NDQgMS4wNDkgNy43NTcuNDAyLjc0Mi40NzYgMS40MDYuMjIgMS45NzQtLjI2NS41ODYtLjYxMSAxLjE5LTQuMzY1IDIuMDY2LS44NTIuMTk2LTEuMzQyLjQ0OS0xLjYyMy44NDggMi4wMTIgMi4yMDcgNC45MSAzLjU5MiA4LjEyOCAzLjU5MnM2LjExNS0xLjM4NSA4LjEyNy0zLjU5em0uNjUtLjc4MmMxLjM5NS0xLjg0NCAyLjIyMy00LjE0IDIuMjIzLTYuNjI4IDAtNi4wNzEtNC45MjktMTEtMTEtMTFzLTExIDQuOTI5LTExIDExYzAgMi40ODcuODI3IDQuNzgzIDIuMjIyIDYuNjI2LjQwOS0uNDUyIDEuMDQ5LS44MSAyLjA0OS0xLjA0MSAyLjAyNS0uNDYyIDMuMzc2LS44MzYgMy42NzgtMS41MDIuMTIyLS4yNzIuMDYxLS42MjgtLjE4OC0xLjA4Ny0xLjkxNy0zLjUzNS0yLjI4Mi02LjY0MS0xLjAzLTguNzQ1Ljg1My0xLjQzMSAyLjQwOC0yLjI1MSA0LjI2OS0yLjI1MSAxLjg0NSAwIDMuMzkxLjgwOCA0LjI0IDIuMjE4IDEuMjUxIDIuMDc5Ljg5NiA1LjE5NS0xIDguNzc0LS4yNDUuNDYzLS4zMDQuODIxLS4xNzkgMS4wOTQuMzA1LjY2OCAxLjY0NCAxLjAzOCAzLjY2NyAxLjQ5OSAxIC4yMyAxLjY0LjU5IDIuMDQ5IDEuMDQzeiIvPjwvc3ZnPg==">
+            </button>
+        </form>
         <p class="menu__name">{{ user.username }} </p>
         <form action="{% url 'logout' %}" method="post" style="display:inline;">
             {% csrf_token %}
@@ -72,6 +77,7 @@
             <ul class="sidebar__list">
                 <li><a href="{% url 'works_orders' %}" class="item">All Work Orders</a></li>
                 <li><a href="{% url 'my_tasks' %}" class="item">My Work Orders</a></li>
+                <li><a href="{% url 'my_tasks' %}" class="item">Finished Work Orders</a></li>
             </ul>
         {% endif %}
     {% endfor %}

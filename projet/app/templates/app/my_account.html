@@ -1,0 +1,31 @@
+<!-- edit_member.html -->
+{% extends "app/main_layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account </title>
+</head>
+{% block content%}
+   
+    <div class='form'>
+        <h2 class="title-manager">My account Informations</h2>
+        {% csrf_token %}
+
+        <label for="username">Login :</label>
+        <input class="input" type="text" id="username" name="username" value="{% if user.username %}{{ user.username }}{% else %}Not specified{% endif %}"><br>
+
+        <label for="email">E-mail:</label>
+        <input class="input" type="email" id="email" name="email" value="{% if user.email %}{{ user.email }}{% else %}Not specified{% endif %}"><br>
+
+        <label for="first_name">Firstname:</label>
+        <input class="input" type="text" id="first_name" name="first_name" value="{% if user.first_name %}{{ user.first_name }}{% else %}Not specified{% endif %}"><br>
+
+        <label for="last_name">Lastname:</label>
+        <input class="input" type="text" id="last_name" name="last_name" value="{% if user.last_name %}{{ user.last_name }}{% else %}Not specified{% endif %}"><br>
+    </div>
+       
+ 
+{% endblock %}
+</html>

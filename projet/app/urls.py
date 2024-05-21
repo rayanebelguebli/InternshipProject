@@ -21,4 +21,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('users_without_team.html/', views.users_without_team, name='users_without_team'),
     path('add_to_manager_team/', views.add_to_manager_team, name='add_to_manager_team'),
+    path('my_account/', views.my_account, name='my_account'),
+    
 ]

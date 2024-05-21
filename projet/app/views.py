@@ -594,6 +594,46 @@ def my_tasks(request):
     return render(request, 'app/my_tasks.html', context)
 
 
+@login_required
+def my_account(request):
+    sync_equipments_from_odoo()
+    sync_with_odoo()
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name', 'done']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id).order_by('schedule_date','priority')
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+    
+    users = User.objects.all()
+
+    context = {
+        'can_create_team': can_create_team,
+        'users': users,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks, 
+        'stages': stages
+    }
+    
+    return render(request, 'app/my_account.html', context)
+
+
 
 
 @login_required
