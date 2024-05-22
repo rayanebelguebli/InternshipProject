@@ -173,22 +173,6 @@ The library provides a wide range of functions for creating programs from raw da
 
 ### Description of uses cases
 
-##### **Create an Account:**
-
-- **Primary Actor:** Technician
-- **Objective:** To create an account to access the platform's features.
-- **Preconditions:** The technician must be present on the site and connected to the Internet.
-- **Postconditions:** The technician now has an account and can access the features.
-- **Basic Flow:**
-    1. The technician clicks on the create account button.
-    2. A create account form appears.
-    3. The technician fills in the mandatory information.
-    4. The technician clicks on the create account button.
-    5. A success message appears.
-    6. The technician now has an account and can log in.
-- **Alternative Paths:**
-    - If mandatory information is missing, an error message appears, prompting the technician to complete the necessary fields.
-    - In case of account creation failure due to technical issues, an error message appears, suggesting the technician to try again later
 
 #### **Login:**
 
