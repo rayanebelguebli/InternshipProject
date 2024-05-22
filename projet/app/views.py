@@ -910,7 +910,7 @@ def upload_model(request):
             file = form.cleaned_data['file']
             nomenclature = form.cleaned_data['nomenclature']
             equipement = form.cleaned_data['equipement']
-            user = request.user  # Assurez-vous d'avoir le user
+            user = request.user
 
             try:
                 UploadedModel.objects.create(user=user, file=file, nomenclature=nomenclature, equipement=equipement)
@@ -923,7 +923,7 @@ def upload_model(request):
     else:
         form = UploadModelForm()
     
-    return render(request, 'app/upload_model.html', {'form': form})  # Rendre le formulaire s'il y a une erreur ou si c'est une requête GET
+    return render(request, 'app/upload_model.html', {'form': form})
 
 @login_required
 @user_passes_test(is_manager)

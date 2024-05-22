@@ -44,10 +44,12 @@ class UploadedModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.FileField(upload_to='uploaded_models/')
     nomenclature = models.CharField(max_length=100)
-    source = models.CharField(max_length=100, blank=True)  # Allow blank but ensure it's set during save
+    source = models.CharField(max_length=100, blank=True)
     equipement = models.ForeignKey(Equipment, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        if self.nomenclature == "BIM Standard" and not self.source:
-            self.source = "Generico"
+        if not self.source:
+            source = self.nomenclature.split('_')[0]
+            if source.lower() == "generico":
+                self.source = "Generico"
         super().save(*args, **kwargs)
