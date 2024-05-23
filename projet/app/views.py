@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
@@ -9,8 +9,10 @@ from datetime import datetime
 import xmlrpc.client
 from xmlrpc.client import Fault
 from .forms import UploadModelForm
+from django.views.decorators.csrf import csrf_protect
 
-url = 'http://192.168.1.244:8069'
+
+url = 'http://localhost:8069'
 db = 'db_test'
 username = 'admin'
 password = 'admin'
@@ -530,13 +532,18 @@ def works_orders(request):
         [[]],
         {'fields': ['id', 'name', 'done']}
     )
-    user_tasks = Task.objects.filter(user_id=request.user.id)
+    
+    # Obtenir les IDs des équipes de l'utilisateur
+    team_ids = teams.values_list('id', flat=True)
+    
+    # Filtrer les tâches basées sur les équipes de l'utilisateur
+    user_team_tasks = Task.objects.filter(maintenance_team_id__in=team_ids)
 
     can_create_team = False
     if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
         can_create_team = True
 
-    tasks = Task.objects.all().order_by('create_date','priority')
+    tasks = Task.objects.all().order_by('create_date', 'priority')
     users = User.objects.all()
 
     context = {
@@ -547,7 +554,7 @@ def works_orders(request):
         'managed_teams': managed_teams,
         'technician_teams': technician_teams,
         'tasks': tasks,
-        'user_tasks': user_tasks, 
+        'user_tasks': user_team_tasks,  # Utiliser user_team_tasks ici
         'stages': stages
     }
     
@@ -930,3 +937,21 @@ def upload_model(request):
 def model_list(request):
     models = UploadedModel.objects.filter(user=request.user)
     return render(request, 'app/model_list.html', {'models': models})
+
+def save_description(request, task_id):
+    if request.method == 'POST':
+        task = get_object_or_404(Task, id=task_id)
+        description = request.POST.get('description')
+
+        try:
+        
+            models.execute_kw(db, uid, password, 'maintenance.request', 'write',
+                               [[task_id], {'description': description}])
+            
+            messages.success(request, 'Description sauvegardée avec succès !')
+            return redirect('my_tasks')  
+
+        except Exception as e:
+            messages.error(request, 'Erreur lors de la sauvegarde de la description : {}'.format(str(e)))
+            return redirect('my_tasks') 
+    return redirect('my_tasks')

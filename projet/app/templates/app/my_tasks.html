@@ -4,44 +4,56 @@
     <div class="search-bar">
         <input class="search-bar__input" id="searchInput" type="search" placeholder="Rechercher ..."/>
     </div>
- 
-       
+
     <div class="list-orders">
         {% for task in user_tasks %}
             {% for stage in stages %}
                 {% if task.stage_id == stage.id|stringformat:"d" %}
                     {% if not stage.done %}
-                        {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders="true" date=task.schedule_date %}
+                        <div class="task-item">
+                            {% include "app/work_order.html" with name=task.name instructions=task.instruction_text responsible=user.username step=stage.name isMyWorkOrders="true" date=task.schedule_date %}
+                            <!-- Formulaire pour chaque tâche -->
+                            <form method="POST" action="{% url 'save_description' task.id %}">
+                                {% csrf_token %}
+                                <textarea name="description" class="description-text" placeholder="Écrire une description...">{{ task.description|safe }}</textarea>
+                                <button type="submit" class="save-button">Save</button>
+                            </form>
+                        </div>
                     {% endif %}
                 {% endif %}
             {% endfor %}
         {% endfor %}
     </div>
-       
-        
-
 </div>
 
-
 <script>
-    // Fonction de recherche
-    function searchTasks() {
-        var input, filter, orders, order, txtValue;
-        input = document.getElementById('searchInput');
-        filter = input.value.toUpperCase();
-        orders = document.getElementsByClassName('work-order');
-        for (var i = 0; i < orders.length; i++) {
-            order = orders[i].getElementsByClassName("work-order__title")[0];
-            txtValue = order.textContent || order.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                orders[i].style.display = "";
-            } else {
-                orders[i].style.display = "none";
+        function searchTasks() {
+            var input, filter, orders, order, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            orders = document.getElementsByClassName('work-order');
+            for (var i = 0; i < orders.length; i++) {
+                order = orders[i].getElementsByClassName("work-order__title")[0];
+                txtValue = order.textContent || order.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    orders[i].style.display = "";
+                } else {
+                    orders[i].style.display = "none";
+                }
             }
         }
-    }
+    
+        document.getElementById('searchInput').addEventListener('input', searchTasks);
 
-    // Ajoutez un écouteur d'événements pour déclencher la recherche lors de la saisie dans le champ
-    document.getElementById('searchInput').addEventListener('input', searchTasks);
+    document.addEventListener('DOMContentLoaded', function() {
+        var textareas = document.querySelectorAll('.description-text');
+        textareas.forEach(function(textarea) {
+            var rawText = textarea.value; 
+            var div = document.createElement('div');
+            div.innerHTML = rawText;
+            var plainText = div.textContent || div.innerText;
+            textarea.value = plainText;
+        });
+    });
 </script>
 {% endblock %}

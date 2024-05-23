@@ -7,7 +7,7 @@
  
    
     <div class="list-orders">
-        {% for task in tasks %}
+        {% for task in user_tasks %}
             {% if task.user_id %}
                 {% for user in users %}
                     {% if user.id == task.user_id %}
