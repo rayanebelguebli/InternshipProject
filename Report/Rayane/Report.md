@@ -253,7 +253,176 @@ In short, Django offers a combination of powerful features, built-in security an
 
 #### Description of uses cases
 
+**Scenarios for Admin**
 
+**Scenario 1: Create a Manager**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin accesses the Managers management section.
+  3. The Admin creates a new Manager by filling out the form.
+  4. The Admin submits the form.
+- **Expected Result**: A new Manager is created and added to the list of Managers.
+- **Error Case**: If the Manager already exists (checked by email or unique identifier), display an error message: "Manager already exists."
+
+**Scenario 2: Modify a Manager**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin accesses the Managers management section.
+  3. The Admin selects the Manager to modify.
+  4. The Admin modifies the Manager's information in the form.
+  5. The Admin submits the modifications.
+- **Expected Result**: The Manager's information is updated.
+- **Error Case**: If the entered information already exists for another Manager, display an error message: "Information already exists for another Manager."
+
+**Scenario 3: Delete a Manager**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin accesses the Managers management section.
+  3. The Admin selects the Manager to delete.
+  4. The Admin confirms the deletion.
+- **Expected Result**: The Manager is deleted from the system.
+- **Error Case**: If the Manager is associated with workorders, display an error message: "Cannot delete Manager as associated with workorders."
+
+**Scenario 4: View the list of Managers**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin accesses the Managers management section.
+  3. The Admin views the list of Managers.
+- **Expected Result**: The Admin sees a list of all Managers with their information.
+
+**Scenario 5: Modify their profile**
+- **Actor**: Admin
+- **Actions**:
+  1. The Admin logs into the system.
+  2. The Admin accesses "My Profile".
+  3. The Admin modifies their personal information.
+  4. The Admin submits the modifications.
+- **Expected Result**: The Admin's profile is updated.
+- **Error Case**: If the new information entered already exists for another user, display an error message: "Information already exists for another user."
+
+**Scenarios for Manager**
+
+**Scenario 1: Create a Team**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager accesses the team management section.
+  3. The Manager creates a new team by specifying a name.
+  4. The Manager submits the team creation.
+- **Expected Result**: A new team is created and added to the Manager's team list.
+- **Error Case**: If the team already exists, display an error message: "Team already exists."
+
+**Scenario 2: Create a Technician**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager accesses the Technicians management section.
+  3. The Manager creates a new Technician by filling out the form.
+  4. The Manager submits the form.
+- **Expected Result**: A new Technician is created and added to the list of Technicians.
+- **Error Case**: If the Technician already exists (checked by email or unique identifier), display an error message: "Technician already exists."
+
+**Scenario 3: Modify a Technician**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager accesses the Technicians management section.
+  3. The Manager selects the Technician to modify.
+  4. The Manager modifies the Technician's information in the form.
+  5. The Manager submits the modifications.
+- **Expected Result**: The Technician's information is updated.
+- **Error Case**: If the entered information already exists for another Technician, display an error message: "Information already exists for another Technician."
+
+**Scenario 4: Delete a Technician**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager accesses the Technicians management section.
+  3. The Manager selects the Technician to delete.
+  4. The Manager confirms the deletion.
+- **Expected Result**: The Technician is deleted from the system.
+- **Error Case**: If the Technician is associated with workorders, display an error message: "Cannot delete Technician as associated with workorders."
+
+**Scenario 5: Add Technicians to their team**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager accesses the team management section.
+  3. The Manager selects existing Technicians to add to their team.
+  4. The Manager confirms the addition.
+- **Expected Result**: The selected Technicians are added to the Manager's team.
+- **Error Case**: If the team already exists, display an error message: "Team already exists."
+
+**Scenario 6: View workorders associated with their team**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager accesses the workorders management section.
+  3. The Manager views the list of workorders associated with their team.
+- **Expected Result**: The Manager sees the workorders assigned to their team.
+
+**Scenario 7: Modify their profile**
+- **Actor**: Manager
+- **Actions**:
+  1. The Manager logs into the system.
+  2. The Manager accesses "My Profile".
+  3. The Manager modifies their personal information.
+  4. The Manager submits the modifications.
+- **Expected Result**: The Manager's profile is updated.
+- **Error Case**: If the new information entered (such as email) already exists for another user, display an error message: "Information already exists for another user."
+
+**Scenarios for Technician**
+
+**Scenario 1: Modify their profile**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician accesses "My Profile".
+  3. The Technician modifies their personal information.
+  4. The Technician submits the modifications.
+- **Expected Result**: The Technician's profile is updated.
+- **Error Case**: If the new information entered (such as email) already exists for another user,      display an error message: "Information already exists for another user."
+
+**Scenario 2: View assigned workorders**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician accesses the workorders management section.
+  3. The Technician views the list of workorders assigned to them.
+- **Expected Result**: The Technician sees the workorders assigned to them.
+
+**Scenario 3: Select workorders**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician accesses the workorders management section.
+  3. The Technician selects one or more workorders to process.
+  4. The Technician confirms their selection.
+- **Expected Result**: The workorders are marked as selected by the Technician.
+
+**Scenario 4: Modify the state of workorders**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician accesses the workorders management section.
+  3. The Technician selects a workorder.
+  4. The Technician modifies the state of the workorder (e.g., in progress, completed).
+  5. The Technician submits the modifications.
+- **Expected Result**: The state of the workorder is updated.
+
+**Scenario 5: Add notes to a workorder**
+- **Actor**: Technician
+- **Actions**:
+  1. The Technician logs into the system.
+  2. The Technician accesses the workorder details.
+  3. The Technician adds notes to the workorder.
+  4. The Technician saves the notes.
+- **Expected Result**: Notes are successfully added to the workorder.
+ 
 
 #### Non-Functional Requirements
 
@@ -320,6 +489,237 @@ models.execute_kw(db, uid, password, 'res.users', 'unlink', [[2]])
 ### Database
 
 ![Database](./DB.png)
+
+\newpage
+
+### Sprints 
+
+#### Sprint 1
+
+**Admin**
+
+**Test Report: Create a Manager**
+
+**Test Case 1: Successfully Create a New Manager**
+
+| **Scenario** | Create a new Manager |
+|--------------|----------------------|
+| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to create a Manager. |
+| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin fills out the form to create a new Manager. <br> **Input Data**: First name, last name, email, unique identifier, password. <br> 4. The Admin submits the form. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - A new Manager is created and added to the list of Managers. <br> - The system displays a confirmation message indicating the Manager has been created successfully. <br> - The new Manager appears in the list of Managers with the provided information. |
+
+**Test Case 2: Attempt to Create an Existing Manager**
+
+| **Scenario** | Create a Manager with an existing email or unique identifier |
+|--------------|----------------------------------------|
+| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to create a Manager. <br> - A Manager with the same email or unique identifier already exists in the system. |
+| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin fills out the form to create a new Manager with an existing email or unique identifier. <br> **Input Data**: First name, last name, email (existing), unique identifier (existing), password. <br> 4. The Admin submits the form. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The system displays an error message: "Manager already exists." <br> - No new entry is created in the list of Managers. |
+
+**Test Report: View the List of Managers**
+
+**Test Case 1: Successfully View the List of Managers**
+
+| **Scenario** | View the list of Managers |
+|--------------|---------------------------|
+| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to view the list of Managers. |
+| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin views the list of Managers. <br> **Input Data**: None (simple action of viewing the list). |
+| **Expected Result** | - The Admin sees a list of all Managers with their information, including first name, last name, email, and unique identifier. |
+
+\newpage
+
+**Manager**
+
+**Test Report: Create a Team**
+
+**Test Case 1: Successfully Create a New Team**
+
+| **Scenario** | Create a new Team |
+|--------------|-------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a team. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the team management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new team by specifying a name. <br> **Input Data**: Team name. <br> 4. The Manager submits the team creation. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - A new team is created and added to the Manager's team list. <br> - The system displays a confirmation message indicating the team has been created successfully. <br> - The new team appears in the Manager's team list with the specified name. |
+
+**Test Case 2: Attempt to Create an Existing Team**
+
+| **Scenario** | Create a Team with an existing name |
+|--------------|-------------------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a team. <br> - A team with the same name already exists under the Manager's teams. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the team management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new team with an existing name. <br> **Input Data**: Team name (existing). <br> 4. The Manager submits the team creation. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The system displays an error message: "Team already exists." <br> - No new entry is created in the Manager's team list. |
+
+**Test Report: Create a Technician**
+
+**Test Case 1: Successfully Create a New Technician**
+
+| **Scenario** | Create a new Technician |
+|--------------|-------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a Technician. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new Technician. <br> **Input Data**: First name, last name, email, unique identifier, password. <br> 4. The Manager submits the form. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - A new Technician is created and added to the list of Technicians. <br> - The system displays a confirmation message indicating the Technician has been created successfully. <br> - The new Technician appears in the list of Technicians with the provided information. |
+
+**Test Case 2: Attempt to Create an Existing Technician**
+
+| **Scenario** | Create a Technician with an existing email or unique identifier |
+|--------------|----------------------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a Technician. <br> - A Technician with the same email or unique identifier already exists in the system. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new Technician with an existing email or unique identifier. <br> **Input Data**: First name, last name, email (existing), unique identifier (existing), password. <br> 4. The Manager submits the form. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The system displays an error message: "Technician already exists." <br> - No new entry is created in the list of Technicians. |
+
+**Test Report: View Workorders Associated with Their Team**
+
+**Test Case 1: Successfully View Workorders Associated with the Manager's Team**
+
+| **Scenario** | View workorders associated with their team |
+|--------------|--------------------------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to view workorders. <br> - There are workorders assigned to the Manager's team. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager views the list of workorders associated with their team. <br> **Input Data**: None (simple action of viewing the list). |
+| **Expected Result** | - The Manager sees the workorders assigned to their team. <br> - The list displays workorder details such as workorder ID, description, status, and assigned technician. |
+
+\newpage
+
+**Technician**
+
+**Test Report: View Assigned Workorders**
+
+**Test Case 1: Successfully View Workorders Assigned to the Technician**
+
+| **Scenario** | View assigned workorders |
+|--------------|--------------------------|
+| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to view workorders. <br> - There are workorders assigned to the Technician. |
+| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Technician views the list of workorders assigned to them. <br> **Input Data**: None (simple action of viewing the list). |
+| **Expected Result** | - The Technician sees the workorders assigned to them. <br> - The list displays workorder details such as workorder ID, description, status, and priority. |
+
+**Test Report: Select Workorders**
+
+**Test Case 1: Successfully Select Workorders to Process**
+
+| **Scenario** | Select workorders to process |
+|--------------|------------------------------|
+| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to view and select workorders. <br> - There are workorders available for the Technician to select. |
+| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Technician selects one or more workorders to process. <br> **Input Data**: Workorder IDs to be selected. <br> 4. The Technician confirms their selection. <br> **Input Data**: None (simple confirmation action). |
+| **Expected Result** | - The selected workorders are marked as selected by the Technician. <br> - The system updates the status of the selected workorders to reflect that they are being processed by the Technician. <br> - A confirmation message is displayed to the Technician. |
+
+
+**Test Report: Modify the State of Workorders**
+
+**Test Case 1: Successfully Modify the State of a Workorder**
+
+| **Scenario** | Modify the state of a workorder |
+|--------------|---------------------------------|
+| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to view and modify workorders. <br> - There are workorders available for the Technician to modify. |
+| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Technician selects a workorder. <br> **Input Data**: Workorder ID to be modified. <br> 4. The Technician modifies the state of the workorder (e.g., in progress, completed). <br> **Input Data**: New state of the workorder. <br> 5. The Technician submits the modifications. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The state of the workorder is updated. <br> - The system displays a confirmation message indicating the state has been updated successfully. <br> - The workorder's new state is reflected in the workorders list. |
+
+\newpage
+
+#### Sprint 2
+
+**Admin**
+
+**Test Report: Modify a Manager**
+
+**Test Case 1: Successfully Modify a Manager's Information**
+
+| **Scenario** | Modify a Manager's information |
+|--------------|-------------------------------|
+| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to modify Managers. <br> - There is at least one Manager available for modification. |
+| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager to modify. <br> **Input Data**: Manager ID or name to be modified. <br> 4. The Admin modifies the Manager's information in the form. <br> **Input Data**: Updated information for the Manager (e.g., name, email, unique identifier). <br> 5. The Admin submits the modifications. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The Manager's information is updated with the modifications made by the Admin. <br> - The system displays a confirmation message indicating that the modifications have been saved successfully. |
+
+**Test Case 2: Error Handling - Information Already Exists for Another Manager**
+
+| **Scenario** | Modify a Manager with existing information |
+|--------------|-------------------------------------------|
+| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to modify Managers. <br> - There is at least one other Manager with the same information (e.g., email, unique identifier). |
+| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager to modify. <br> **Input Data**: Manager ID or name to be modified. <br> 4. The Admin modifies the Manager's information in the form with information that already exists for another Manager. <br> **Input Data**: Updated information for the Manager (e.g., email, unique identifier). <br> 5. The Admin submits the modifications. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The system displays an error message: "Information already exists for another Manager." <br> - The modifications are not saved. |
+
+**Test Report: Delete a Manager**
+
+**Test Case 1: Successfully Delete a Manager**
+
+| **Scenario** | Delete a Manager |
+|--------------|-------------------|
+| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to delete Managers. <br> - There is at least one Manager available for deletion. |
+| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager to delete. <br> **Input Data**: Manager ID or name to be deleted. <br> 4. The Admin confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
+| **Expected Result** | - The selected Manager is deleted from the system. <br> - The system displays a confirmation message indicating that the Manager has been successfully deleted. |
+
+**Test Case 2: Error Handling - Manager Associated with Workorders**
+
+| **Scenario** | Attempt to Delete a Manager Associated with Workorders |
+|--------------|--------------------------------------------------------|
+| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to delete Managers. <br> - The Manager selected for deletion is associated with one or more workorders. |
+| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager associated with workorders to delete. <br> **Input Data**: Manager ID or name to be deleted. <br> 4. The Admin confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
+| **Expected Result** | - The system displays an error message: "Cannot delete Manager as associated with workorders." <br> - The Manager is not deleted from the system. |
+
+\newpage
+
+**Manager**
+
+**Test Report: Modify a Technician**
+
+**Test Case 1: Successfully Modify a Technician's Information**
+
+| **Scenario** | Modify a Technician's information |
+|--------------|-----------------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to modify Technicians. <br> - There is at least one Technician available for modification. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician to modify. <br> **Input Data**: Technician ID or name to be modified. <br> 4. The Manager modifies the Technician's information in the form. <br> **Input Data**: Updated information for the Technician (e.g., name, email, unique identifier). <br> 5. The Manager submits the modifications. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The Technician's information is updated with the modifications made by the Manager. <br> - The system displays a confirmation message indicating that the modifications have been saved successfully. |
+
+**Test Case 2: Error Handling - Information Already Exists for Another Technician**
+
+| **Scenario** | Modify a Technician with existing information |
+|--------------|---------------------------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to modify Technicians. <br> - There is at least one other Technician with the same information (e.g., email, unique identifier). |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician to modify. <br> **Input Data**: Technician ID or name to be modified. <br> 4. The Manager modifies the Technician's information in the form with information that already exists for another Technician. <br> **Input Data**: Updated information for the Technician (e.g., email, unique identifier). <br> 5. The Manager submits the modifications. <br> **Input Data**: None (simple submission action). |
+| **Expected Result** | - The system displays an error message: "Information already exists for another Technician." <br> - The modifications are not saved. |
+
+**Test Report: Delete a Technician**
+
+**Test Case 1: Successfully Delete a Technician**
+
+| **Scenario** | Delete a Technician |
+|--------------|----------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to delete Technicians. <br> - There is at least one Technician available for deletion. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician to delete. <br> **Input Data**: Technician ID or name to be deleted. <br> 4. The Manager confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
+| **Expected Result** | - The selected Technician is deleted from the system. <br> - The system displays a confirmation message indicating that the Technician has been successfully deleted. |
+
+**Test Case 2: Error Handling - Technician Associated with Workorders**
+
+| **Scenario** | Attempt to Delete a Technician Associated with Workorders |
+|--------------|---------------------------------------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to delete Technicians. <br> - The Technician selected for deletion is associated with one or more workorders. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician associated with workorders to delete. <br> **Input Data**: Technician ID or name to be deleted. <br> 4. The Manager confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
+| **Expected Result** | - The system displays an error message: "Cannot delete Technician as associated with workorders." <br> - The Technician is not deleted from the system. |
+
+Here's the test report for the scenario "Add Technicians to their team" in English and in Markdown table format.
+
+**Test Report: Add Technicians to Their Team**
+
+**Test Case 1: Successfully Add Technicians to Their Team**
+
+| **Scenario** | Add Technicians to their team |
+|--------------|--------------------------------|
+| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to manage teams. <br> - There are existing Technicians available to be added to the Manager's team. |
+| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the team management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects existing Technicians to add to their team. <br> **Input Data**: Technician IDs or names to be added. <br> 4. The Manager confirms the addition. <br> **Input Data**: Confirmation action (e.g., clicking "Add" button). |
+| **Expected Result** | - The selected Technicians are added to the Manager's team. <br> - The system displays a confirmation message indicating that the Technicians have been successfully added to the team. |
+
+\newpage
+
+#### Sprint 3
+
+**Technician**
+
+**Test Report: Add Notes to a Workorder**
+
+**Test Case 1: Successfully Add Notes to a Workorder**
+
+| **Scenario** | Add notes to a workorder |
+|--------------|----------------------------|
+| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to add notes to workorders. <br> - There is at least one workorder available for the Technician to add notes to. |
+| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorder details. <br> **Input Data**: Workorder ID or name to view details. <br> 3. The Technician adds notes to the workorder. <br> **Input Data**: Text of the notes to be added. <br> 4. The Technician saves the notes. <br> **Input Data**: Confirmation action (e.g., clicking "Save" button). |
+| **Expected Result** | - Notes are successfully added to the workorder. <br> - The system displays a confirmation message indicating that the notes have been saved successfully. |
 
 ## References
 
