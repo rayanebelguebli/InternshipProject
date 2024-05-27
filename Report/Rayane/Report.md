@@ -36,6 +36,10 @@ header-includes:
         - [Non-Functional Requirements](#non-functional-requirements)
     - [External API Odoo](#external-api-odoo)
     - [Database](#database)
+    - [Sprints](#sprints)
+        - [Sprint 1](#sprint-1)
+        - [Sprint 2](#sprint-2)
+        - [Sprint 3](#sprint-3)
 
 - [**References**](#references)
 
