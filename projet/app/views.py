@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_protect
 
 
 url = 'http://localhost:8069'
-db = 'db_test'
+db = 'odoo'
 username = 'admin'
 password = 'admin'
 
@@ -36,6 +36,7 @@ def is_technicien(user):
 def is_manager(user):
     return user.groups.filter(name='Manager').exists()
 
+@csrf_protect
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -124,7 +125,7 @@ def add_manager(request):
         group_name = 'Manager' 
         
         if not User.objects.filter(username=signup_username).exists():
-            group_ids_manager = [17, 24, 32]
+            group_ids_manager = [17, 24, 28]
             new_user_data = {
                 'name': signup_username,  
                 'login': signup_email,
@@ -223,7 +224,7 @@ def add_technician(request):
         group_name = 'Technicien'
 
         if not User.objects.filter(username=signup_username).exists():
-            group_ids_technician = [1, 31]
+            group_ids_technician = [1, 27]
             new_user_data = {
                 'name': signup_username,
                 'login': signup_email,

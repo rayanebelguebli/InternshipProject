@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Teams(models.Model):
-    id = models.IntegerField(primary_key=True)  # ID ajouté manuellement
+    id = models.IntegerField(primary_key=True)  
     name = models.CharField(max_length=100)
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='managed_teams', null=True, blank=True)
     members = models.ManyToManyField(User)

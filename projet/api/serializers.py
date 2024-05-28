@@ -28,3 +28,8 @@ class MyTasksSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyTasks
         fields = ['user', 'tasks']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
