@@ -12,7 +12,7 @@ from .forms import UploadModelForm
 from django.views.decorators.csrf import csrf_protect
 
 
-url = 'http://localhost:8069'
+url = 'https://rcm.esac.pt/'
 db = 'odoo'
 username = 'admin'
 password = 'admin'
@@ -125,7 +125,7 @@ def add_manager(request):
         group_name = 'Manager' 
         
         if not User.objects.filter(username=signup_username).exists():
-            group_ids_manager = [17, 24, 28]
+            group_ids_manager = [1, 26, 13]
             new_user_data = {
                 'name': signup_username,  
                 'login': signup_email,
@@ -394,7 +394,7 @@ def sync_with_odoo():
         'maintenance.request',
         'search_read',
         [[]],
-        {'fields': ['id', 'name', 'stage_id', 'maintenance_type', 'user_id', 'priority', 'schedule_date', 'equipment_id', 'description', 'instruction_text', 'maintenance_team_id', 'create_date']}
+        {'fields': ['id', 'name', 'stage_id', 'maintenance_type', 'user_id', 'priority', 'schedule_date', 'equipment_id', 'description', 'maintenance_team_id', 'create_date']}
     )
 
     odoo_task_ids = []
@@ -413,7 +413,6 @@ def sync_with_odoo():
             existing_task.priority = task_data['priority']
             existing_task.equipment_id = task_data['equipment_id'][0]
             existing_task.description = task_data['description']
-            existing_task.instruction_text = task_data['instruction_text']
             existing_task.maintenance_team_id = task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0]
             existing_task.create_date = task_data['create_date']
             existing_task.schedule_date = task_data['schedule_date']
@@ -433,7 +432,6 @@ def sync_with_odoo():
                 priority=task_data['priority'],
                 equipment_id=task_data['equipment_id'][0],
                 description=task_data['description'],
-                instruction_text=task_data['instruction_text'],
                 maintenance_team_id=task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0],
                 create_date=task_data['create_date'],
                 schedule_date=task_data['schedule_date']
@@ -832,7 +830,10 @@ def delete_member(request, member_id):
                 return redirect('manager_members')
         except Exception as e:
             messages.error(request, f"Erreur lors de la suppression de l'utilisateur : {e}")
-            return redirect('confirm_delete', member_id=member_id)
+            if request.user.groups.filter(name='Manager').exists():
+                return redirect('technician_members')  
+            elif request.user.groups.filter(name='Admin').exists():
+                return redirect('manager_members')
         
     return render(request, 'app/confirm_delete.html', {'user': user})
 
