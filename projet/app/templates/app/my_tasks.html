@@ -12,12 +12,6 @@
                     {% if not stage.done %}
                         <div class="task-item">
                             {% include "app/work_order.html" with name=task.name instructions=task.instruction_text responsible=user.username step=stage.name isMyWorkOrders="true" date=task.schedule_date %}
-                            <!-- Formulaire pour chaque tâche -->
-                            <form method="POST" action="{% url 'save_description' task.id %}">
-                                {% csrf_token %}
-                                <textarea name="description" class="description-text" placeholder="Écrire une description...">{{ task.description|safe }}</textarea>
-                                <button type="submit" class="save-button">Save</button>
-                            </form>
                         </div>
                     {% endif %}
                 {% endif %}

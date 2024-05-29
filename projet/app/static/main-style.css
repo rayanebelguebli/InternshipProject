@@ -273,6 +273,20 @@ body {
     margin-left: 30%;
 }
 
+.btn--save {
+    border: none;
+    border-radius: 3%;
+    width: 30%;
+    height: 37px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 450;
+    margin: 3%;
+}
+
+.form-save {
+    align-items: center;
+}
+
 .alone-technician-btn {
     background-color: white;
     color: #5C59F4;
@@ -483,4 +497,40 @@ input:focus {
     margin-left: 4%;
     font-weight: 400;
     font-size: 2.2em;
+}
+
+.description-text:focus {
+    outline: none;
+    border-color: #888;
+
+}
+
+.form--model {
+    margin-left: 45%;
+}
+
+.form--model>h1 {
+    font-weight: 400;
+    margin-bottom: 6%;
+    font-size: 2.4em;
+}
+
+.btn--model {
+    margin: 0;
+    margin-top: 4%;
+    margin-right: 1%;
+}
+
+.form-model-nomenclature {
+    border: none;
+    border-radius: 4%;
+    width: 30%;
+    height: 24px;
+    font-size: 16px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.form-model-file {
+    border: none;
 }

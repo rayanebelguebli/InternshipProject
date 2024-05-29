@@ -5,6 +5,11 @@ class UploadModelForm(forms.ModelForm):
     class Meta:
         model = UploadedModel
         fields = ['file', 'nomenclature', 'equipement']
+        widgets = {
+            'file': forms.FileInput(attrs={'class': 'form-model-file'}),
+            'nomenclature': forms.TextInput(attrs={'class': 'form-model-nomenclature'}),
+            'equipement': forms.Select(attrs={'class': 'form-model-equipement'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(UploadModelForm, self).__init__(*args, **kwargs)

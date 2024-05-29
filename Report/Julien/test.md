@@ -88,6 +88,7 @@ Content of the list of symbols.
 
 
 # Introduction
+
 We are faced with the development of a full-stack website that requires tight integration between the backend and the frontend. The backend and frontend of our application will be developed using Django. It will be interconnected to a Computerized Maintenance Management System (CMMS) for effective management of maintenance operations. On the other hand, the frontend, also built with Django, will be linked to augmented reality (AR), an immersive technology that enriches the user experience by providing contextual information in real time. Our project has a direct link to the work presented in this article **[@ana2021augmented]  [[1]](#references)**. Our goal is therefore to make a link between the CMMS and the AR; in this figure, we will therefore take care of the server and the database. In this project, my role mainly focuses on frontend development.
 
 The fusion of CMMS and AR presents several technical and logistical challenges. Achieving seamless communication and data flow between the backend server and the AR frontend poses a significant hurdle. Furthermore, ensuring real-time synchronization of data from the CMMS to the AR interface demands meticulous planning and execution. Additionally, the inherent complexity of AR integration necessitates a user-friendly frontend design without compromising functionality and performance.
@@ -165,7 +166,7 @@ The library provides a wide range of functions for creating programs from raw da
 
 ### Uses cases 
 
-![Use case for Technician](../uses-cases/use_case_app.png)
+![Use case for Technician](./usecase1.png)
 
 \newpage
 
@@ -266,21 +267,19 @@ The library provides a wide range of functions for creating programs from raw da
 - **Alternative Paths:**
     - If the uploaded media is incorrect, an error message is displayed.
 
-#### **Send Message :**
+### Test cases
 
-- **Primary Actor:** Technician
-- **Objective:** To send message 
-- **Preconditions:** The technician must be present on-site, logged into the platform .
-- **Postconditions:** The technician sent a message to another employee.
-- **Basic Flow:**
-    1. The technician clicks on a link in the site's top menu labeled "Chat"
-    2. The list of the technicians displayed.
-    3. The technician selects the desired technician from the list.
-    4. A message chat appears.
-    5. The technician types the message he wants.
-    6. The technician presses the “send” button.
-    7. The technician sees his message in the chat.
-    
+| **Scenario** | Test Case Description | Preconditions | Test Steps | Expected Result |
+|--------------|-----------------------|---------------|------------|-----------------|
+| **Login** | Verify technician login | - Valid technician account credentials exist.<br>- Technician is on the login page. | 1. Enter valid technician username and password.<br>2. Click on the login button. | Technician should be logged in successfully and directed to the dashboard. |
+| **Logout** | Verify technician logout | - Technician is logged into the system. | 1. Click on the logout button.<br>2. Confirm the logout action. | Technician should be logged out successfully and redirected to the login page. |
+| **View Work Orders** | Verify technician can view work orders | - Technician is logged into the system. | 1. Navigate to the "View Work Orders" section. | Technician should see a list of available work orders. |
+| **Select a Work Order** | Verify technician can select a work order | - Technician is logged into the system and viewing the list of work orders. | 1. Click on a specific work order from the list.<br>2. Confirm the selection. | Selected work order should be associated with the technician. |
+| **Validate a Work Order** | Verify technician can validate a work order | - Technician is logged into the system and has selected a work order. | 1. Navigate to the "View My Work Orders" section.<br>2. Click on the work order to be validated.<br>3. Confirm the validation action. | Selected work order should be validated and removed from the technician's list. |
+| **Add Media to a Work Order** | Verify technician can add media to a work order | - Technician is logged into the system, has selected a work order, and the work order is not yet validated. | 1. Navigate to the selected work order.<br>2. Click on the "Add Media" button.<br>3. Upload the desired media.<br>4. Submit the form. | Media should be successfully added to the work order and visible to other users. |
+
+
+
 ### Mockups
 
 
@@ -363,7 +362,40 @@ The second part of my internship focused on creating a RESTful API using Django 
 \newpage
 
 
+### Development of a mmobile application
 
+## Why a mobile application ?
+
+After developing a website to meet the needs I mentioned earlier, my supervisor suggested creating a mobile application that replicates the website's functionalities, allowing technicians to access it directly via their phones. Technicians will be able to log in, view their work orders, select them, and add notes, just like on the website. However, the main advantage of this application is that it allows technicians to continue updating their work orders even without a connection. They will be able to add notes, move work orders to different states, and when the connection is restored, all changes will be synchronized with our application.
+
+## Choice of Language
+
+Initially, upon learning that I needed to develop a mobile application, I realized that I didn't know much about mobile applications. Therefore, I conducted extensive research.
+Two technologies stood out: React Native and Flutter.
+
+![API rest using](fluttervsreact.png)  [Figure 6 - Flutter vs React ](#list-of-figures) Source : https://imgs.search.brave.com/NFHNKJc Last search : 28/05/2024
+
+React Native is an open-source mobile application development framework created by Facebook, while Flutter is another open-source mobile application development framework, created by Google.
+These two technologies caught my eye because they both allow the development of applications for both Android and iOS devices.
+Thus, I conducted further research to determine which one would be more advantageous in my case.
+
+| **React Native**                                                                    | **Flutter**                                                                             |
+|-------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| **Advantages:** Utilizes JavaScript and React, familiar to web developers.          | **Disadvantages:** Dart may require additional learning for some developers.             |
+| **Advantages:** Employs native components, delivering near-native performance.      | **Advantages:** Often boasts superior performance due to its efficient rendering engine.  |
+| **Disadvantages:** May necessitate bridges for accessing specific native components.| **Advantages:** Provides a plethora of customizable, integrated widgets.                |
+| **Advantages:** Facilitates instant viewing of changes without recompilation.       | **Advantages:** Offers hot reload functionality for rapid testing and development.        |
+| **Advantages:** Boasts a large community and a rich ecosystem of tools and libraries| **Disadvantages:** Community size is smaller but rapidly expanding.                        |
+| **Advantages:** Offers a broad selection of available libraries.                    | **Disadvantages:** Presents fewer third-party libraries, albeit under development.         |
+| **Advantages:** Easy for JavaScript and React proficient individuals to learn.      | **Disadvantages:** Dart may pose a learning curve for some developers.                    |
+| **Advantages:** Provides extensive documentation and abundant online resources.     | **Advantages:** Furnishes clear, well-organized documentation courtesy of Google.          |
+| **Advantages:** Benefits from consistent support and updates from Facebook.         | **Advantages:** Actively maintained by Google, ensuring regular updates.                  |
+| **Disadvantages:** Integrating with native modules may require additional effort.   | **Advantages:** Offers seamless integration with native platforms via diverse widgets.     |
+
+After this research, I realized that React Native suited my needs better, and the fact that it uses JavaScript was a big plus for me since I am very comfortable with this language.
+Therefore, I chose React Native.
+
+\newpage
 
 # References
 

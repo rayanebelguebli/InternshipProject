@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Uploaded Models</title>
-</head>
-<body>
+{% extends "app/main_layout.html" %}
+{% block content %}
+<div class="form">
     <h2>Uploaded Models</h2>
     <ul>
         {% for model in models %}
             <li>{{ model.file }} - {{ model.equipement.name }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+</div>
+{% endblock %}
+

@@ -833,6 +833,7 @@ def delete_member(request, member_id):
         except Exception as e:
             messages.error(request, f"Erreur lors de la suppression de l'utilisateur : {e}")
             return redirect('confirm_delete', member_id=member_id)
+        
     return render(request, 'app/confirm_delete.html', {'user': user})
 
 @login_required
@@ -909,8 +910,8 @@ def add_to_manager_team(request):
     
     return redirect('users_without_team')
 
-@login_required
 @user_passes_test(is_manager)
+@login_required
 def upload_model(request):
     if request.method == 'POST':
         form = UploadModelForm(request.POST, request.FILES)
@@ -931,13 +932,79 @@ def upload_model(request):
     else:
         form = UploadModelForm()
     
-    return render(request, 'app/upload_model.html', {'form': form})
+    # Contexte de la vue home
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name', 'done']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+
+    context = {
+        'can_create_team': can_create_team,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks, 
+        'stages': stages,
+        'form': form  # Ajout du formulaire dans le contexte
+    }
+    
+    return render(request, 'app/upload_model.html', context)
 
 @login_required
 @user_passes_test(is_manager)
 def model_list(request):
-    models = UploadedModel.objects.filter(user=request.user)
-    return render(request, 'app/model_list.html', {'models': models})
+    sync_equipments_from_odoo()
+    sync_with_odoo()
+    user = request.user
+    user_groups = user.groups.all()
+    teams = Teams.objects.filter(members=user)
+    managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
+    technician_teams = teams.values_list('name', flat=True)
+    stages = models.execute_kw(
+        db, uid, password, 'maintenance.stage', 'search_read',
+        [[]],
+        {'fields': ['id', 'name', 'done']}
+    )
+    user_tasks = Task.objects.filter(user_id=request.user.id)
+
+    can_create_team = False
+    if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
+        can_create_team = True
+
+    tasks = Task.objects.filter(
+        Q(maintenance_team_id__in=teams) & Q(stage_id=1))
+
+    user_models = UploadedModel.objects.filter(user=request.user)  # Renommer la variable models en user_models
+
+    context = {
+        'can_create_team': can_create_team,
+        'user': user,
+        'user_groups': user_groups,
+        'managed_teams': managed_teams,
+        'technician_teams': technician_teams,
+        'tasks': tasks,
+        'user_tasks': user_tasks, 
+        'stages': stages,
+        'user_models': user_models  # Utiliser user_models à la place de models
+    }
+    
+    return render(request, 'app/model_list.html', context)
 
 def save_description(request, task_id):
     if request.method == 'POST':
