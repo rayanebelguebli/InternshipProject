@@ -32,15 +32,13 @@ header-includes:
 -  [**Chapter 3**](#chapter-3)
     - [Requirements](#requirements)
         - [Use Case](#use-case)
-        - [Descriptions of Uses Cases](#description-of-uses-cases)
         - [Non-Functional Requirements](#non-functional-requirements)
     - [External API Odoo](#external-api-odoo)
     - [Database](#database)
-    - [Sprints](#sprints)
-        - [Sprint 1](#sprint-1)
-        - [Sprint 2](#sprint-2)
-        - [Sprint 3](#sprint-3)
-
+    - [Tests](#tests)
+- [**Chapter 4**](#chapter-4)
+- [**Chapter 5**](#chapter-5)
+  - [Conclusion](#conclusion)
 - [**References**](#references)
 
 \newpage
@@ -254,180 +252,7 @@ In short, Django offers a combination of powerful features, built-in security an
 ![Use case](./Use_case.png)
 
 \newpage
-
-#### Description of uses cases
-
-**Scenarios for Admin**
-
-**Scenario 1: Create a Manager**
-- **Actor**: Admin
-- **Actions**:
-  1. The Admin logs into the system.
-  2. The Admin accesses the Managers management section.
-  3. The Admin creates a new Manager by filling out the form.
-  4. The Admin submits the form.
-- **Expected Result**: A new Manager is created and added to the list of Managers.
-- **Error Case**: If the Manager already exists (checked by email or unique identifier), display an error message: "Manager already exists."
-
-**Scenario 2: Modify a Manager**
-- **Actor**: Admin
-- **Actions**:
-  1. The Admin logs into the system.
-  2. The Admin accesses the Managers management section.
-  3. The Admin selects the Manager to modify.
-  4. The Admin modifies the Manager's information in the form.
-  5. The Admin submits the modifications.
-- **Expected Result**: The Manager's information is updated.
-- **Error Case**: If the entered information already exists for another Manager, display an error message: "Information already exists for another Manager."
-
-**Scenario 3: Delete a Manager**
-- **Actor**: Admin
-- **Actions**:
-  1. The Admin logs into the system.
-  2. The Admin accesses the Managers management section.
-  3. The Admin selects the Manager to delete.
-  4. The Admin confirms the deletion.
-- **Expected Result**: The Manager is deleted from the system.
-- **Error Case**: If the Manager is associated with workorders, display an error message: "Cannot delete Manager as associated with workorders."
-
-**Scenario 4: View the list of Managers**
-- **Actor**: Admin
-- **Actions**:
-  1. The Admin logs into the system.
-  2. The Admin accesses the Managers management section.
-  3. The Admin views the list of Managers.
-- **Expected Result**: The Admin sees a list of all Managers with their information.
-
-**Scenario 5: Modify their profile**
-- **Actor**: Admin
-- **Actions**:
-  1. The Admin logs into the system.
-  2. The Admin accesses "My Profile".
-  3. The Admin modifies their personal information.
-  4. The Admin submits the modifications.
-- **Expected Result**: The Admin's profile is updated.
-- **Error Case**: If the new information entered already exists for another user, display an error message: "Information already exists for another user."
-
-**Scenarios for Manager**
-
-**Scenario 1: Create a Team**
-- **Actor**: Manager
-- **Actions**:
-  1. The Manager logs into the system.
-  2. The Manager accesses the team management section.
-  3. The Manager creates a new team by specifying a name.
-  4. The Manager submits the team creation.
-- **Expected Result**: A new team is created and added to the Manager's team list.
-- **Error Case**: If the team already exists, display an error message: "Team already exists."
-
-**Scenario 2: Create a Technician**
-- **Actor**: Manager
-- **Actions**:
-  1. The Manager logs into the system.
-  2. The Manager accesses the Technicians management section.
-  3. The Manager creates a new Technician by filling out the form.
-  4. The Manager submits the form.
-- **Expected Result**: A new Technician is created and added to the list of Technicians.
-- **Error Case**: If the Technician already exists (checked by email or unique identifier), display an error message: "Technician already exists."
-
-**Scenario 3: Modify a Technician**
-- **Actor**: Manager
-- **Actions**:
-  1. The Manager logs into the system.
-  2. The Manager accesses the Technicians management section.
-  3. The Manager selects the Technician to modify.
-  4. The Manager modifies the Technician's information in the form.
-  5. The Manager submits the modifications.
-- **Expected Result**: The Technician's information is updated.
-- **Error Case**: If the entered information already exists for another Technician, display an error message: "Information already exists for another Technician."
-
-**Scenario 4: Delete a Technician**
-- **Actor**: Manager
-- **Actions**:
-  1. The Manager logs into the system.
-  2. The Manager accesses the Technicians management section.
-  3. The Manager selects the Technician to delete.
-  4. The Manager confirms the deletion.
-- **Expected Result**: The Technician is deleted from the system.
-- **Error Case**: If the Technician is associated with workorders, display an error message: "Cannot delete Technician as associated with workorders."
-
-**Scenario 5: Add Technicians to their team**
-- **Actor**: Manager
-- **Actions**:
-  1. The Manager logs into the system.
-  2. The Manager accesses the team management section.
-  3. The Manager selects existing Technicians to add to their team.
-  4. The Manager confirms the addition.
-- **Expected Result**: The selected Technicians are added to the Manager's team.
-- **Error Case**: If the team already exists, display an error message: "Team already exists."
-
-**Scenario 6: View workorders associated with their team**
-- **Actor**: Manager
-- **Actions**:
-  1. The Manager logs into the system.
-  2. The Manager accesses the workorders management section.
-  3. The Manager views the list of workorders associated with their team.
-- **Expected Result**: The Manager sees the workorders assigned to their team.
-
-**Scenario 7: Modify their profile**
-- **Actor**: Manager
-- **Actions**:
-  1. The Manager logs into the system.
-  2. The Manager accesses "My Profile".
-  3. The Manager modifies their personal information.
-  4. The Manager submits the modifications.
-- **Expected Result**: The Manager's profile is updated.
-- **Error Case**: If the new information entered (such as email) already exists for another user, display an error message: "Information already exists for another user."
-
-**Scenarios for Technician**
-
-**Scenario 1: Modify their profile**
-- **Actor**: Technician
-- **Actions**:
-  1. The Technician logs into the system.
-  2. The Technician accesses "My Profile".
-  3. The Technician modifies their personal information.
-  4. The Technician submits the modifications.
-- **Expected Result**: The Technician's profile is updated.
-- **Error Case**: If the new information entered (such as email) already exists for another user,      display an error message: "Information already exists for another user."
-
-**Scenario 2: View assigned workorders**
-- **Actor**: Technician
-- **Actions**:
-  1. The Technician logs into the system.
-  2. The Technician accesses the workorders management section.
-  3. The Technician views the list of workorders assigned to them.
-- **Expected Result**: The Technician sees the workorders assigned to them.
-
-**Scenario 3: Select workorders**
-- **Actor**: Technician
-- **Actions**:
-  1. The Technician logs into the system.
-  2. The Technician accesses the workorders management section.
-  3. The Technician selects one or more workorders to process.
-  4. The Technician confirms their selection.
-- **Expected Result**: The workorders are marked as selected by the Technician.
-
-**Scenario 4: Modify the state of workorders**
-- **Actor**: Technician
-- **Actions**:
-  1. The Technician logs into the system.
-  2. The Technician accesses the workorders management section.
-  3. The Technician selects a workorder.
-  4. The Technician modifies the state of the workorder (e.g., in progress, completed).
-  5. The Technician submits the modifications.
-- **Expected Result**: The state of the workorder is updated.
-
-**Scenario 5: Add notes to a workorder**
-- **Actor**: Technician
-- **Actions**:
-  1. The Technician logs into the system.
-  2. The Technician accesses the workorder details.
-  3. The Technician adds notes to the workorder.
-  4. The Technician saves the notes.
-- **Expected Result**: Notes are successfully added to the workorder.
  
-
 #### Non-Functional Requirements
 
 - Performance:
@@ -496,234 +321,861 @@ models.execute_kw(db, uid, password, 'res.users', 'unlink', [[2]])
 
 \newpage
 
-### Sprints 
+### Tests
 
-#### Sprint 1
+#### General Information
+**Project:** Internship Project  
+**Function:** `user_login`  
+**Date:** May 30, 2024  
+**Tested by:** Rayane Belguebli  
 
-**Admin**
+#### Summary
+The objective of this test was to verify the functionality of the `user_login` method, which handles user authentication in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
 
-**Test Report: Create a Manager**
+#### Test Scenarios
 
-**Test Case 1: Successfully Create a New Manager**
+#### Scenario 1: Successful Login
+**Description:** Verify that a user can successfully log in with correct credentials.  
+**Pre-condition:** The user has valid login credentials.  
+**Steps:**
+1. Send a POST request with valid `username` and `password`.
+2. Authenticate the user.
+3. Redirect to the home page if authentication is successful.
+**Expected Result:** The user is logged in and redirected to the home page.  
+**Actual Result:** The user is logged in and redirected to the home page.  
+**Status:** Passed
 
-| **Scenario** | Create a new Manager |
-|--------------|----------------------|
-| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to create a Manager. |
-| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin fills out the form to create a new Manager. <br> **Input Data**: First name, last name, email, unique identifier, password. <br> 4. The Admin submits the form. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - A new Manager is created and added to the list of Managers. <br> - The system displays a confirmation message indicating the Manager has been created successfully. <br> - The new Manager appears in the list of Managers with the provided information. |
+#### Scenario 2: Unsuccessful Login with Incorrect Credentials
+**Description:** Verify that a user cannot log in with incorrect credentials.  
+**Pre-condition:** The user has invalid login credentials.  
+**Steps:**
+1. Send a POST request with an incorrect `username` and/or `password`.
+2. Attempt to authenticate the user.
+3. Display an error message if authentication fails.
+**Expected Result:** An error message "Incorrect username or password." is displayed.  
+**Actual Result:** An error message "Incorrect username or password." is displayed.  
+**Status:** Passed
 
-**Test Case 2: Attempt to Create an Existing Manager**
+#### Scenario 3: GET Request to Login Page
+**Description:** Verify that the login page is rendered when accessed with a GET request.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a GET request to the login URL.
+2. Render the login page.
+**Expected Result:** The login page is rendered.  
+**Actual Result:** The login page is rendered.  
+**Status:** Passed
 
-| **Scenario** | Create a Manager with an existing email or unique identifier |
-|--------------|----------------------------------------|
-| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to create a Manager. <br> - A Manager with the same email or unique identifier already exists in the system. |
-| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin fills out the form to create a new Manager with an existing email or unique identifier. <br> **Input Data**: First name, last name, email (existing), unique identifier (existing), password. <br> 4. The Admin submits the form. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The system displays an error message: "Manager already exists." <br> - No new entry is created in the list of Managers. |
+#### Scenario 4: CSRF Protection
+**Description:** Verify that CSRF protection is enabled for the login form.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a POST request to the login URL without a CSRF token.
+2. Attempt to process the login request.
+**Expected Result:** The request is rejected due to missing CSRF token.  
+**Actual Result:** The request is rejected due to missing CSRF token.  
+**Status:** Passed
 
-**Test Report: View the List of Managers**
+#### Summary of Results
+- **Total Tests:** 4
+- **Passed:** 4
+- **Failed:** 0
+- **Blocked:** 0
 
-**Test Case 1: Successfully View the List of Managers**
-
-| **Scenario** | View the list of Managers |
-|--------------|---------------------------|
-| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to view the list of Managers. |
-| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin views the list of Managers. <br> **Input Data**: None (simple action of viewing the list). |
-| **Expected Result** | - The Admin sees a list of all Managers with their information, including first name, last name, email, and unique identifier. |
-
-\newpage
-
-**Manager**
-
-**Test Report: Create a Team**
-
-**Test Case 1: Successfully Create a New Team**
-
-| **Scenario** | Create a new Team |
-|--------------|-------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a team. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the team management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new team by specifying a name. <br> **Input Data**: Team name. <br> 4. The Manager submits the team creation. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - A new team is created and added to the Manager's team list. <br> - The system displays a confirmation message indicating the team has been created successfully. <br> - The new team appears in the Manager's team list with the specified name. |
-
-**Test Case 2: Attempt to Create an Existing Team**
-
-| **Scenario** | Create a Team with an existing name |
-|--------------|-------------------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a team. <br> - A team with the same name already exists under the Manager's teams. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the team management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new team with an existing name. <br> **Input Data**: Team name (existing). <br> 4. The Manager submits the team creation. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The system displays an error message: "Team already exists." <br> - No new entry is created in the Manager's team list. |
-
-**Test Report: Create a Technician**
-
-**Test Case 1: Successfully Create a New Technician**
-
-| **Scenario** | Create a new Technician |
-|--------------|-------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a Technician. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new Technician. <br> **Input Data**: First name, last name, email, unique identifier, password. <br> 4. The Manager submits the form. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - A new Technician is created and added to the list of Technicians. <br> - The system displays a confirmation message indicating the Technician has been created successfully. <br> - The new Technician appears in the list of Technicians with the provided information. |
-
-**Test Case 2: Attempt to Create an Existing Technician**
-
-| **Scenario** | Create a Technician with an existing email or unique identifier |
-|--------------|----------------------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to create a Technician. <br> - A Technician with the same email or unique identifier already exists in the system. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager fills out the form to create a new Technician with an existing email or unique identifier. <br> **Input Data**: First name, last name, email (existing), unique identifier (existing), password. <br> 4. The Manager submits the form. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The system displays an error message: "Technician already exists." <br> - No new entry is created in the list of Technicians. |
-
-**Test Report: View Workorders Associated with Their Team**
-
-**Test Case 1: Successfully View Workorders Associated with the Manager's Team**
-
-| **Scenario** | View workorders associated with their team |
-|--------------|--------------------------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to view workorders. <br> - There are workorders assigned to the Manager's team. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager views the list of workorders associated with their team. <br> **Input Data**: None (simple action of viewing the list). |
-| **Expected Result** | - The Manager sees the workorders assigned to their team. <br> - The list displays workorder details such as workorder ID, description, status, and assigned technician. |
+#### Conclusions and Recommendations
+The `user_login` function performs as expected in handling user authentication. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., rate limiting, account lockout) to ensure robustness.
 
 \newpage
 
-**Technician**
+#### General Information
+**Project:** Internship Project  
+**Function:** `add_manager`  
+**Date:** May 30, 2024  
+**Tested by:** Rayane Belguebli  
 
-**Test Report: View Assigned Workorders**
+#### Summary
+The objective of this test was to verify the functionality of the `add_manager` method, which handles the addition of a new manager in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
 
-**Test Case 1: Successfully View Workorders Assigned to the Technician**
+#### Test Scenarios
 
-| **Scenario** | View assigned workorders |
-|--------------|--------------------------|
-| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to view workorders. <br> - There are workorders assigned to the Technician. |
-| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Technician views the list of workorders assigned to them. <br> **Input Data**: None (simple action of viewing the list). |
-| **Expected Result** | - The Technician sees the workorders assigned to them. <br> - The list displays workorder details such as workorder ID, description, status, and priority. |
+#### Scenario 1: Successful Manager Addition
+**Description:** Verify that an admin user can successfully add a new manager with valid details.  
+**Pre-condition:** The user has admin rights and the provided username does not exist.  
+**Steps:**
+1. Send a POST request with `username`, `email`, and `password`.
+2. Check if the user already exists.
+3. Create a new user in Odoo.
+4. Create a new user in Django.
+5. Add the new user to the 'Manager' group.
+6. Redirect to the home page with a success message.
+**Expected Result:** The user is created and added to the 'Manager' group. A success message is displayed.  
+**Actual Result:** The user is created and added to the 'Manager' group. A success message is displayed.  
+**Status:** Passed
 
-**Test Report: Select Workorders**
+#### Scenario 2: Manager Addition with Existing Username
+**Description:** Verify that an error message is shown if the username already exists.  
+**Pre-condition:** The user has admin rights and the provided username already exists.  
+**Steps:**
+1. Send a POST request with `username`, `email`, and `password`.
+2. Check if the user already exists.
+3. Display an error message if the username exists.
+**Expected Result:** An error message "This user already exists." is displayed.  
+**Actual Result:** An error message "This user already exists." is displayed.  
+**Status:** Passed
 
-**Test Case 1: Successfully Select Workorders to Process**
+#### Scenario 3: GET Request to Add Manager Page
+**Description:** Verify that the add manager page is rendered when accessed with a GET request.  
+**Pre-condition:** The user is authenticated and has admin rights.  
+**Steps:**
+1. Send a GET request to the add manager URL.
+2. Render the add manager page with the appropriate context.
+**Expected Result:** The add manager page is rendered with the context.  
+**Actual Result:** The add manager page is rendered with the context.  
+**Status:** Passed
 
-| **Scenario** | Select workorders to process |
-|--------------|------------------------------|
-| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to view and select workorders. <br> - There are workorders available for the Technician to select. |
-| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Technician selects one or more workorders to process. <br> **Input Data**: Workorder IDs to be selected. <br> 4. The Technician confirms their selection. <br> **Input Data**: None (simple confirmation action). |
-| **Expected Result** | - The selected workorders are marked as selected by the Technician. <br> - The system updates the status of the selected workorders to reflect that they are being processed by the Technician. <br> - A confirmation message is displayed to the Technician. |
+#### Scenario 4: CSRF Protection
+**Description:** Verify that CSRF protection is enabled for the add manager form.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a POST request to the add manager URL without a CSRF token.
+2. Attempt to process the request.
+**Expected Result:** The request is rejected due to missing CSRF token.  
+**Actual Result:** The request is rejected due to missing CSRF token.  
+**Status:** Passed
 
+#### Scenario 5: Authorization Check
+**Description:** Verify that only users with admin rights can access the add manager functionality.  
+**Pre-condition:** The user is authenticated but does not have admin rights.  
+**Steps:**
+1. Attempt to access the add manager URL.
+2. Check for authorization.
+**Expected Result:** Access is denied, and the user is redirected or shown an error message.  
+**Actual Result:** Access is denied, and the user is redirected or shown an error message.  
+**Status:** Passed
 
-**Test Report: Modify the State of Workorders**
+#### Scenario 6: Odoo Integration Error Handling
+**Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
+**Pre-condition:** The user has admin rights, and Odoo integration is functional.  
+**Steps:**
+1. Send a POST request with `username`, `email`, and `password`.
+2. Simulate an error during Odoo user creation.
+3. Catch the error and display an appropriate message.
+**Expected Result:** An error message detailing the Odoo error is displayed.  
+**Actual Result:** An error message detailing the Odoo error is displayed.  
+**Status:** Passed
 
-**Test Case 1: Successfully Modify the State of a Workorder**
+#### Summary of Results
+- **Total Tests:** 6
+- **Passed:** 6
+- **Failed:** 0
+- **Blocked:** 0
 
-| **Scenario** | Modify the state of a workorder |
-|--------------|---------------------------------|
-| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to view and modify workorders. <br> - There are workorders available for the Technician to modify. |
-| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorders management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Technician selects a workorder. <br> **Input Data**: Workorder ID to be modified. <br> 4. The Technician modifies the state of the workorder (e.g., in progress, completed). <br> **Input Data**: New state of the workorder. <br> 5. The Technician submits the modifications. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The state of the workorder is updated. <br> - The system displays a confirmation message indicating the state has been updated successfully. <br> - The workorder's new state is reflected in the workorders list. |
-
-\newpage
-
-#### Sprint 2
-
-**Admin**
-
-**Test Report: Modify a Manager**
-
-**Test Case 1: Successfully Modify a Manager's Information**
-
-| **Scenario** | Modify a Manager's information |
-|--------------|-------------------------------|
-| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to modify Managers. <br> - There is at least one Manager available for modification. |
-| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager to modify. <br> **Input Data**: Manager ID or name to be modified. <br> 4. The Admin modifies the Manager's information in the form. <br> **Input Data**: Updated information for the Manager (e.g., name, email, unique identifier). <br> 5. The Admin submits the modifications. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The Manager's information is updated with the modifications made by the Admin. <br> - The system displays a confirmation message indicating that the modifications have been saved successfully. |
-
-**Test Case 2: Error Handling - Information Already Exists for Another Manager**
-
-| **Scenario** | Modify a Manager with existing information |
-|--------------|-------------------------------------------|
-| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to modify Managers. <br> - There is at least one other Manager with the same information (e.g., email, unique identifier). |
-| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager to modify. <br> **Input Data**: Manager ID or name to be modified. <br> 4. The Admin modifies the Manager's information in the form with information that already exists for another Manager. <br> **Input Data**: Updated information for the Manager (e.g., email, unique identifier). <br> 5. The Admin submits the modifications. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The system displays an error message: "Information already exists for another Manager." <br> - The modifications are not saved. |
-
-**Test Report: Delete a Manager**
-
-**Test Case 1: Successfully Delete a Manager**
-
-| **Scenario** | Delete a Manager |
-|--------------|-------------------|
-| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to delete Managers. <br> - There is at least one Manager available for deletion. |
-| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager to delete. <br> **Input Data**: Manager ID or name to be deleted. <br> 4. The Admin confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
-| **Expected Result** | - The selected Manager is deleted from the system. <br> - The system displays a confirmation message indicating that the Manager has been successfully deleted. |
-
-**Test Case 2: Error Handling - Manager Associated with Workorders**
-
-| **Scenario** | Attempt to Delete a Manager Associated with Workorders |
-|--------------|--------------------------------------------------------|
-| **Preconditions** | - The Admin is registered in the system. <br> - The Admin has the necessary rights to delete Managers. <br> - The Manager selected for deletion is associated with one or more workorders. |
-| **Steps** | 1. The Admin logs into the system. <br> **Input Data**: Admin username and password. <br> 2. The Admin accesses the Managers management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Admin selects the Manager associated with workorders to delete. <br> **Input Data**: Manager ID or name to be deleted. <br> 4. The Admin confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
-| **Expected Result** | - The system displays an error message: "Cannot delete Manager as associated with workorders." <br> - The Manager is not deleted from the system. |
-
-\newpage
-
-**Manager**
-
-**Test Report: Modify a Technician**
-
-**Test Case 1: Successfully Modify a Technician's Information**
-
-| **Scenario** | Modify a Technician's information |
-|--------------|-----------------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to modify Technicians. <br> - There is at least one Technician available for modification. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician to modify. <br> **Input Data**: Technician ID or name to be modified. <br> 4. The Manager modifies the Technician's information in the form. <br> **Input Data**: Updated information for the Technician (e.g., name, email, unique identifier). <br> 5. The Manager submits the modifications. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The Technician's information is updated with the modifications made by the Manager. <br> - The system displays a confirmation message indicating that the modifications have been saved successfully. |
-
-**Test Case 2: Error Handling - Information Already Exists for Another Technician**
-
-| **Scenario** | Modify a Technician with existing information |
-|--------------|---------------------------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to modify Technicians. <br> - There is at least one other Technician with the same information (e.g., email, unique identifier). |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician to modify. <br> **Input Data**: Technician ID or name to be modified. <br> 4. The Manager modifies the Technician's information in the form with information that already exists for another Technician. <br> **Input Data**: Updated information for the Technician (e.g., email, unique identifier). <br> 5. The Manager submits the modifications. <br> **Input Data**: None (simple submission action). |
-| **Expected Result** | - The system displays an error message: "Information already exists for another Technician." <br> - The modifications are not saved. |
-
-**Test Report: Delete a Technician**
-
-**Test Case 1: Successfully Delete a Technician**
-
-| **Scenario** | Delete a Technician |
-|--------------|----------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to delete Technicians. <br> - There is at least one Technician available for deletion. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician to delete. <br> **Input Data**: Technician ID or name to be deleted. <br> 4. The Manager confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
-| **Expected Result** | - The selected Technician is deleted from the system. <br> - The system displays a confirmation message indicating that the Technician has been successfully deleted. |
-
-**Test Case 2: Error Handling - Technician Associated with Workorders**
-
-| **Scenario** | Attempt to Delete a Technician Associated with Workorders |
-|--------------|---------------------------------------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to delete Technicians. <br> - The Technician selected for deletion is associated with one or more workorders. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the Technicians management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects the Technician associated with workorders to delete. <br> **Input Data**: Technician ID or name to be deleted. <br> 4. The Manager confirms the deletion. <br> **Input Data**: Confirmation action (e.g., clicking "Delete" button). |
-| **Expected Result** | - The system displays an error message: "Cannot delete Technician as associated with workorders." <br> - The Technician is not deleted from the system. |
-
-Here's the test report for the scenario "Add Technicians to their team" in English and in Markdown table format.
-
-**Test Report: Add Technicians to Their Team**
-
-**Test Case 1: Successfully Add Technicians to Their Team**
-
-| **Scenario** | Add Technicians to their team |
-|--------------|--------------------------------|
-| **Preconditions** | - The Manager is registered in the system. <br> - The Manager has the necessary rights to manage teams. <br> - There are existing Technicians available to be added to the Manager's team. |
-| **Steps** | 1. The Manager logs into the system. <br> **Input Data**: Manager username and password. <br> 2. The Manager accesses the team management section. <br> **Input Data**: None (simple access to the section). <br> 3. The Manager selects existing Technicians to add to their team. <br> **Input Data**: Technician IDs or names to be added. <br> 4. The Manager confirms the addition. <br> **Input Data**: Confirmation action (e.g., clicking "Add" button). |
-| **Expected Result** | - The selected Technicians are added to the Manager's team. <br> - The system displays a confirmation message indicating that the Technicians have been successfully added to the team. |
+#### Conclusions and Recommendations
+The `add_manager` function performs as expected in handling the addition of a new manager. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., different user roles, network issues) to ensure robustness.
 
 \newpage
 
-#### Sprint 3
+\newpage
 
-**Technician**
+#### General Information
+**Project:** Internship Project 
+**Function:** `add_technician`  
+**Date:** May 30, 2024  
+**Tested by:** Belguebli Rayane
 
-**Test Report: Add Notes to a Workorder**
+#### Summary
+The objective of this test was to verify the functionality of the `add_technician` method, which handles the addition of a new technician in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
 
-**Test Case 1: Successfully Add Notes to a Workorder**
+#### Test Scenarios
 
-| **Scenario** | Add notes to a workorder |
-|--------------|----------------------------|
-| **Preconditions** | - The Technician is registered in the system. <br> - The Technician has the necessary rights to add notes to workorders. <br> - There is at least one workorder available for the Technician to add notes to. |
-| **Steps** | 1. The Technician logs into the system. <br> **Input Data**: Technician username and password. <br> 2. The Technician accesses the workorder details. <br> **Input Data**: Workorder ID or name to view details. <br> 3. The Technician adds notes to the workorder. <br> **Input Data**: Text of the notes to be added. <br> 4. The Technician saves the notes. <br> **Input Data**: Confirmation action (e.g., clicking "Save" button). |
-| **Expected Result** | - Notes are successfully added to the workorder. <br> - The system displays a confirmation message indicating that the notes have been saved successfully. |
+#### Scenario 1: Successful Technician Addition
+**Description:** Verify that a manager can successfully add a new technician with valid details.  
+**Pre-condition:** The user has manager rights and the provided username does not exist.  
+**Steps:**
+1. Send a POST request with `username`, `email`, and `password`.
+2. Check if the user already exists.
+3. Create a new user in Odoo.
+4. Create a new user in Django.
+5. Add the new user to the 'Technician' group.
+6. Add the new user to the manager's team.
+7. Redirect to the home page with a success message.
+**Expected Result:** The user is created, added to the 'Technician' group, and added to the manager's team. A success message is displayed.  
+**Actual Result:** The user is created, added to the 'Technician' group, and added to the manager's team. A success message is displayed.  
+**Status:** Passed
+
+#### Scenario 2: Technician Addition with Existing Username
+**Description:** Verify that an error message is shown if the username already exists.  
+**Pre-condition:** The user has manager rights and the provided username already exists.  
+**Steps:**
+1. Send a POST request with `username`, `email`, and `password`.
+2. Check if the user already exists.
+3. Display an error message if the username exists.
+**Expected Result:** An error message "This user already exists." is displayed.  
+**Actual Result:** An error message "This user already exists." is displayed.  
+**Status:** Passed
+
+#### Scenario 3: GET Request to Add Technician Page
+**Description:** Verify that the add technician page is rendered when accessed with a GET request.  
+**Pre-condition:** The user is authenticated and has manager rights.  
+**Steps:**
+1. Send a GET request to the add technician URL.
+2. Render the add technician page with the appropriate context.
+**Expected Result:** The add technician page is rendered with the context.  
+**Actual Result:** The add technician page is rendered with the context.  
+**Status:** Passed
+
+#### Scenario 4: CSRF Protection
+**Description:** Verify that CSRF protection is enabled for the add technician form.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a POST request to the add technician URL without a CSRF token.
+2. Attempt to process the request.
+**Expected Result:** The request is rejected due to missing CSRF token.  
+**Actual Result:** The request is rejected due to missing CSRF token.  
+**Status:** Passed
+
+#### Scenario 5: Authorization Check
+**Description:** Verify that only users with manager rights can access the add technician functionality.  
+**Pre-condition:** The user is authenticated but does not have manager rights.  
+**Steps:**
+1. Attempt to access the add technician URL.
+2. Check for authorization.
+**Expected Result:** Access is denied, and the user is redirected or shown an error message.  
+**Actual Result:** Access is denied, and the user is redirected or shown an error message.  
+**Status:** Passed
+
+#### Scenario 6: Odoo Integration Error Handling
+**Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
+**Pre-condition:** The user has manager rights, and Odoo integration is functional.  
+**Steps:**
+1. Send a POST request with `username`, `email`, and `password`.
+2. Simulate an error during Odoo user creation.
+3. Catch the error and display an appropriate message.
+**Expected Result:** An error message detailing the Odoo error is displayed.  
+**Actual Result:** An error message detailing the Odoo error is displayed.  
+**Status:** Passed
+
+#### Summary of Results
+- **Total Tests:** 6
+- **Passed:** 6
+- **Failed:** 0
+- **Blocked:** 0
+
+#### Conclusions and Recommendations
+The `add_technician` function performs as expected in handling the addition of a new technician. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., different user roles, network issues) to ensure robustness.
+
+\newpage
+
+#### General Information
+**Project:** Internship Project   
+**Function:** `take_task`  
+**Date:** May 30, 2024  
+**Tested by:** Rayane Belguebli  
+
+#### Summary
+The objective of this test was to verify the functionality of the `take_task` method, which allows a technician to take a task and update its status in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
+
+#### Test Scenarios
+
+#### Scenario 1: Successful Task Takeover
+**Description:** Verify that a technician can successfully take a task with valid details.  
+**Pre-condition:** The user is a technician and the provided task ID and user ID exist.  
+**Steps:**
+1. Send a POST request with `taskId` and `userId`.
+2. Retrieve the user and task from the database.
+3. Update the task in Odoo.
+4. Add the task to the technician's list of tasks.
+5. Redirect to the home page with a success message.
+**Expected Result:** The task is updated, added to the technician's list, and a success message is displayed.  
+**Actual Result:** The task is updated, added to the technician's list, and a success message is displayed.  
+**Status:** Passed
+
+#### Scenario 2: Task Takeover with Non-existent User
+**Description:** Verify that an error is handled when the user ID does not exist.  
+**Pre-condition:** The provided user ID does not exist.  
+**Steps:**
+1. Send a POST request with `taskId` and `userId`.
+2. Attempt to retrieve the user from the database.
+3. Handle the `User.DoesNotExist` exception.
+**Expected Result:** An error message "The user or task does not exist." is displayed.  
+**Actual Result:** An error message "The user or task does not exist." is displayed.  
+**Status:** Passed
+
+#### Scenario 3: Task Takeover with Non-existent Task
+**Description:** Verify that an error is handled when the task ID does not exist.  
+**Pre-condition:** The provided task ID does not exist.  
+**Steps:**
+1. Send a POST request with `taskId` and `userId`.
+2. Attempt to retrieve the task from the database.
+3. Handle the `Task.DoesNotExist` exception.
+**Expected Result:** An error message "The user or task does not exist." is displayed.  
+**Actual Result:** An error message "The user or task does not exist." is displayed.  
+**Status:** Passed
+
+#### Scenario 4: GET Request to Take Task Endpoint
+**Description:** Verify that the take task endpoint does not allow GET requests.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a GET request to the take task URL.
+2. Ensure the request is not processed.
+**Expected Result:** The request is ignored or an appropriate response is given.  
+**Actual Result:** The request is ignored or an appropriate response is given.  
+**Status:** Passed
+
+#### Scenario 5: Authorization Check
+**Description:** Verify that only users with technician rights can access the take task functionality.  
+**Pre-condition:** The user is authenticated but does not have technician rights.  
+**Steps:**
+1. Attempt to access the take task URL.
+2. Check for authorization.
+**Expected Result:** Access is denied, and the user is redirected or shown an error message.  
+**Actual Result:** Access is denied, and the user is redirected or shown an error message.  
+**Status:** Passed
+
+#### Scenario 6: Odoo Integration Error Handling
+**Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
+**Pre-condition:** The user has technician rights, and Odoo integration is functional.  
+**Steps:**
+1. Send a POST request with `taskId` and `userId`.
+2. Simulate an error during the Odoo task update.
+3. Catch the error and display an appropriate message.
+**Expected Result:** An error message detailing the Odoo error is displayed.  
+**Actual Result:** An error message detailing the Odoo error is displayed.  
+**Status:** Passed
+
+#### Summary of Results
+- **Total Tests:** 6
+- **Passed:** 6
+- **Failed:** 0
+- **Blocked:** 0
+
+#### Conclusions and Recommendations
+The `take_task` function performs as expected in handling the task takeover by a technician. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., different user roles, network issues) to ensure robustness.
+
+\newpage
+
+#### General Information
+**Project:** Internship Project  
+**Function:** `update_task`  
+**Date:** May 30, 2024  
+**Tested by:** Rayane Belguebli  
+
+#### Summary
+The objective of this test was to verify the functionality of the `update_task` method, which allows a technician to update the stage of a task in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
+
+#### Test Scenarios
+
+#### Scenario 1: Successful Task Update
+**Description:** Verify that a technician can successfully update the stage of a task with valid details.  
+**Pre-condition:** The user is a technician, and both the user and task exist.  
+**Steps:**
+1. Send a POST request with `taskId`, `userId`, and `stageId`.
+2. Retrieve the user and task based on the provided IDs.
+3. Update the task in Odoo to change its stage.
+4. Remove the task from the technician's MyTasks.
+5. Redirect to the My Tasks page.
+**Expected Result:** The task stage is updated in Odoo, removed from the technician's MyTasks, and a success message is displayed.  
+**Actual Result:** The task stage is updated in Odoo, removed from the technician's MyTasks, and a success message is displayed.  
+**Status:** Passed
+
+#### Scenario 2: Task Update with Non-existent User
+**Description:** Verify that an appropriate message is shown if the user does not exist.  
+**Pre-condition:** The user ID provided does not correspond to an existing user.  
+**Steps:**
+1. Send a POST request with `taskId`, `userId`, and `stageId`.
+2. Attempt to retrieve the user based on the provided ID.
+3. Display an error message if the user does not exist.
+**Expected Result:** An error message "The user does not exist." is displayed.  
+**Actual Result:** An error message "The user does not exist." is displayed.  
+**Status:** Passed
+
+#### Scenario 3: Task Update with Non-existent Task
+**Description:** Verify that an appropriate message is shown if the task does not exist.  
+**Pre-condition:** The task ID provided does not correspond to an existing task.  
+**Steps:**
+1. Send a POST request with `taskId`, `userId`, and `stageId`.
+2. Attempt to retrieve the task based on the provided ID.
+3. Display an error message if the task does not exist.
+**Expected Result:** An error message "The task does not exist." is displayed.  
+**Actual Result:** An error message "The task does not exist." is displayed.  
+**Status:** Passed
+
+#### Scenario 4: GET Request to Update Task Page
+**Description:** Verify that the update task functionality is not accessible via a GET request.  
+**Pre-condition:** The user is authenticated and has technician rights.  
+**Steps:**
+1. Send a GET request to the update task URL.
+2. Attempt to access the functionality.
+**Expected Result:** The GET request is not processed, and no action is taken.  
+**Actual Result:** The GET request is not processed, and no action is taken.  
+**Status:** Passed
+
+#### Scenario 5: CSRF Protection
+**Description:** Verify that CSRF protection is enabled for the update task form.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a POST request to the update task URL without a CSRF token.
+2. Attempt to process the request.
+**Expected Result:** The request is rejected due to missing CSRF token.  
+**Actual Result:** The request is rejected due to missing CSRF token.  
+**Status:** Passed
+
+#### Scenario 6: Authorization Check
+**Description:** Verify that only users with technician rights can access the update task functionality.  
+**Pre-condition:** The user is authenticated but does not have technician rights.  
+**Steps:**
+1. Attempt to access the update task URL.
+2. Check for authorization.
+**Expected Result:** Access is denied, and the user is redirected or shown an error message.  
+**Actual Result:** Access is denied, and the user is redirected or shown an error message.  
+**Status:** Passed
+
+#### Scenario 7: Odoo Integration Error Handling
+**Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
+**Pre-condition:** The user has technician rights, and Odoo integration is functional.  
+**Steps:**
+1. Send a POST request with `taskId`, `userId`, and `stageId`.
+2. Simulate an error during Odoo task update.
+3. Catch the error and display an appropriate message.
+**Expected Result:** An error message detailing the Odoo error is displayed.  
+**Actual Result:** An error message detailing the Odoo error is displayed.  
+**Status:** Passed
+
+#### Summary of Results
+- **Total Tests:** 7
+- **Passed:** 7
+- **Failed:** 0
+- **Blocked:** 0
+
+#### Conclusions and Recommendations
+The `update_task` function performs as expected in allowing a technician to update the stage of a task. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., different user roles, network issues) to ensure robustness.
+
+\newpage
+
+#### General Information
+**Project:** Internship Project  
+**Function:** `edit_member`  
+**Date:** May 30, 2024  
+**Tested by:** Rayane Belguebli  
+
+#### Summary
+The objective of this test was to verify the functionality of the `edit_member` method, which allows an admin or manager to edit user details in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
+
+#### Test Scenarios
+
+#### Scenario 1: Successful Member Edit by Admin
+**Description:** Verify that an admin can successfully edit a member's details.  
+**Pre-condition:** The user is authenticated as an admin, and the member ID corresponds to an existing user.  
+**Steps:**
+1. Send a POST request with updated member details.
+2. Update the user details in Odoo.
+3. Redirect to the appropriate page (manager members or technician members).
+**Expected Result:** The user details are updated in Odoo and Django, and the admin is redirected to the appropriate page with a success message.  
+**Actual Result:** The user details are updated in Odoo and Django, and the admin is redirected to the appropriate page with a success message.  
+**Status:** Passed
+
+#### Scenario 2: Successful Member Edit by Manager
+**Description:** Verify that a manager can successfully edit a member's details.  
+**Pre-condition:** The user is authenticated as a manager, and the member ID corresponds to an existing user.  
+**Steps:**
+1. Send a POST request with updated member details.
+2. Update the user details in Odoo.
+3. Redirect to the technician members page.
+**Expected Result:** The user details are updated in Odoo and Django, and the manager is redirected to the technician members page with a success message.  
+**Actual Result:** The user details are updated in Odoo and Django, and the manager is redirected to the technician members page with a success message.  
+**Status:** Passed
+
+#### Scenario 3: GET Request to Edit Member Page
+**Description:** Verify that the edit member functionality is not accessible via a GET request.  
+**Pre-condition:** The user is authenticated as an admin or manager.  
+**Steps:**
+1. Send a GET request to the edit member URL.
+2. Attempt to access the functionality.
+**Expected Result:** The GET request is not processed, and no action is taken.  
+**Actual Result:** The GET request is not processed, and no action is taken.  
+**Status:** Passed
+
+#### Scenario 4: CSRF Protection
+**Description:** Verify that CSRF protection is enabled for the edit member form.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a POST request to the edit member URL without a CSRF token.
+2. Attempt to process the request.
+**Expected Result:** The request is rejected due to missing CSRF token.  
+**Actual Result:** The request is rejected due to missing CSRF token.  
+**Status:** Passed
+
+#### Scenario 5: Authorization Check
+**Description:** Verify that only admins or managers can access the edit member functionality.  
+**Pre-condition:** The user is authenticated but does not have admin or manager rights.  
+**Steps:**
+1. Attempt to access the edit member URL.
+2. Check for authorization.
+**Expected Result:** Access is denied, and the user is redirected or shown an error message.  
+**Actual Result:** Access is denied, and the user is redirected or shown an error message.  
+**Status:** Passed
+
+#### Scenario 6: Odoo Integration Error Handling
+**Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
+**Pre-condition:** Odoo integration is functional.  
+**Steps:**
+1. Send a POST request with updated member details.
+2. Simulate an error during Odoo user update.
+3. Catch the error and display an appropriate message.
+**Expected Result:** An error message detailing the Odoo error is displayed.  
+**Actual Result:** An error message detailing the Odoo error is displayed.  
+**Status:** Passed
+
+#### Summary of Results
+- **Total Tests:** 6
+- **Passed:** 6
+- **Failed:** 0
+- **Blocked:** 0
+
+#### Conclusions and Recommendations
+The `edit_member` function performs as expected in allowing an admin or manager to edit user details. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., different user roles, network issues) to ensure robustness.
+
+\newpage
+
+#### General Information
+**Project:** Internship project 
+**Function:** `add_to_manager_team`  
+**Date:** May 30, 2024  
+**Tested by:** Rayane Belguebli  
+
+#### Summary
+The objective of this test was to verify the functionality of the `add_to_manager_team` method, which allows a manager to add a user to their team in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
+
+#### Test Scenarios
+
+#### Scenario 1: Successful Addition to Manager's Team
+**Description:** Verify that a user can be successfully added to the manager's team.  
+**Pre-condition:** The user is authenticated as a manager, and the user ID corresponds to an existing user.  
+**Steps:**
+1. Send a POST request with the user ID.
+2. Retrieve the manager's team.
+3. Add the user to the manager's team.
+4. Update the team in Odoo.
+5. Redirect to the users without a team page.
+**Expected Result:** The user is added to the manager's team in Odoo and Django, and a success message is displayed.  
+**Actual Result:** The user is added to the manager's team in Odoo and Django, and a success message is displayed.  
+**Status:** Passed
+
+#### Scenario 2: No Manager's Team Found
+**Description:** Verify that an appropriate message is shown if the manager's team does not exist.  
+**Pre-condition:** The user is authenticated as a manager, and the manager's team does not exist.  
+**Steps:**
+1. Send a POST request with the user ID.
+2. Attempt to retrieve the manager's team.
+3. Display an error message if the team does not exist.
+**Expected Result:** An error message "Unable to find your team." is displayed.  
+**Actual Result:** An error message "Unable to find your team." is displayed.  
+**Status:** Passed
+
+#### Scenario 3: GET Request to Add to Manager's Team Page
+**Description:** Verify that the add to manager's team functionality is not accessible via a GET request.  
+**Pre-condition:** The user is authenticated as a manager.  
+**Steps:**
+1. Send a GET request to the add to manager's team URL.
+2. Attempt to access the functionality.
+**Expected Result:** The GET request is not processed, and no action is taken.  
+**Actual Result:** The GET request is not processed, and no action is taken.  
+**Status:** Passed
+
+#### Scenario 4: CSRF Protection
+**Description:** Verify that CSRF protection is enabled for the add to manager's team form.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a POST request to the add to manager's team URL without a CSRF token.
+2. Attempt to process the request.
+**Expected Result:** The request is rejected due to missing CSRF token.  
+**Actual Result:** The request is rejected due to missing CSRF token.  
+**Status:** Passed
+
+#### Scenario 5: Authorization Check
+**Description:** Verify that only managers can access the add to manager's team functionality.  
+**Pre-condition:** The user is authenticated but does not have manager rights.  
+**Steps:**
+1. Attempt to access the add to manager's team URL.
+2. Check for authorization.
+**Expected Result:** Access is denied, and the user is redirected or shown an error message.  
+**Actual Result:** Access is denied, and the user is redirected or shown an error message.  
+**Status:** Passed
+
+#### Scenario 6: Odoo Integration Error Handling
+**Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
+**Pre-condition:** Odoo integration is functional.  
+**Steps:**
+1. Send a POST request with the user ID.
+2. Simulate an error during Odoo team update.
+3. Catch the error and display an appropriate message.
+**Expected Result:** An error message detailing the Odoo error is displayed.  
+**Actual Result:** An error message detailing the Odoo error is displayed.  
+**Status:** Passed
+
+#### Summary of Results
+- **Total Tests:** 6
+- **Passed:** 6
+- **Failed:** 0
+- **Blocked:** 0
+
+#### Conclusions and Recommendations
+The `add_to_manager_team` function performs as expected in allowing a manager to add a user to their team. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., different user roles, network issues) to ensure robustness.
+
+\newpage
+
+#### General Information
+**Project:** Internship Project  
+**Function:** `upload_model`  
+**Date:** May 30, 2024  
+**Tested by:** Rayane Belguebli  
+
+#### Summary
+The objective of this test was to verify the functionality of the `upload_model` method, which allows a manager to upload a model in a Django application. The tests were conducted to ensure that the method performs as expected under various scenarios. Most tests were successful, but some issues were identified.
+
+#### Test Scenarios
+
+#### Scenario 1: Successful Model Upload
+**Description:** Verify that a manager can successfully upload a model with valid details.  
+**Pre-condition:** The user is authenticated as a manager.  
+**Steps:**
+1. Send a POST request with valid model details.
+2. Save the model in the database.
+3. Redirect to the home page with a success message.
+**Expected Result:** The model is uploaded successfully, and a success message is displayed.  
+**Actual Result:** The model is uploaded successfully, and a success message is displayed.  
+**Status:** Passed
+
+#### Scenario 2: Invalid Form Submission
+**Description:** Verify that an appropriate message is shown if the form submission is invalid.  
+**Pre-condition:** The user is authenticated as a manager.  
+**Steps:**
+1. Send a POST request with invalid model details.
+2. Display an error message due to the invalid form submission.
+**Expected Result:** An error message "The form is not valid. Please correct the errors." is displayed.  
+**Actual Result:** An error message "The form is not valid. Please correct the errors." is displayed.  
+**Status:** Passed
+
+#### Scenario 3: GET Request to Upload Model Page
+**Description:** Verify that the upload model functionality is accessible via a GET request.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a GET request to the upload model URL.
+2. Attempt to access the functionality.
+**Expected Result:** The GET request is processed, and the upload model page is displayed with an empty form.  
+**Actual Result:** The GET request is processed, and the upload model page is displayed with an empty form.  
+**Status:** Passed
+
+#### Scenario 4: CSRF Protection
+**Description:** Verify that CSRF protection is enabled for the upload model form.  
+**Pre-condition:** None  
+**Steps:**
+1. Send a POST request to the upload model URL without a CSRF token.
+2. Attempt to process the request.
+**Expected Result:** The request is rejected due to missing CSRF token.  
+**Actual Result:** The request is rejected due to missing CSRF token.  
+**Status:** Passed
+
+#### Scenario 5: Authorization Check
+**Description:** Verify that only managers can access the upload model functionality.  
+**Pre-condition:** The user is authenticated but does not have manager rights.  
+**Steps:**
+1. Attempt to access the upload model URL.
+2. Check for authorization.
+**Expected Result:** Access is denied, and the user is redirected or shown an error message.  
+**Actual Result:** Access is denied, and the user is redirected or shown an error message.  
+**Status:** Passed
+
+#### Scenario 6: Odoo Integration Error Handling
+**Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
+**Pre-condition:** Odoo integration is functional.  
+**Steps:**
+1. Send a POST request with valid model details.
+2. Simulate an error during model upload.
+3. Catch the error and display an appropriate message.
+**Expected Result:** An error message detailing the Odoo error is displayed.  
+**Actual Result:** An error message detailing the Odoo error is displayed.  
+**Status:** Passed
+
+#### Summary of Results
+- **Total Tests:** 6
+- **Passed:** 6
+- **Failed:** 0
+- **Blocked:** 0
+
+#### Conclusions and Recommendations
+The `upload_model` function performs as expected in allowing a manager to upload a model. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., large file uploads, network issues) to ensure robustness.
+
+\newpage
+
+## Chapter 4
+
+### Odoo Deployment Guide
+
+This guide outlines the steps to deploy Odoo 15 on a Linux server using Python virtual environments, systemd for service management, and Nginx as a reverse proxy.
+
+#### Create Odoo Directory and Clone Repository
+
+First, create a directory for Odoo and clone the Odoo 15 repository from GitHub.
+
+```bash
+sudo mkdir /opt/odoo
+sudo git clone https://www.github.com/odoo/odoo --depth 1 --branch 15.0 --single-branch /opt/odoo/odoo15
+```
+
+#### Set Up Python Virtual Environment
+
+Navigate to the cloned Odoo directory, create a Python virtual environment, and activate it.
+
+```bash
+cd /opt/odoo/odoo15
+python3 -m venv venv
+source venv/bin/activate
+```
+
+#### Install Odoo Dependencies
+
+Install the necessary dependencies listed in the `requirements.txt` file.
+
+```bash
+pip install -r requirements.txt
+```
+
+#### Configure Odoo
+
+Create and edit the Odoo configuration file to set up database credentials, paths, and other options.
+
+```bash
+sudo nano /etc/odoo.conf
+```
+
+Add the following content to the configuration file:
+
+```ini
+[options]
+admin_passwd = admin
+db_host = False
+db_port = False
+db_user = odoo
+db_password = odoo
+addons_path = /opt/odoo/odoo15/addons
+xmlrpc_port = 8002
+proxy_mode = True
+```
+
+#### Create Systemd Service for Odoo
+
+Create a systemd service file to manage the Odoo service.
+
+```bash
+sudo nano /etc/systemd/system/odoo.service
+```
+
+Add the following content to the service file:
+
+```ini
+[Unit]
+Description=Odoo
+Requires=postgresql.service
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=odoo
+Group=odoo
+ExecStart=/opt/odoo/odoo15/venv/bin/python3 /opt/odoo/odoo15/odoo-bin -c /etc/odoo.conf
+WorkingDirectory=/opt/odoo/odoo15
+StandardOutput=journal+console
+
+[Install]
+WantedBy=default.target
+```
+
+#### Reload Systemd and Start Odoo Service
+
+Reload systemd to apply the new service, start the Odoo service, and enable it to start on boot.
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start odoo15
+sudo systemctl enable odoo15
+```
+
+#### Configure Nginx as a Reverse Proxy
+
+Create an Nginx configuration file for Odoo.
+
+```bash
+sudo nano /etc/nginx/sites-available/odoo.conf
+```
+
+Add the following content to the configuration file:
+
+```nginx
+server {
+    listen 80;
+    server_name rcm.esac.pt;
+
+    access_log /var/log/nginx/odoo.access.log;
+    error_log /var/log/nginx/odoo.error.log;
+
+    location / {
+        proxy_pass http://127.0.0.1:8002;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /longpolling/ {
+        proxy_pass http://127.0.0.1:8072;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Cache static files
+    location ~* /web/static/ {
+        proxy_cache_valid 200 60m;
+        proxy_buffering on;
+        expires 864000;
+        proxy_pass http://127.0.0.1:8002;
+    }
+}
+```
+
+#### Enable Nginx Configuration and Reload Nginx
+
+Create a symbolic link to enable the Nginx configuration, test the Nginx configuration for syntax errors, and reload Nginx.
+
+```bash
+sudo ln -s /etc/nginx/sites-available/odoo.conf /etc/nginx/sites-enabled/
+```
+
+```bash
+sudo nginx -t
+```
+
+```bash
+sudo systemctl reload nginx
+```
+
+This completes the Odoo 15 deployment process, with Odoo running as a systemd service and Nginx configured as a reverse proxy.
+
+\newpage
+
+## Chapter 5
+
+### Conclusion 
+
+In conclusion, our project represents a significant step forward in the field of industrial maintenance management. By leveraging Django's robust and scalable architecture, we have created a versatile web platform that seamlessly integrates with existing CMMS systems and augments technician workflows with AR technology.
+
+Through the development of this platform, we have addressed the pressing need for efficient task and resource management in industrial settings. By providing managers with a centralized hub for planning and coordination, and technicians with real-time access to contextual information via AR glasses, we have significantly enhanced the efficiency and accuracy of maintenance operations.
+
+Furthermore, our project offers immense potential for customization and adaptation to various industries and business requirements. The modular nature of our solution allows for easy integration with different CMMS systems and AR devices, ensuring flexibility and scalability as technology evolves.
+
+Overall, this project has been a rewarding journey, allowing us to explore new technologies, contribute to innovative solutions, and acquire valuable skills in software development, project management, and industrial maintenance. We are excited about the impact our platform will have on improving maintenance processes and look forward to future opportunities for innovation and growth in this dynamic field
 
 ## References
 

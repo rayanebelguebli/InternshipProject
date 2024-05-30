@@ -193,8 +193,7 @@ def manager_members(request):
     return render(request, 'app/manager_members.html', context)
 
 
-@login_required
-@user_passes_test(is_manager)
+
 @login_required
 @user_passes_test(is_manager)
 def add_technician(request):
@@ -754,6 +753,8 @@ def update_task(request):
         return redirect('my_tasks')  
     else:
         pass
+
+    
 @login_required
 @user_passes_test(is_admin_or_manager)
 def edit_member(request, member_id):
