@@ -246,9 +246,7 @@ In short, Django offers a combination of powerful features, built-in security an
 ### Requirements
 
 #### Use Case 
-
 &nbsp;
-
 ![Use case](./Use_case.png)
 
 \newpage
@@ -271,6 +269,8 @@ In short, Django offers a combination of powerful features, built-in security an
 
 **Connection**
 
+This part establishes the connection to the Odoo server using the provided URL, database name, username, and password.
+
 ```py
 url = <insert server URL>
 db = <insert database name>
@@ -280,11 +280,15 @@ password = <insert password for your admin user (default: admin)>
 
 **GET**
 
+This example demonstrates how to retrieve data from Odoo, specifically from the 'res.users' model, using the 'search_read' method. It retrieves all records ('search_read' with an empty domain) and specifies which fields to include in the response.
+
 ```py
 models.execute_kw(db, uid, password, 'res.users', 'search_read', [[]], {'fields': []})
 ```
 
 **PATCH**
+
+This example shows how to update an existing record in the 'maintenance.request' model. It uses the 'write' method with the record ID (in this case, 33) and a dictionary containing the field(s) to update.
 
 ```py
 models.execute_kw(
@@ -296,6 +300,8 @@ models.execute_kw(
 
 **CREATE**
 
+Here, you're creating a new user in the 'res.users' model. You provide a dictionary with the necessary data for the new user, such as name, login, and password, and use the 'create' method to add it to the database.
+
 ```py
 new_user_data = {
     'name': "signup_username",
@@ -306,6 +312,8 @@ models.execute_kw(db, uid, password, 'res.users', 'create', [new_user_data])
 ```
 
 **DELETE**
+
+This example demonstrates how to delete a record from the 'res.users' model. It uses the 'unlink' method with the ID of the record to be deleted (in this case, 2).
 
 ```py
 models.execute_kw(db, uid, password, 'res.users', 'unlink', [[2]])
@@ -338,9 +346,10 @@ The objective of this test was to verify the functionality of the `user_login` m
 **Description:** Verify that a user can successfully log in with correct credentials.  
 **Pre-condition:** The user has valid login credentials.  
 **Steps:**
-1. Send a POST request with valid `username` and `password`.
-2. Authenticate the user.
-3. Redirect to the home page if authentication is successful.
+- Send a POST request with valid `username` and `password`.
+- Authenticate the user.
+- Redirect to the home page if authentication is successful.
+
 **Expected Result:** The user is logged in and redirected to the home page.  
 **Actual Result:** The user is logged in and redirected to the home page.  
 **Status:** Passed
@@ -349,9 +358,10 @@ The objective of this test was to verify the functionality of the `user_login` m
 **Description:** Verify that a user cannot log in with incorrect credentials.  
 **Pre-condition:** The user has invalid login credentials.  
 **Steps:**
-1. Send a POST request with an incorrect `username` and/or `password`.
-2. Attempt to authenticate the user.
-3. Display an error message if authentication fails.
+- Send a POST request with an incorrect `username` and/or `password`.
+- Attempt to authenticate the user.
+- Display an error message if authentication fails.
+
 **Expected Result:** An error message "Incorrect username or password." is displayed.  
 **Actual Result:** An error message "Incorrect username or password." is displayed.  
 **Status:** Passed
@@ -360,8 +370,9 @@ The objective of this test was to verify the functionality of the `user_login` m
 **Description:** Verify that the login page is rendered when accessed with a GET request.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a GET request to the login URL.
-2. Render the login page.
+- Send a GET request to the login URL.
+- Render the login page.
+
 **Expected Result:** The login page is rendered.  
 **Actual Result:** The login page is rendered.  
 **Status:** Passed
@@ -370,8 +381,9 @@ The objective of this test was to verify the functionality of the `user_login` m
 **Description:** Verify that CSRF protection is enabled for the login form.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a POST request to the login URL without a CSRF token.
-2. Attempt to process the login request.
+- Send a POST request to the login URL without a CSRF token.
+- Attempt to process the login request.
+
 **Expected Result:** The request is rejected due to missing CSRF token.  
 **Actual Result:** The request is rejected due to missing CSRF token.  
 **Status:** Passed
@@ -402,12 +414,13 @@ The objective of this test was to verify the functionality of the `add_manager` 
 **Description:** Verify that an admin user can successfully add a new manager with valid details.  
 **Pre-condition:** The user has admin rights and the provided username does not exist.  
 **Steps:**
-1. Send a POST request with `username`, `email`, and `password`.
-2. Check if the user already exists.
-3. Create a new user in Odoo.
-4. Create a new user in Django.
-5. Add the new user to the 'Manager' group.
-6. Redirect to the home page with a success message.
+- Send a POST request with `username`, `email`, and `password`.
+- Check if the user already exists.
+- Create a new user in Odoo.
+- Create a new user in Django.
+- Add the new user to the 'Manager' group.
+- Redirect to the home page with a success message.
+
 **Expected Result:** The user is created and added to the 'Manager' group. A success message is displayed.  
 **Actual Result:** The user is created and added to the 'Manager' group. A success message is displayed.  
 **Status:** Passed
@@ -416,9 +429,10 @@ The objective of this test was to verify the functionality of the `add_manager` 
 **Description:** Verify that an error message is shown if the username already exists.  
 **Pre-condition:** The user has admin rights and the provided username already exists.  
 **Steps:**
-1. Send a POST request with `username`, `email`, and `password`.
-2. Check if the user already exists.
-3. Display an error message if the username exists.
+- Send a POST request with `username`, `email`, and `password`.
+- Check if the user already exists.
+- Display an error message if the username exists.
+
 **Expected Result:** An error message "This user already exists." is displayed.  
 **Actual Result:** An error message "This user already exists." is displayed.  
 **Status:** Passed
@@ -427,8 +441,9 @@ The objective of this test was to verify the functionality of the `add_manager` 
 **Description:** Verify that the add manager page is rendered when accessed with a GET request.  
 **Pre-condition:** The user is authenticated and has admin rights.  
 **Steps:**
-1. Send a GET request to the add manager URL.
-2. Render the add manager page with the appropriate context.
+- Send a GET request to the add manager URL.
+- Render the add manager page with the appropriate context.
+
 **Expected Result:** The add manager page is rendered with the context.  
 **Actual Result:** The add manager page is rendered with the context.  
 **Status:** Passed
@@ -437,8 +452,9 @@ The objective of this test was to verify the functionality of the `add_manager` 
 **Description:** Verify that CSRF protection is enabled for the add manager form.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a POST request to the add manager URL without a CSRF token.
-2. Attempt to process the request.
+- Send a POST request to the add manager URL without a CSRF token.
+- Attempt to process the request.
+
 **Expected Result:** The request is rejected due to missing CSRF token.  
 **Actual Result:** The request is rejected due to missing CSRF token.  
 **Status:** Passed
@@ -447,8 +463,9 @@ The objective of this test was to verify the functionality of the `add_manager` 
 **Description:** Verify that only users with admin rights can access the add manager functionality.  
 **Pre-condition:** The user is authenticated but does not have admin rights.  
 **Steps:**
-1. Attempt to access the add manager URL.
-2. Check for authorization.
+- Attempt to access the add manager URL.
+- Check for authorization.
+
 **Expected Result:** Access is denied, and the user is redirected or shown an error message.  
 **Actual Result:** Access is denied, and the user is redirected or shown an error message.  
 **Status:** Passed
@@ -457,9 +474,10 @@ The objective of this test was to verify the functionality of the `add_manager` 
 **Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
 **Pre-condition:** The user has admin rights, and Odoo integration is functional.  
 **Steps:**
-1. Send a POST request with `username`, `email`, and `password`.
-2. Simulate an error during Odoo user creation.
-3. Catch the error and display an appropriate message.
+- Send a POST request with `username`, `email`, and `password`.
+- Simulate an error during Odoo user creation.
+- Catch the error and display an appropriate message.
+
 **Expected Result:** An error message detailing the Odoo error is displayed.  
 **Actual Result:** An error message detailing the Odoo error is displayed.  
 **Status:** Passed
@@ -472,8 +490,6 @@ The objective of this test was to verify the functionality of the `add_manager` 
 
 #### Conclusions and Recommendations
 The `add_manager` function performs as expected in handling the addition of a new manager. All tested scenarios passed successfully. It is recommended to conduct further testing under different conditions (e.g., different user roles, network issues) to ensure robustness.
-
-\newpage
 
 \newpage
 
@@ -492,13 +508,14 @@ The objective of this test was to verify the functionality of the `add_technicia
 **Description:** Verify that a manager can successfully add a new technician with valid details.  
 **Pre-condition:** The user has manager rights and the provided username does not exist.  
 **Steps:**
-1. Send a POST request with `username`, `email`, and `password`.
-2. Check if the user already exists.
-3. Create a new user in Odoo.
-4. Create a new user in Django.
-5. Add the new user to the 'Technician' group.
-6. Add the new user to the manager's team.
-7. Redirect to the home page with a success message.
+- Send a POST request with `username`, `email`, and `password`.
+- Check if the user already exists.
+- Create a new user in Odoo.
+- Create a new user in Django.
+- Add the new user to the 'Technician' group.
+- Add the new user to the manager's team.
+- Redirect to the home page with a success message.
+
 **Expected Result:** The user is created, added to the 'Technician' group, and added to the manager's team. A success message is displayed.  
 **Actual Result:** The user is created, added to the 'Technician' group, and added to the manager's team. A success message is displayed.  
 **Status:** Passed
@@ -507,9 +524,10 @@ The objective of this test was to verify the functionality of the `add_technicia
 **Description:** Verify that an error message is shown if the username already exists.  
 **Pre-condition:** The user has manager rights and the provided username already exists.  
 **Steps:**
-1. Send a POST request with `username`, `email`, and `password`.
-2. Check if the user already exists.
-3. Display an error message if the username exists.
+- Send a POST request with `username`, `email`, and `password`.
+- Check if the user already exists.
+- Display an error message if the username exists.
+
 **Expected Result:** An error message "This user already exists." is displayed.  
 **Actual Result:** An error message "This user already exists." is displayed.  
 **Status:** Passed
@@ -518,8 +536,9 @@ The objective of this test was to verify the functionality of the `add_technicia
 **Description:** Verify that the add technician page is rendered when accessed with a GET request.  
 **Pre-condition:** The user is authenticated and has manager rights.  
 **Steps:**
-1. Send a GET request to the add technician URL.
-2. Render the add technician page with the appropriate context.
+- Send a GET request to the add technician URL.
+- Render the add technician page with the appropriate context.
+
 **Expected Result:** The add technician page is rendered with the context.  
 **Actual Result:** The add technician page is rendered with the context.  
 **Status:** Passed
@@ -528,8 +547,9 @@ The objective of this test was to verify the functionality of the `add_technicia
 **Description:** Verify that CSRF protection is enabled for the add technician form.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a POST request to the add technician URL without a CSRF token.
-2. Attempt to process the request.
+- Send a POST request to the add technician URL without a CSRF token.
+- Attempt to process the request.
+
 **Expected Result:** The request is rejected due to missing CSRF token.  
 **Actual Result:** The request is rejected due to missing CSRF token.  
 **Status:** Passed
@@ -538,8 +558,9 @@ The objective of this test was to verify the functionality of the `add_technicia
 **Description:** Verify that only users with manager rights can access the add technician functionality.  
 **Pre-condition:** The user is authenticated but does not have manager rights.  
 **Steps:**
-1. Attempt to access the add technician URL.
-2. Check for authorization.
+- Attempt to access the add technician URL.
+- Check for authorization.
+
 **Expected Result:** Access is denied, and the user is redirected or shown an error message.  
 **Actual Result:** Access is denied, and the user is redirected or shown an error message.  
 **Status:** Passed
@@ -548,9 +569,10 @@ The objective of this test was to verify the functionality of the `add_technicia
 **Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
 **Pre-condition:** The user has manager rights, and Odoo integration is functional.  
 **Steps:**
-1. Send a POST request with `username`, `email`, and `password`.
-2. Simulate an error during Odoo user creation.
-3. Catch the error and display an appropriate message.
+- Send a POST request with `username`, `email`, and `password`.
+- Simulate an error during Odoo user creation.
+- Catch the error and display an appropriate message.
+
 **Expected Result:** An error message detailing the Odoo error is displayed.  
 **Actual Result:** An error message detailing the Odoo error is displayed.  
 **Status:** Passed
@@ -581,11 +603,12 @@ The objective of this test was to verify the functionality of the `take_task` me
 **Description:** Verify that a technician can successfully take a task with valid details.  
 **Pre-condition:** The user is a technician and the provided task ID and user ID exist.  
 **Steps:**
-1. Send a POST request with `taskId` and `userId`.
-2. Retrieve the user and task from the database.
-3. Update the task in Odoo.
-4. Add the task to the technician's list of tasks.
-5. Redirect to the home page with a success message.
+- Send a POST request with `taskId` and `userId`.
+- Retrieve the user and task from the database.
+- Update the task in Odoo.
+- Add the task to the technician's list of tasks.
+- Redirect to the home page with a success message.
+
 **Expected Result:** The task is updated, added to the technician's list, and a success message is displayed.  
 **Actual Result:** The task is updated, added to the technician's list, and a success message is displayed.  
 **Status:** Passed
@@ -594,9 +617,10 @@ The objective of this test was to verify the functionality of the `take_task` me
 **Description:** Verify that an error is handled when the user ID does not exist.  
 **Pre-condition:** The provided user ID does not exist.  
 **Steps:**
-1. Send a POST request with `taskId` and `userId`.
-2. Attempt to retrieve the user from the database.
-3. Handle the `User.DoesNotExist` exception.
+- Send a POST request with `taskId` and `userId`.
+- Attempt to retrieve the user from the database.
+- Handle the `User.DoesNotExist` exception.
+
 **Expected Result:** An error message "The user or task does not exist." is displayed.  
 **Actual Result:** An error message "The user or task does not exist." is displayed.  
 **Status:** Passed
@@ -605,9 +629,10 @@ The objective of this test was to verify the functionality of the `take_task` me
 **Description:** Verify that an error is handled when the task ID does not exist.  
 **Pre-condition:** The provided task ID does not exist.  
 **Steps:**
-1. Send a POST request with `taskId` and `userId`.
-2. Attempt to retrieve the task from the database.
-3. Handle the `Task.DoesNotExist` exception.
+- Send a POST request with `taskId` and `userId`.
+- Attempt to retrieve the task from the database.
+- Handle the `Task.DoesNotExist` exception.
+
 **Expected Result:** An error message "The user or task does not exist." is displayed.  
 **Actual Result:** An error message "The user or task does not exist." is displayed.  
 **Status:** Passed
@@ -616,8 +641,9 @@ The objective of this test was to verify the functionality of the `take_task` me
 **Description:** Verify that the take task endpoint does not allow GET requests.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a GET request to the take task URL.
-2. Ensure the request is not processed.
+- Send a GET request to the take task URL.
+- Ensure the request is not processed.
+
 **Expected Result:** The request is ignored or an appropriate response is given.  
 **Actual Result:** The request is ignored or an appropriate response is given.  
 **Status:** Passed
@@ -626,8 +652,9 @@ The objective of this test was to verify the functionality of the `take_task` me
 **Description:** Verify that only users with technician rights can access the take task functionality.  
 **Pre-condition:** The user is authenticated but does not have technician rights.  
 **Steps:**
-1. Attempt to access the take task URL.
-2. Check for authorization.
+- Attempt to access the take task URL.
+- Check for authorization.
+
 **Expected Result:** Access is denied, and the user is redirected or shown an error message.  
 **Actual Result:** Access is denied, and the user is redirected or shown an error message.  
 **Status:** Passed
@@ -636,9 +663,10 @@ The objective of this test was to verify the functionality of the `take_task` me
 **Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
 **Pre-condition:** The user has technician rights, and Odoo integration is functional.  
 **Steps:**
-1. Send a POST request with `taskId` and `userId`.
-2. Simulate an error during the Odoo task update.
-3. Catch the error and display an appropriate message.
+- Send a POST request with `taskId` and `userId`.
+- Simulate an error during the Odoo task update.
+- Catch the error and display an appropriate message.
+
 **Expected Result:** An error message detailing the Odoo error is displayed.  
 **Actual Result:** An error message detailing the Odoo error is displayed.  
 **Status:** Passed
@@ -669,11 +697,12 @@ The objective of this test was to verify the functionality of the `update_task` 
 **Description:** Verify that a technician can successfully update the stage of a task with valid details.  
 **Pre-condition:** The user is a technician, and both the user and task exist.  
 **Steps:**
-1. Send a POST request with `taskId`, `userId`, and `stageId`.
-2. Retrieve the user and task based on the provided IDs.
-3. Update the task in Odoo to change its stage.
-4. Remove the task from the technician's MyTasks.
-5. Redirect to the My Tasks page.
+- Send a POST request with `taskId`, `userId`, and `stageId`.
+- Retrieve the user and task based on the provided IDs.
+- Update the task in Odoo to change its stage.
+- Remove the task from the technician's MyTasks.
+- Redirect to the My Tasks page.
+
 **Expected Result:** The task stage is updated in Odoo, removed from the technician's MyTasks, and a success message is displayed.  
 **Actual Result:** The task stage is updated in Odoo, removed from the technician's MyTasks, and a success message is displayed.  
 **Status:** Passed
@@ -682,9 +711,10 @@ The objective of this test was to verify the functionality of the `update_task` 
 **Description:** Verify that an appropriate message is shown if the user does not exist.  
 **Pre-condition:** The user ID provided does not correspond to an existing user.  
 **Steps:**
-1. Send a POST request with `taskId`, `userId`, and `stageId`.
-2. Attempt to retrieve the user based on the provided ID.
-3. Display an error message if the user does not exist.
+- Send a POST request with `taskId`, `userId`, and `stageId`.
+- Attempt to retrieve the user based on the provided ID.
+- Display an error message if the user does not exist.
+
 **Expected Result:** An error message "The user does not exist." is displayed.  
 **Actual Result:** An error message "The user does not exist." is displayed.  
 **Status:** Passed
@@ -693,9 +723,10 @@ The objective of this test was to verify the functionality of the `update_task` 
 **Description:** Verify that an appropriate message is shown if the task does not exist.  
 **Pre-condition:** The task ID provided does not correspond to an existing task.  
 **Steps:**
-1. Send a POST request with `taskId`, `userId`, and `stageId`.
-2. Attempt to retrieve the task based on the provided ID.
-3. Display an error message if the task does not exist.
+- Send a POST request with `taskId`, `userId`, and `stageId`.
+- Attempt to retrieve the task based on the provided ID.
+- Display an error message if the task does not exist.
+
 **Expected Result:** An error message "The task does not exist." is displayed.  
 **Actual Result:** An error message "The task does not exist." is displayed.  
 **Status:** Passed
@@ -704,8 +735,9 @@ The objective of this test was to verify the functionality of the `update_task` 
 **Description:** Verify that the update task functionality is not accessible via a GET request.  
 **Pre-condition:** The user is authenticated and has technician rights.  
 **Steps:**
-1. Send a GET request to the update task URL.
-2. Attempt to access the functionality.
+- Send a GET request to the update task URL.
+- Attempt to access the functionality.
+
 **Expected Result:** The GET request is not processed, and no action is taken.  
 **Actual Result:** The GET request is not processed, and no action is taken.  
 **Status:** Passed
@@ -714,8 +746,9 @@ The objective of this test was to verify the functionality of the `update_task` 
 **Description:** Verify that CSRF protection is enabled for the update task form.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a POST request to the update task URL without a CSRF token.
-2. Attempt to process the request.
+- Send a POST request to the update task URL without a CSRF token.
+- Attempt to process the request.
+
 **Expected Result:** The request is rejected due to missing CSRF token.  
 **Actual Result:** The request is rejected due to missing CSRF token.  
 **Status:** Passed
@@ -724,8 +757,9 @@ The objective of this test was to verify the functionality of the `update_task` 
 **Description:** Verify that only users with technician rights can access the update task functionality.  
 **Pre-condition:** The user is authenticated but does not have technician rights.  
 **Steps:**
-1. Attempt to access the update task URL.
-2. Check for authorization.
+- Attempt to access the update task URL.
+- Check for authorization.
+
 **Expected Result:** Access is denied, and the user is redirected or shown an error message.  
 **Actual Result:** Access is denied, and the user is redirected or shown an error message.  
 **Status:** Passed
@@ -734,9 +768,10 @@ The objective of this test was to verify the functionality of the `update_task` 
 **Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
 **Pre-condition:** The user has technician rights, and Odoo integration is functional.  
 **Steps:**
-1. Send a POST request with `taskId`, `userId`, and `stageId`.
-2. Simulate an error during Odoo task update.
-3. Catch the error and display an appropriate message.
+- Send a POST request with `taskId`, `userId`, and `stageId`.
+- Simulate an error during Odoo task update.
+- Catch the error and display an appropriate message.
+
 **Expected Result:** An error message detailing the Odoo error is displayed.  
 **Actual Result:** An error message detailing the Odoo error is displayed.  
 **Status:** Passed
@@ -767,9 +802,10 @@ The objective of this test was to verify the functionality of the `edit_member` 
 **Description:** Verify that an admin can successfully edit a member's details.  
 **Pre-condition:** The user is authenticated as an admin, and the member ID corresponds to an existing user.  
 **Steps:**
-1. Send a POST request with updated member details.
-2. Update the user details in Odoo.
-3. Redirect to the appropriate page (manager members or technician members).
+- Send a POST request with updated member details.
+- Update the user details in Odoo.
+- Redirect to the appropriate page (manager members or technician members).
+
 **Expected Result:** The user details are updated in Odoo and Django, and the admin is redirected to the appropriate page with a success message.  
 **Actual Result:** The user details are updated in Odoo and Django, and the admin is redirected to the appropriate page with a success message.  
 **Status:** Passed
@@ -778,9 +814,10 @@ The objective of this test was to verify the functionality of the `edit_member` 
 **Description:** Verify that a manager can successfully edit a member's details.  
 **Pre-condition:** The user is authenticated as a manager, and the member ID corresponds to an existing user.  
 **Steps:**
-1. Send a POST request with updated member details.
-2. Update the user details in Odoo.
-3. Redirect to the technician members page.
+- Send a POST request with updated member details.
+- Update the user details in Odoo.
+- Redirect to the technician members page.
+
 **Expected Result:** The user details are updated in Odoo and Django, and the manager is redirected to the technician members page with a success message.  
 **Actual Result:** The user details are updated in Odoo and Django, and the manager is redirected to the technician members page with a success message.  
 **Status:** Passed
@@ -789,8 +826,9 @@ The objective of this test was to verify the functionality of the `edit_member` 
 **Description:** Verify that the edit member functionality is not accessible via a GET request.  
 **Pre-condition:** The user is authenticated as an admin or manager.  
 **Steps:**
-1. Send a GET request to the edit member URL.
-2. Attempt to access the functionality.
+- Send a GET request to the edit member URL.
+- Attempt to access the functionality.
+
 **Expected Result:** The GET request is not processed, and no action is taken.  
 **Actual Result:** The GET request is not processed, and no action is taken.  
 **Status:** Passed
@@ -799,8 +837,9 @@ The objective of this test was to verify the functionality of the `edit_member` 
 **Description:** Verify that CSRF protection is enabled for the edit member form.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a POST request to the edit member URL without a CSRF token.
-2. Attempt to process the request.
+- Send a POST request to the edit member URL without a CSRF token.
+- Attempt to process the request.
+
 **Expected Result:** The request is rejected due to missing CSRF token.  
 **Actual Result:** The request is rejected due to missing CSRF token.  
 **Status:** Passed
@@ -809,8 +848,9 @@ The objective of this test was to verify the functionality of the `edit_member` 
 **Description:** Verify that only admins or managers can access the edit member functionality.  
 **Pre-condition:** The user is authenticated but does not have admin or manager rights.  
 **Steps:**
-1. Attempt to access the edit member URL.
-2. Check for authorization.
+- Attempt to access the edit member URL.
+- Check for authorization.
+
 **Expected Result:** Access is denied, and the user is redirected or shown an error message.  
 **Actual Result:** Access is denied, and the user is redirected or shown an error message.  
 **Status:** Passed
@@ -819,9 +859,10 @@ The objective of this test was to verify the functionality of the `edit_member` 
 **Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
 **Pre-condition:** Odoo integration is functional.  
 **Steps:**
-1. Send a POST request with updated member details.
-2. Simulate an error during Odoo user update.
-3. Catch the error and display an appropriate message.
+- Send a POST request with updated member details.
+- Simulate an error during Odoo user update.
+- Catch the error and display an appropriate message.
+
 **Expected Result:** An error message detailing the Odoo error is displayed.  
 **Actual Result:** An error message detailing the Odoo error is displayed.  
 **Status:** Passed
@@ -852,11 +893,12 @@ The objective of this test was to verify the functionality of the `add_to_manage
 **Description:** Verify that a user can be successfully added to the manager's team.  
 **Pre-condition:** The user is authenticated as a manager, and the user ID corresponds to an existing user.  
 **Steps:**
-1. Send a POST request with the user ID.
-2. Retrieve the manager's team.
-3. Add the user to the manager's team.
-4. Update the team in Odoo.
-5. Redirect to the users without a team page.
+- Send a POST request with the user ID.
+- Retrieve the manager's team.
+- Add the user to the manager's team.
+- Update the team in Odoo.
+- Redirect to the users without a team page.
+
 **Expected Result:** The user is added to the manager's team in Odoo and Django, and a success message is displayed.  
 **Actual Result:** The user is added to the manager's team in Odoo and Django, and a success message is displayed.  
 **Status:** Passed
@@ -865,9 +907,10 @@ The objective of this test was to verify the functionality of the `add_to_manage
 **Description:** Verify that an appropriate message is shown if the manager's team does not exist.  
 **Pre-condition:** The user is authenticated as a manager, and the manager's team does not exist.  
 **Steps:**
-1. Send a POST request with the user ID.
-2. Attempt to retrieve the manager's team.
-3. Display an error message if the team does not exist.
+- Send a POST request with the user ID.
+- Attempt to retrieve the manager's team.
+- Display an error message if the team does not exist.
+
 **Expected Result:** An error message "Unable to find your team." is displayed.  
 **Actual Result:** An error message "Unable to find your team." is displayed.  
 **Status:** Passed
@@ -876,8 +919,9 @@ The objective of this test was to verify the functionality of the `add_to_manage
 **Description:** Verify that the add to manager's team functionality is not accessible via a GET request.  
 **Pre-condition:** The user is authenticated as a manager.  
 **Steps:**
-1. Send a GET request to the add to manager's team URL.
-2. Attempt to access the functionality.
+- Send a GET request to the add to manager's team URL.
+- Attempt to access the functionality.
+
 **Expected Result:** The GET request is not processed, and no action is taken.  
 **Actual Result:** The GET request is not processed, and no action is taken.  
 **Status:** Passed
@@ -886,8 +930,9 @@ The objective of this test was to verify the functionality of the `add_to_manage
 **Description:** Verify that CSRF protection is enabled for the add to manager's team form.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a POST request to the add to manager's team URL without a CSRF token.
-2. Attempt to process the request.
+- Send a POST request to the add to manager's team URL without a CSRF token.
+- Attempt to process the request.
+
 **Expected Result:** The request is rejected due to missing CSRF token.  
 **Actual Result:** The request is rejected due to missing CSRF token.  
 **Status:** Passed
@@ -896,8 +941,9 @@ The objective of this test was to verify the functionality of the `add_to_manage
 **Description:** Verify that only managers can access the add to manager's team functionality.  
 **Pre-condition:** The user is authenticated but does not have manager rights.  
 **Steps:**
-1. Attempt to access the add to manager's team URL.
-2. Check for authorization.
+- Attempt to access the add to manager's team URL.
+- Check for authorization.
+
 **Expected Result:** Access is denied, and the user is redirected or shown an error message.  
 **Actual Result:** Access is denied, and the user is redirected or shown an error message.  
 **Status:** Passed
@@ -906,9 +952,10 @@ The objective of this test was to verify the functionality of the `add_to_manage
 **Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
 **Pre-condition:** Odoo integration is functional.  
 **Steps:**
-1. Send a POST request with the user ID.
-2. Simulate an error during Odoo team update.
-3. Catch the error and display an appropriate message.
+- Send a POST request with the user ID.
+- Simulate an error during Odoo team update.
+- Catch the error and display an appropriate message.
+
 **Expected Result:** An error message detailing the Odoo error is displayed.  
 **Actual Result:** An error message detailing the Odoo error is displayed.  
 **Status:** Passed
@@ -939,9 +986,10 @@ The objective of this test was to verify the functionality of the `upload_model`
 **Description:** Verify that a manager can successfully upload a model with valid details.  
 **Pre-condition:** The user is authenticated as a manager.  
 **Steps:**
-1. Send a POST request with valid model details.
-2. Save the model in the database.
-3. Redirect to the home page with a success message.
+- Send a POST request with valid model details.
+- Save the model in the database.
+- Redirect to the home page with a success message.
+
 **Expected Result:** The model is uploaded successfully, and a success message is displayed.  
 **Actual Result:** The model is uploaded successfully, and a success message is displayed.  
 **Status:** Passed
@@ -950,8 +998,9 @@ The objective of this test was to verify the functionality of the `upload_model`
 **Description:** Verify that an appropriate message is shown if the form submission is invalid.  
 **Pre-condition:** The user is authenticated as a manager.  
 **Steps:**
-1. Send a POST request with invalid model details.
-2. Display an error message due to the invalid form submission.
+- Send a POST request with invalid model details.
+- Display an error message due to the invalid form submission.
+
 **Expected Result:** An error message "The form is not valid. Please correct the errors." is displayed.  
 **Actual Result:** An error message "The form is not valid. Please correct the errors." is displayed.  
 **Status:** Passed
@@ -960,8 +1009,9 @@ The objective of this test was to verify the functionality of the `upload_model`
 **Description:** Verify that the upload model functionality is accessible via a GET request.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a GET request to the upload model URL.
-2. Attempt to access the functionality.
+- Send a GET request to the upload model URL.
+- Attempt to access the functionality.
+
 **Expected Result:** The GET request is processed, and the upload model page is displayed with an empty form.  
 **Actual Result:** The GET request is processed, and the upload model page is displayed with an empty form.  
 **Status:** Passed
@@ -970,8 +1020,9 @@ The objective of this test was to verify the functionality of the `upload_model`
 **Description:** Verify that CSRF protection is enabled for the upload model form.  
 **Pre-condition:** None  
 **Steps:**
-1. Send a POST request to the upload model URL without a CSRF token.
-2. Attempt to process the request.
+- Send a POST request to the upload model URL without a CSRF token.
+- Attempt to process the request.
+
 **Expected Result:** The request is rejected due to missing CSRF token.  
 **Actual Result:** The request is rejected due to missing CSRF token.  
 **Status:** Passed
@@ -980,8 +1031,9 @@ The objective of this test was to verify the functionality of the `upload_model`
 **Description:** Verify that only managers can access the upload model functionality.  
 **Pre-condition:** The user is authenticated but does not have manager rights.  
 **Steps:**
-1. Attempt to access the upload model URL.
-2. Check for authorization.
+- Attempt to access the upload model URL.
+- Check for authorization.
+
 **Expected Result:** Access is denied, and the user is redirected or shown an error message.  
 **Actual Result:** Access is denied, and the user is redirected or shown an error message.  
 **Status:** Passed
@@ -990,9 +1042,10 @@ The objective of this test was to verify the functionality of the `upload_model`
 **Description:** Verify that an error message is shown if there is an issue with Odoo integration.  
 **Pre-condition:** Odoo integration is functional.  
 **Steps:**
-1. Send a POST request with valid model details.
-2. Simulate an error during model upload.
-3. Catch the error and display an appropriate message.
+- Send a POST request with valid model details.
+- Simulate an error during model upload.
+- Catch the error and display an appropriate message.
+
 **Expected Result:** An error message detailing the Odoo error is displayed.  
 **Actual Result:** An error message detailing the Odoo error is displayed.  
 **Status:** Passed
@@ -1020,7 +1073,8 @@ First, create a directory for Odoo and clone the Odoo 15 repository from GitHub.
 
 ```bash
 sudo mkdir /opt/odoo
-sudo git clone https://www.github.com/odoo/odoo --depth 1 --branch 15.0 --single-branch /opt/odoo/odoo15
+sudo git clone https://www.github.com/odoo/odoo --depth 1 --branch 15.0 
+--single-branch /opt/odoo/odoo15
 ```
 
 #### Set Up Python Virtual Environment
