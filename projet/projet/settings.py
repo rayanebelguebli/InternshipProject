@@ -157,4 +157,4 @@ APPEND_SLASH = False
 
 LOGOUT_REDIRECT_URL = '/'
 
-CSRF_TRUSTED_ORIGINS = ['https://f565-2001-818-dbbb-a100-759c-3981-2506-ec6f.ngrok-free.app','http://127.0.0.1:8000']
+CSRF_TRUSTED_ORIGINS = ['https://18ca-2001-818-dbbb-a100-99c3-6c94-ff89-470d.ngrok-free.app','http://127.0.0.1:8000']
