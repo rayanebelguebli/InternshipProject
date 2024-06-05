@@ -28,7 +28,7 @@
         </div>
         <form class="form-save" method="POST" action="{% url 'save_description' task.id %}">
             {% csrf_token %}
-            <textarea name="description" class="description-text" placeholder="Écrire une description..." rows="8" cols="50" style="resize: none; padding: 10px; border: 2px solid #ccc; border-radius: 5px; font-family: Arial, sans-serif; font-size: 14px;">{{ task.description|safe }}</textarea>
+            <textarea name="description" class="description-text" placeholder="Write notes ..." rows="8" cols="50" style="resize: none; padding: 10px; border: 2px solid #ccc; border-radius: 5px; font-family: Arial, sans-serif; font-size: 14px;">{{ task.description|safe }}</textarea>
             <button class="btn--save btn--login save-button" type="submit">Save</button>
         </form>
         
