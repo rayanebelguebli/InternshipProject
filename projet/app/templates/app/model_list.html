@@ -8,12 +8,12 @@
                 {{ model.file.name }} - {{ model.equipement.name }}
                 <form action="{% url 'download_model' model.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Download</button>
+                    <button type="submit" class="btn btn--register btn-danger btn__register">Download</button>
                 </form>
                 {% if can_delete_model %}
                 <form action="{% url 'delete_model' model.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn--login btn-danger">Delete</button>
                 </form>
                 {% endif %}
             </li>
