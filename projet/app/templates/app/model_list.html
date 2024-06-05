@@ -3,10 +3,21 @@
 <div class="form">
     <h2>Uploaded Models</h2>
     <ul>
-        {% for model in models %}
-            <li>{{ model.file }} - {{ model.equipement.name }}</li>
+        {% for model in modelsFiles %}
+            <li>
+                {{ model.file.name }} - {{ model.equipement.name }}
+                <form action="{% url 'download_model' model.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Download</button>
+                </form>
+                {% if can_delete_model %}
+                <form action="{% url 'delete_model' model.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 </div>
 {% endblock %}
-

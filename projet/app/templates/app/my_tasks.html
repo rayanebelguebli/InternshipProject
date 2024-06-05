@@ -11,7 +11,7 @@
                 {% if task.stage_id == stage.id|stringformat:"d" %}
                     {% if not stage.done %}
                         <div class="task-item">
-                            {% include "app/work_order.html" with name=task.name instructions=task.instruction_text responsible=user.username step=stage.name isMyWorkOrders="true" date=task.schedule_date %}
+                            {% include "app/work_order.html" with name=task.name instructions=task.instruction_text|safe responsible=user.username step=stage.name isMyWorkOrders="true" date=task.schedule_date %}
                         </div>
                     {% endif %}
                 {% endif %}

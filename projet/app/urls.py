@@ -26,5 +26,6 @@ urlpatterns = [
     path('models/', views.model_list, name='model_list'),
     path('tasks_done/', views.tasks_done, name='tasks_done'),
     path('save-description/<int:task_id>/', views.save_description, name='save_description'),
-
+    path('models/download/<int:model_id>/', views.download_model, name='download_model'),
+    path('models/delete/<int:model_id>/', views.delete_model, name='delete_model'),
 ]

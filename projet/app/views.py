@@ -9,6 +9,7 @@ from datetime import datetime
 import xmlrpc.client
 from xmlrpc.client import Fault
 from .forms import UploadModelForm
+from django.http import FileResponse, HttpResponse
 from django.views.decorators.csrf import csrf_protect
 
 
@@ -26,6 +27,9 @@ def is_admin_or_manager_or_technicien(user):
 
 def is_admin_or_manager(user):
     return user.groups.filter(name__in=['Admin', 'Manager']).exists()
+
+def is_technicien_or_manager(user):
+    return user.groups.filter(name__in=['Technicien', 'Manager']).exists()
 
 def is_admin(user):
     return user.groups.filter(name='Admin').exists()
@@ -411,7 +415,7 @@ def sync_with_odoo():
                 existing_task.user_id = None
             existing_task.priority = task_data['priority']
             existing_task.equipment_id = task_data['equipment_id'][0]
-            existing_task.description = task_data['description']
+            existing_task.instruction_text = task_data['description']
             existing_task.maintenance_team_id = task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0]
             existing_task.create_date = task_data['create_date']
             existing_task.schedule_date = task_data['schedule_date']
@@ -430,7 +434,7 @@ def sync_with_odoo():
                 user_id=user_id,
                 priority=task_data['priority'],
                 equipment_id=task_data['equipment_id'][0],
-                description=task_data['description'],
+                instruction_text=task_data['description'],
                 maintenance_team_id=task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0],
                 create_date=task_data['create_date'],
                 schedule_date=task_data['schedule_date']
@@ -969,7 +973,7 @@ def upload_model(request):
     return render(request, 'app/upload_model.html', context)
 
 @login_required
-@user_passes_test(is_manager)
+@user_passes_test(is_technicien_or_manager)
 def model_list(request):
     sync_equipments_from_odoo()
     sync_with_odoo()
@@ -978,6 +982,7 @@ def model_list(request):
     teams = Teams.objects.filter(members=user)
     managed_teams = Teams.objects.filter(manager=user).values_list('name', flat=True)
     technician_teams = teams.values_list('name', flat=True)
+    can_delete_model = False
     stages = models.execute_kw(
         db, uid, password, 'maintenance.stage', 'search_read',
         [[]],
@@ -989,10 +994,13 @@ def model_list(request):
     if user.groups.filter(id=2).exists() and not Teams.objects.filter(manager=user).exists():
         can_create_team = True
 
+    if user.groups.filter(id=2).exists():
+        can_delete_model = True
+
     tasks = Task.objects.filter(
         Q(maintenance_team_id__in=teams) & Q(stage_id=1))
 
-    user_models = UploadedModel.objects.filter(user=request.user)  # Renommer la variable models en user_models
+    modelsFiles = UploadedModel.objects.all()  # Renommer la variable models en user_models
 
     context = {
         'can_create_team': can_create_team,
@@ -1003,7 +1011,8 @@ def model_list(request):
         'tasks': tasks,
         'user_tasks': user_tasks, 
         'stages': stages,
-        'user_models': user_models  # Utiliser user_models à la place de models
+        'modelsFiles': modelsFiles,
+        'can_delete_model' : can_delete_model
     }
     
     return render(request, 'app/model_list.html', context)
@@ -1014,10 +1023,10 @@ def save_description(request, task_id):
         description = request.POST.get('description')
 
         try:
-        
-            models.execute_kw(db, uid, password, 'maintenance.request', 'write',
-                               [[task_id], {'description': description}])
-            
+            print(task.description)
+            task.description = description
+            task.save()
+            print(task.description)
             messages.success(request, 'Description sauvegardée avec succès !')
             return redirect('my_tasks')  
 
@@ -1025,3 +1034,19 @@ def save_description(request, task_id):
             messages.error(request, 'Erreur lors de la sauvegarde de la description : {}'.format(str(e)))
             return redirect('my_tasks') 
     return redirect('my_tasks')
+
+@login_required
+@user_passes_test(is_technicien_or_manager)
+def download_model(request, model_id):
+    model = get_object_or_404(UploadedModel, id=model_id)
+    response = FileResponse(model.file, as_attachment=True)
+    return response
+
+@login_required
+@user_passes_test(is_manager)
+def delete_model(request, model_id):
+    if not request.user.groups.filter(id=2).exists():
+        return HttpResponse(status=403)
+    model = get_object_or_404(UploadedModel, id=model_id)
+    model.delete()
+    return redirect('model_list')
