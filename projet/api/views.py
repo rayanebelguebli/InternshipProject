@@ -5,10 +5,11 @@ from django.shortcuts import render
 # api/views.py
 from rest_framework import viewsets,filters
 from app.models import Teams, Task, MyTasks
-from .serializers import TeamSerializer, TaskSerializer, MyTasksSerializer, UserSerializer
+from .serializers import StageSerializer, TeamSerializer, TaskSerializer, MyTasksSerializer, UserSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.response import Response
 import xmlrpc.client
 from rest_framework.decorators import api_view, permission_classes
@@ -51,6 +52,7 @@ class MyTasksViewSet(viewsets.ModelViewSet):
         if username:
             user = User.objects.filter(username=username).first()
             if user:
+                sync_with_odoo()
                 my_tasks = MyTasks.objects.filter(user=user)
                 serializer = self.get_serializer(my_tasks, many=True)
                 return Response(serializer.data)
@@ -58,6 +60,7 @@ class MyTasksViewSet(viewsets.ModelViewSet):
                 return Response({'message': 'Utilisateur non trouvé'}, status=404)
         else:
             return Response({'message': 'Veuillez fournir un nom d\'utilisateur valide'}, status=400)
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -99,7 +102,7 @@ class TakeTaskViewSet(viewsets.ModelViewSet):
             now = datetime.now()
             formatted_now = now.strftime('%Y-%m-%d %H:%M:%S')
 
-            url = 'http://localhost:8069'
+            url = 'https://rcm.esac.pt/'
             db = 'odoo'
             username = 'admin'
             password = 'admin'
@@ -132,25 +135,59 @@ class TakeTaskViewSet(viewsets.ModelViewSet):
             return Response({"message": "La tâche n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
         
 
+class UpdateTaskViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        task_id = request.data.get('taskId')
+        user_id = request.data.get('userId')
+        stage_id = request.data.get('stageId')
+        sync_with_odoo()
+
+        try:
+            user = User.objects.get(id=user_id)
+            task = Task.objects.get(id=task_id)
+
+            url = 'https://rcm.esac.pt/'
+            db = 'odoo'
+            username = 'admin'
+            password = 'admin'
+
+            common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
+            uid = common.authenticate(db, username, password, {})
+            models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
+
+            result = models.execute_kw(
+                db, uid, password,
+                'maintenance.request', 'write',
+                [[int(task_id)], {'stage_id': int(stage_id)}]
+            )
+
+            if result:
+                return Response({"message": "La tâche a été mise à jour avec succès."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "La tâche n'a pas pu être mise à jour."}, status=status.HTTP_400_BAD_REQUEST)
+
+        except (User.DoesNotExist, Task.DoesNotExist):
+            return Response({"message": "L'utilisateur ou la tâche n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
+
 
 def sync_with_odoo():
 
-    url = 'http://localhost:8069'
+    url = 'https://rcm.esac.pt/'
     db = 'odoo'
     username = 'admin'
     password = 'admin'
-
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     uid = common.authenticate(db, username, password, {})
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
-
     # Récupérer les tâches depuis Odoo
     tasks = models.execute_kw(
         db, uid, password,
         'maintenance.request',
         'search_read',
         [[]],
-        {'fields': ['id', 'name', 'stage_id', 'maintenance_type', 'user_id', 'priority', 'schedule_date', 'equipment_id', 'description', 'instruction_text', 'maintenance_team_id', 'create_date']}
+        {'fields': ['id', 'name', 'stage_id', 'maintenance_type', 'user_id', 'priority', 'schedule_date', 'equipment_id', 'description', 'maintenance_team_id', 'create_date']}
     )
 
     odoo_task_ids = []
@@ -169,7 +206,6 @@ def sync_with_odoo():
             existing_task.priority = task_data['priority']
             existing_task.equipment_id = task_data['equipment_id'][0]
             existing_task.description = task_data['description']
-            existing_task.instruction_text = task_data['instruction_text']
             existing_task.maintenance_team_id = task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0]
             existing_task.create_date = task_data['create_date']
             existing_task.schedule_date = task_data['schedule_date']
@@ -189,7 +225,6 @@ def sync_with_odoo():
                 priority=task_data['priority'],
                 equipment_id=task_data['equipment_id'][0],
                 description=task_data['description'],
-                instruction_text=task_data['instruction_text'],
                 maintenance_team_id=task_data.get('maintenance_team_id', False) and task_data['maintenance_team_id'][0],
                 create_date=task_data['create_date'],
                 schedule_date=task_data['schedule_date']
@@ -197,3 +232,24 @@ def sync_with_odoo():
             task.save()
 
     Task.objects.exclude(id__in=odoo_task_ids).delete()
+
+class StageViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        url = 'https://rcm.esac.pt/'
+        db = 'odoo'
+        username = 'admin'
+        password = 'admin'
+
+        common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
+        uid = common.authenticate(db, username, password, {})
+        models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
+
+        stages = models.execute_kw(
+            db, uid, password, 'maintenance.stage', 'search_read',
+            [[]],
+            {'fields': ['id', 'name', 'done']}
+        )
+
+        return Response(stages)
