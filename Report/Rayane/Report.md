@@ -2,44 +2,7 @@
 title: Internship project report
 author: Belguebli Rayane
 bibliography: test.bib
-header-includes:
-  - \usepackage{fancyhdr}
-  - \pagestyle{fancy}
-  - \fancyhead{}
-  - \fancyhead[C]{Internship project report}
-  - \fancyhead[R]{\thepage}
-  - \fancyfoot{}
-  - \fancyfoot[C]{\thepage}
-  - \renewcommand{\headrulewidth}{0.4pt}
-  - \renewcommand{\footrulewidth}{0pt}
 ---
-
-\newpage
-
-## Table of Contents
-
-- [**Abstract**](#abstract)
-
-- [**Chapter 1**](#chapter-1)
-    - [Introduction](#introduction)
-
--  [**Chapter 2**](#chapter-2)
-    - [What is CMMS ?](#what-is-cmms)
-        - [Examples of CMMS](#examples-of-cmms)
-            - [CMMS comparaison](#cmms-comparison)
-    - [What are Maintenance Management Systems?](#what-are-maintenance-management-systems)
-    - [What is the django framework et and why use this for our web application ?](#what-is-the-django-framework-et-and-why-use-this-for-our-web-application)
--  [**Chapter 3**](#chapter-3)
-    - [Requirements](#requirements)
-        - [Use Case](#use-case)
-        - [Non-Functional Requirements](#non-functional-requirements)
-    - [External API Odoo](#external-api-odoo)
-    - [Database](#database)
-    - [Tests](#tests)
-- [**Chapter 4**](#chapter-4)
-- [**Chapter 5**](#chapter-5)
-  - [Conclusion](#conclusion)
-- [**References**](#references)
 
 \newpage
 
@@ -61,9 +24,30 @@ Our aim is to provide a versatile and adaptable platform that can be tailored to
 
 This project represents an exciting opportunity for an internship abroad, offering the chance to explore new technologies and contribute to innovative solutions in the field of industrial maintenance. By taking on this challenge, we aim to acquire new skills.
 
+The primary objectives of this internship are to develop a robust back-end infrastructure for our web platform using Django, deploy Odoo to the server for enhanced resource management, and integrate AR features to provide real-time contextual information to technicians. Additionally, we aim to work collaboratively with our team to ensure seamless interaction between the web platform and the mobile app.
+
+Our project is part of a larger initiative titled "Advanced Maintenance for the Railroad using Augmented Reality." In this context, my colleague and I have divided our tasks to cover both the website and mobile app development. I focused on developing the back-office functionality of the site and deploying Odoo to the server, ensuring a stable and efficient back-end operation. Meanwhile, my colleague concentrated on the frontend development and the creation of the mobile app, ensuring a user-friendly interface and optimal mobile experience.
+
 \newpage
 
 ## Chapter 2
+
+### What are Maintenance Management Systems?
+
+Maintenance is a critical aspect of any manufacturing or industrial process. It ensures that equipment, machines and facilities operate at their optimum level, avoiding breakdowns and costly downtime. To achieve this, companies need to put in place a well-defined Maintenance Management System (MMS). An MMS is a holistic approach to maintenance management that involves the integration of people, processes and technology to optimise maintenance activities.
+
+The main objective of an MMS is to improve equipment reliability, minimise downtime and increase productivity. It does this by providing a structured approach to maintenance planning, scheduling and execution. This helps maintenance teams to proactively identify and resolve potential problems before they become major issues. By leveraging data, analytics and technology, an MMS enables organisations to optimise maintenance processes, reduce costs and increase asset life. Here are some key points highlighting their importance and benefits :
+
+- **Optimising maintenance operations** : MMS provides a centralised platform for planning, executing and monitoring maintenance activities. This enables efficient resource allocation, priority management and coordination of maintenance teams.
+
+- **Reduced unplanned downtime** : By enabling preventive and predictive maintenance, MMS helps to identify and resolve problems before they become major breakdowns. This reduces unplanned downtime and minimises production interruptions.
+
+- **Extended equipment life** : By providing regular, preventive maintenance, MMS helps to extend the life of equipment. By identifying and correcting potential problems at an early stage, MMS reduces wear and tear on assets.
+
+- **Maximising asset availability** : By ensuring that equipment is well maintained and available when needed, MMS maximises asset availability. This enables organisations to maintain productivity and respond effectively to market demand.
+
+In summary, MMS plays a crucial role in optimising maintenance operations, reducing downtime, extending equipment life and maximising asset availability. The above references illustrate the positive impact of MMS in various sectors and highlight their value as strategic tools for asset management and operational performance [@MMS] [[5]](#references).
+\newpage
 
 ### What is CMMS ?
 
@@ -81,7 +65,7 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
 
 \newpage
 
-![CMMS source(04/2024) : https://limblecmms.com/cmms/](./CMMS.jpg)
+![CMMS Last access 2024/04 : https://limblecmms.com/cmms/](./CMMS.jpg)
 
 &nbsp;
 \newpage
@@ -92,7 +76,7 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
 
 - **MaintainX** :
 
-    ![MAINTAINX source(04/2024) : https://www.prnewswire.com/news-releases/maintainx-raises-50m-with-12x-revenue-growth-from-boosting-productivity-of-industrial-and-frontline-workers-as-america-gets-back-to-work-301308326.html](./MaintainX.jpg)
+    ![MAINTAINX Last access 2024/04 : https://www.prnewswire.com/news-releases/maintainx-raises-50m-with-12x-revenue-growth-from-boosting-productivity-of-industrial-and-frontline-workers-as-america-gets-back-to-work-301308326.html](./MaintainX.jpg)
 
     MaintainX is a CMMS based on a mobile application and a web platform that aims to simplify the maintenance process for teams in the field.
 
@@ -100,7 +84,7 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
 
     The mobile application allows technicians to receive real-time notifications, update the status of tasks and upload photos or notes to document interventions.
 
-    The web platform provides managers with a centralised dashboard where they can track the progress of jobs, analyse performance data and generate reports to optimise maintenance processes. [source(04/2024)](https://www.getmaintainx.com/)
+    The web platform provides managers with a centralised dashboard where they can track the progress of jobs, analyse performance data and generate reports to optimise maintenance processes. [Last access 2024/04](https://www.getmaintainx.com/)
 
     ![workorders](./m1.png)
 
@@ -114,7 +98,7 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
 
 - **Limble** :
 
-    ![LIMBLE source(04/2024) : https://www.prnewswire.com/news-releases/limble-announces-58m-series-b-funding-round-led-by-goldman-sachs-asset-management-bringing-total-valuation-to-450m-301857646.html](./limble.png)
+    ![LIMBLE Last access 2024/04 : https://www.prnewswire.com/news-releases/limble-announces-58m-series-b-funding-round-led-by-goldman-sachs-asset-management-bringing-total-valuation-to-450m-301857646.html](./limble.png)
 
     Limble is also a modern CMMS designed to simplify the management of maintenance activities and extend the life of assets.
 
@@ -122,7 +106,7 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
 
     Limble is distinguished by its user-friendly interface and advanced asset management features, such as equipment hierarchy modelling, warranty management and replacement planning. 
 
-    It also incorporates predictive maintenance and performance dashboard capabilities to help users anticipate breakdowns and make informed decisions to optimise maintenance. [source(04/2024)](https://limblecmms.com/)
+    It also incorporates predictive maintenance and performance dashboard capabilities to help users anticipate breakdowns and make informed decisions to optimise maintenance. [Last access 2024/04](https://limblecmms.com/)
 
     ![dashboard](./l1.png)
 
@@ -132,11 +116,11 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
 
 - **Odoo Maintenance**
 
-    ![ODOO source(04/2024 : https://ubi.edu/odoo/)](./Odoo.png)
+    ![ODOO Last access 2024/04 : https://ubi.edu/odoo/)](./Odoo.png)
 
     Odoo is a suite of open source applications covering all your business needs: CRM, eCommerce, Accounting, Inventory, Point of Sale, Project Management, etc. 
 
-    Odoo has a dedicated maintenance section that allows you to manage work orders and assets. Odoo Maintenance is perhaps less advanced than the previous CMMS but is sufficient to solve our problem and above all is free to download. [source(04/2024)](https://www.odoo.com/fr_FR/page/about-us)
+    Odoo has a dedicated maintenance section that allows you to manage work orders and assets. Odoo Maintenance is perhaps less advanced than the previous CMMS but is sufficient to solve our problem and above all is free to download. [Last access 2024/04](https://www.odoo.com/fr_FR/page/about-us)
 
     Odoo is based on a 3-tier architecture:
 
@@ -145,7 +129,7 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
     - a presentation server that allows users to connect to OpenERP using any Web browser (with the Flash player installed for displaying graphics).
     This last server is not necessary if the user uses the native client, which does require installation on the user's workstation.
 
-    The server part is written in Python. The various building blocks are organised into modules. A module is a folder with a predefined structure containing Python code and XML files. A module defines the data structure, forms, reports, menus, procedures, workflow, etc. [source(04/2024)](https://fr.wikipedia.org/wiki/Odoo#:~:text=La%20partie%20serveur%20est%20%C3%A9crite,Python%20et%20des%20fichiers%20XML.)
+    The server part is written in Python. The various building blocks are organised into modules. A module is a folder with a predefined structure containing Python code and XML files. A module defines the data structure, forms, reports, menus, procedures, workflow, etc. [Last access 2024/04](https://fr.wikipedia.org/wiki/Odoo#:~:text=La%20partie%20serveur%20est%20%C3%A9crite,Python%20et%20des%20fichiers%20XML.)
 
     ![apps](./1.png)
 
@@ -167,22 +151,7 @@ In summary, CMMS are essential tools for maintenance teams, providing efficient 
 
 \newpage
 
-### What are Maintenance Management Systems?
 
-Maintenance is a critical aspect of any manufacturing or industrial process. It ensures that equipment, machines and facilities operate at their optimum level, avoiding breakdowns and costly downtime. To achieve this, companies need to put in place a well-defined Maintenance Management System (MMS). An MMS is a holistic approach to maintenance management that involves the integration of people, processes and technology to optimise maintenance activities.
-
-The main objective of an MMS is to improve equipment reliability, minimise downtime and increase productivity. It does this by providing a structured approach to maintenance planning, scheduling and execution. This helps maintenance teams to proactively identify and resolve potential problems before they become major issues. By leveraging data, analytics and technology, an MMS enables organisations to optimise maintenance processes, reduce costs and increase asset life. Here are some key points highlighting their importance and benefits :
-
-- **Optimising maintenance operations** : MMS provides a centralised platform for planning, executing and monitoring maintenance activities. This enables efficient resource allocation, priority management and coordination of maintenance teams.
-
-- **Reduced unplanned downtime** : By enabling preventive and predictive maintenance, MMS helps to identify and resolve problems before they become major breakdowns. This reduces unplanned downtime and minimises production interruptions.
-
-- **Extended equipment life** : By providing regular, preventive maintenance, MMS helps to extend the life of equipment. By identifying and correcting potential problems at an early stage, MMS reduces wear and tear on assets.
-
-- **Maximising asset availability** : By ensuring that equipment is well maintained and available when needed, MMS maximises asset availability. This enables organisations to maintain productivity and respond effectively to market demand.
-
-In summary, MMS plays a crucial role in optimising maintenance operations, reducing downtime, extending equipment life and maximising asset availability. The above references illustrate the positive impact of MMS in various sectors and highlight their value as strategic tools for asset management and operational performance [@MMS] [[5]](#references).
-\newpage
 
 ### What is the django framework et and why use this for our web application ?
 
