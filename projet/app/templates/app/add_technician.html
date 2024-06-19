@@ -4,23 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un technicien</title>
+    <title>Add a technician</title>
 </head>
 
 {% block content%}
     <form class="form" method="post">
-        <h2 class="technician-title">Ajouter un technicien</h2>
+        <h2 class="technician-title">Add a technician</h2>
         {% csrf_token %}
-        <label class="label" for="username">Nom d'utilisateur :</label><br>
+        <label class="label" for="username">Username :</label><br>
         <input class="input" type="text" id="username" name="username" required><br>
         
-        <label class="label" for="email">Email :</label><br>
+        <label class="label" for="email">Mail adress :</label><br>
         <input class="input" type="email" id="email" name="email" required><br>
         
-        <label class="label" for="password">Mot de passe :</label><br>
+        <label class="label" for="password">Password :</label><br>
         <input class="input" type="password" id="password" name="password" required><br>
         
-        <button class="btn btn--login" type="submit">Ajouter le technicien</button>
+        <button class="btn btn--login" type="submit">Add a technician</button>
     </form>
 {% endblock %}
 </html>

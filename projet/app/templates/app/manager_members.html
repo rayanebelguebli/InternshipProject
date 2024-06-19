@@ -17,8 +17,8 @@
                     <strong class="member-margin">ID:</strong> {{ member.id }}<br>
                     <strong>Login:</strong> {{ member.username }} <br>
                     <strong>E-mail:</strong> {{ member.email }} <br>
-                    <button class="btn btn--login"><a class="btn-text btn-text--login" href="{% url 'delete_member' member.id %}">Supprimer</a></button>
-                    <button class="btn btn--register"><a class="btn-text btn-text--register" href="{% url 'edit_member' member.id %}">Modifier</a></button>
+                    <button class="btn btn--login"><a class="btn-text btn-text--login" href="{% url 'delete_member' member.id %}">Delete</a></button>
+                    <button class="btn btn--register"><a class="btn-text btn-text--register" href="{% url 'edit_member' member.id %}">CHange</a></button>
                 </li>
             {% endfor %}
         </ul>

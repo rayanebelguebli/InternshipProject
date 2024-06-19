@@ -23,11 +23,11 @@
     <form class="form" method="post">
         <h2 class="title-manager">Add Manager</h2>
         {% csrf_token %}
-        <label class="labem" for="id_username">Nom d'utilisateur :</label><br>
+        <label class="labem" for="id_username">Username :</label><br>
         <input class="input" type="text" id="id_username" name="username" required><br>
-        <label for="id_email">Adresse e-mail :</label><br>
+        <label for="id_email">Mail address :</label><br>
         <input class="input" type="email" id="id_email" name="email" required><br>
-        <label class="labem" for="id_password">Mot de passe :</label><br>
+        <label class="labem" for="id_password">Password :</label><br>
         <input class="input" type="password" id="id_password" name="password" required><br>
         <input class="btn btn--login" type="submit" value="Ajouter">
     </form>
