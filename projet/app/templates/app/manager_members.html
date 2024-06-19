@@ -18,7 +18,7 @@
                     <strong>Login:</strong> {{ member.username }} <br>
                     <strong>E-mail:</strong> {{ member.email }} <br>
                     <button class="btn btn--login"><a class="btn-text btn-text--login" href="{% url 'delete_member' member.id %}">Delete</a></button>
-                    <button class="btn btn--register"><a class="btn-text btn-text--register" href="{% url 'edit_member' member.id %}">CHange</a></button>
+                    <button class="btn btn--register"><a class="btn-text btn-text--register" href="{% url 'edit_member' member.id %}">Change</a></button>
                 </li>
             {% endfor %}
         </ul>
